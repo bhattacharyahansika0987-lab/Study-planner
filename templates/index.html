@@ -1,110 +1,139 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="lavender">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#F2EBF7" />
   <title>Flow Space ✨</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%B8%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+
+  <!-- Apply saved theme before first paint (prevents flash of wrong theme) -->
+  <script>
+    (function () {
+      var valid = ['lavender','matcha','rose','peach','ultramarine','obsidian','emerald','amethyst'];
+      var t = null;
+      try {
+        t = localStorage.getItem('fs_theme');
+        if (!t) {
+          var legacyKey = localStorage.getItem('fs_colortheme');
+          var legacyMode = localStorage.getItem('fs_theme_mode');
+          if (legacyKey && valid.indexOf(legacyKey) > -1) t = legacyKey;
+          else if (legacyMode === 'dark') t = 'ultramarine';
+        }
+        if (!t && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) t = 'ultramarine';
+      } catch (e) {}
+      if (valid.indexOf(t) < 0) t = 'lavender';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+
   <style>
-    /* ================= DYNAMIC THEME PALETTES ================= */
-    :root {
-      /* Default Light: Lavender Dreams */
-      --bg-main: #F2EBF7;
-      --bg-card: #FFF0F5;
-      --primary: #E8A0BF;
-      --secondary: #B7A6E0;
-      --accent: #9CC5A1;
-      --highlight: #F9D5A7;
-      --text-main: #4A3B47;
-      --text-muted: #8c767e;
-      --border-color: #E2D1E9;
-      --shadow: 0 10px 30px rgba(183, 166, 224, 0.2);
+    /* ================= THEME PALETTES (8 total) ================= */
+    :root, [data-theme="lavender"] {
+      color-scheme: light;
+      --bg-main: #F2EBF7; --bg-card: #FFF0F5;
+      --primary: #E8A0BF; --secondary: #B7A6E0; --accent: #9CC5A1; --highlight: #F9D5A7;
+      --heading: #B5547F; --text-main: #4A3B47; --text-muted: #7d6873; --border-color: #E2D1E9;
+      --on-primary: #3b2a38; --danger: #D1495B; --success: #4C9A63;
+      --shadow: 0 10px 30px rgba(183, 166, 224, 0.22);
+    }
+    [data-theme="matcha"] {
+      color-scheme: light;
+      --bg-main: #F1F8F2; --bg-card: #E3F2E1;
+      --primary: #52B788; --secondary: #74C69D; --accent: #B7E4C7; --highlight: #D8F3DC;
+      --heading: #2D6A4F; --text-main: #1B4332; --text-muted: #4f7a63; --border-color: #B7E4C7;
+      --on-primary: #0f2e20; --danger: #C44536; --success: #2D8659;
+      --shadow: 0 10px 30px rgba(82, 183, 136, 0.2);
+    }
+    [data-theme="rose"] {
+      color-scheme: light;
+      --bg-main: #FFF0F3; --bg-card: #FFE0E6;
+      --primary: #FF4D6D; --secondary: #FF758F; --accent: #FFB3C1; --highlight: #FFCCD5;
+      --heading: #C9184A; --text-main: #590D22; --text-muted: #8a4a5c; --border-color: #FFB3C1;
+      --on-primary: #ffffff; --danger: #A4133C; --success: #2D8659;
+      --shadow: 0 10px 30px rgba(255, 77, 109, 0.18);
+    }
+    [data-theme="peach"] {
+      color-scheme: light;
+      --bg-main: #FFF5EE; --bg-card: #FFE5D9;
+      --primary: #F4A261; --secondary: #E76F51; --accent: #2A9D8F; --highlight: #E9C46A;
+      --heading: #C2571F; --text-main: #264653; --text-muted: #5c7480; --border-color: #F4C6A0;
+      --on-primary: #2a1a0e; --danger: #C0392B; --success: #2A9D8F;
+      --shadow: 0 10px 30px rgba(231, 111, 81, 0.2);
+    }
+    [data-theme="ultramarine"] {
+      color-scheme: dark;
+      --bg-main: #0B132B; --bg-card: #1C2541;
+      --primary: #64B5F6; --secondary: #48CAE4; --accent: #F2D888; --highlight: #90E0EF;
+      --heading: #64B5F6; --text-main: #E0FBFC; --text-muted: #8D99AE; --border-color: #243B53;
+      --on-primary: #0B132B; --danger: #FF6B6B; --success: #6BE3A0;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+    }
+    [data-theme="obsidian"] {
+      color-scheme: dark;
+      --bg-main: #12100E; --bg-card: #1D1A16;
+      --primary: #D4AF37; --secondary: #B8923A; --accent: #F2D888; --highlight: #D4AF37;
+      --heading: #D4AF37; --text-main: #F5EBD7; --text-muted: #b8a892; --border-color: #3A3226;
+      --on-primary: #1D1A16; --danger: #FF7A6B; --success: #9AD18B;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.65);
+    }
+    [data-theme="emerald"] {
+      color-scheme: dark;
+      --bg-main: #081C15; --bg-card: #1B4332;
+      --primary: #52B788; --secondary: #74C69D; --accent: #D8F3DC; --highlight: #95D5B2;
+      --heading: #74C69D; --text-main: #E8F5E9; --text-muted: #95D5B2; --border-color: #2D6A4F;
+      --on-primary: #081C15; --danger: #FF8A80; --success: #95D5B2;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+    }
+    [data-theme="amethyst"] {
+      color-scheme: dark;
+      --bg-main: #1A0B2E; --bg-card: #2D1B4E;
+      --primary: #D8B4FE; --secondary: #C084FC; --accent: #F3E8FF; --highlight: #E879F9;
+      --heading: #D8B4FE; --text-main: #FAF5FF; --text-muted: #D8B4FE; --border-color: #4C1D95;
+      --on-primary: #1A0B2E; --danger: #FF8FA3; --success: #86EFAC;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
     }
 
-    [data-dark-theme="ultramarine"] {
-      --bg-main: #0B132B;
-      --bg-card: #1C2541;
-      --primary: #64B5F6;
-      --secondary: #48CAE4;
-      --accent: #F2D888;
-      --highlight: #90E0EF;
-      --text-main: #E0FBFC;
-      --text-muted: #8D99AE;
-      --border-color: #243B53;
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-    }
-
-    [data-dark-theme="obsidian"] {
-      --bg-main: #12100E;
-      --bg-card: #1D1A16;
-      --primary: #D4AF37;
-      --secondary: #B8923A;
-      --accent: #F2D888;
-      --highlight: #D4AF37;
-      --text-main: #F5EBD7;
-      --text-muted: #b8a892;
-      --border-color: #3A3226;
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-    }
-
-    [data-dark-theme="emerald"] {
-      --bg-main: #081C15;
-      --bg-card: #1B4332;
-      --primary: #52B788;
-      --secondary: #74C69D;
-      --accent: #D8F3DC;
-      --highlight: #95D5B2;
-      --text-main: #E8F5E9;
-      --text-muted: #95D5B2;
-      --border-color: #2D6A4F;
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-    }
-
-    [data-dark-theme="amethyst"] {
-      --bg-main: #1A0B2E;
-      --bg-card: #2D1B4E;
-      --primary: #D8B4FE;
-      --secondary: #C084FC;
-      --accent: #F3E8FF;
-      --highlight: #E879F9;
-      --text-main: #FAF5FF;
-      --text-muted: #D8B4FE;
-      --border-color: #4C1D95;
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-    }
+    /* ================= BASE ================= */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 
     body {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
       background-color: var(--bg-main);
       color: var(--text-main);
       min-height: 100vh;
-      padding-bottom: 50px;
+      padding-bottom: 60px;
       position: relative;
       overflow-x: hidden;
+      transition: background-color .35s ease, color .35s ease;
     }
 
-    /* Ambient Background Sparkle Pattern */
+    .card, header, .quote-banner, .tab-btn, input, select, textarea, .task-item, .exam-item,
+    .day-box, .mini-calendar, .pomodoro-display, .technique-card, .cal-date, .glass, .mood-btn,
+    .sticker-canvas, .sticker-btn, .chip, .btn-small, .icon-btn, .mode-btn, .sound-btn, .cw-cell, .habit-table th, .habit-table td, .time-label {
+      transition: background-color .35s ease, color .35s ease, border-color .35s ease, box-shadow .2s ease, transform .15s ease, opacity .2s ease;
+    }
+
     body::before {
       content: "";
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      position: fixed; inset: 0;
       pointer-events: none;
-      background-image: 
+      background-image:
         radial-gradient(2px 2px at 60px 80px, var(--primary), rgba(0,0,0,0)),
         radial-gradient(2px 2px at 280px 200px, var(--accent), rgba(0,0,0,0)),
         radial-gradient(2.5px 2.5px at 85% 25%, var(--highlight), rgba(0,0,0,0)),
         radial-gradient(2px 2px at 75% 75%, var(--secondary), rgba(0,0,0,0));
       background-size: 500px 500px;
-      opacity: 0.5;
+      opacity: 0.45;
       z-index: 0;
     }
+
+    button { font-family: inherit; }
+    :focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 
     .container {
       max-width: 1200px;
@@ -114,156 +143,103 @@
       z-index: 1;
     }
 
-    /* Header & Personalization */
+    /* ================= HEADER ================= */
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex; justify-content: space-between; align-items: center;
       background: var(--bg-card);
       border: 2px solid var(--border-color);
       border-radius: 24px;
-      padding: 20px 28px;
+      padding: 18px 26px;
       box-shadow: var(--shadow);
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-      gap: 15px;
+      margin-bottom: 18px;
+      flex-wrap: wrap; gap: 14px;
     }
 
+    .brand { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
     .brand h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      color: var(--heading);
+      display: flex; align-items: center; gap: 10px;
+      line-height: 1.1;
     }
 
     .personalize-box {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--text-muted);
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.9rem; font-weight: 500; color: var(--text-muted);
     }
-
     .personalize-box input {
-      padding: 6px 12px;
-      border-radius: 50px;
-      border: 1.5px solid var(--border-color);
-      background: var(--bg-main);
-      color: var(--text-main);
-      font-family: 'Poppins', sans-serif;
-      font-weight: 600;
-      width: 140px;
-      margin-bottom: 0;
+      padding: 6px 14px; border-radius: 50px; width: 150px; margin-bottom: 0; font-weight: 600;
     }
 
-    .header-controls {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
+    .header-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
     .theme-select {
-      background: var(--bg-main);
-      border: 1.5px solid var(--border-color);
-      color: var(--text-main);
-      padding: 8px 14px;
-      border-radius: 50px;
-      font-family: 'Poppins', sans-serif;
-      font-size: 0.85rem;
-      cursor: pointer;
+      width: auto; margin: 0;
+      padding: 8px 14px; border-radius: 50px; font-size: 0.85rem; cursor: pointer;
     }
 
     .theme-btn {
       background: var(--bg-main);
       border: 1.5px solid var(--border-color);
       color: var(--text-main);
-      padding: 8px 16px;
-      border-radius: 50px;
-      cursor: pointer;
-      font-family: 'Poppins', sans-serif;
-      font-weight: 500;
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      padding: 8px 16px; border-radius: 50px; cursor: pointer;
+      font-weight: 500; font-size: 0.85rem;
+      display: inline-flex; align-items: center; gap: 6px;
+      white-space: nowrap;
     }
+    .theme-btn:hover { background: var(--primary); color: var(--on-primary); transform: translateY(-1px); }
+    .theme-btn:active { transform: scale(.97); }
 
-    .theme-btn:hover {
-      background: var(--primary);
-      color: #fff;
-    }
-
-    /* Quote Banner */
+    /* ================= QUOTE ================= */
     .quote-banner {
       background: linear-gradient(135deg, var(--bg-card), var(--bg-main));
       border: 1.5px solid var(--border-color);
       border-radius: 16px;
       padding: 14px 22px;
       text-align: center;
-      margin-bottom: 24px;
-      font-style: italic;
-      font-size: 0.95rem;
+      margin-bottom: 18px;
+      font-style: italic; font-size: 0.95rem;
       box-shadow: var(--shadow);
+      cursor: pointer; user-select: none;
     }
 
-    /* Navigation Tabs */
-    .tabs-nav {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
+    /* ================= TABS ================= */
+    .tabs-wrap {
+      position: sticky; top: 0; z-index: 30;
+      padding: 8px 0;
+      margin: 0 -4px 18px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
-
+    .tabs-nav { display: flex; gap: 8px; padding: 0 4px; }
     .tab-btn {
-      flex: 1;
-      min-width: 140px;
+      flex: 1; min-width: 0;
       background: var(--bg-card);
       border: 2px solid var(--border-color);
       color: var(--text-main);
-      padding: 12px 14px;
+      padding: 11px 12px;
       border-radius: 16px;
-      font-family: 'Poppins', sans-serif;
-      font-weight: 600;
-      font-size: 0.85rem;
+      font-weight: 600; font-size: 0.85rem;
       cursor: pointer;
       box-shadow: var(--shadow);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      white-space: nowrap;
     }
-
-    .tab-btn.active, .tab-btn:hover {
+    .tab-btn:hover { transform: translateY(-2px); border-color: var(--primary); }
+    .tab-btn.active {
       background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: #fff;
+      color: var(--on-primary);
       border-color: var(--primary);
       transform: translateY(-2px);
     }
 
-    .tab-pane {
-      display: none;
-      animation: fadeIn 0.3s ease;
-    }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; animation: fadeIn .35s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-    .tab-pane.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Grids & Cards */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 20px;
-    }
+    /* ================= GRID & CARDS ================= */
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 20px; align-items: start; }
 
     .card {
       background: var(--bg-card);
@@ -273,18 +249,15 @@
       box-shadow: var(--shadow);
       margin-bottom: 20px;
     }
-
     .card h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      color: var(--primary);
+      font-size: 1.3rem; color: var(--heading);
       margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
     }
+    .card-sub { font-size: .85rem; color: var(--text-muted); margin-bottom: 10px; }
 
-    /* Form Inputs */
+    /* ================= FORMS ================= */
     input, select, textarea {
       width: 100%;
       padding: 11px 14px;
@@ -297,473 +270,378 @@
       margin-bottom: 12px;
       outline: none;
     }
-
+    input::placeholder, textarea::placeholder { color: var(--text-muted); opacity: .75; }
     input:focus, select:focus, textarea:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(232, 160, 191, 0.2);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 28%, transparent);
     }
+    input[type="checkbox"] { width: auto; margin: 0; accent-color: var(--primary); cursor: pointer; }
+    input[type="range"] { padding: 0; margin-bottom: 0; accent-color: var(--primary); height: 28px; background: transparent; border: none; }
+    input[type="date"] { min-width: 0; }
 
     .btn-primary {
       background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: #fff;
+      color: var(--on-primary);
       border: none;
       padding: 11px 20px;
       border-radius: 12px;
-      font-family: 'Poppins', sans-serif;
-      font-weight: 600;
-      font-size: 0.9rem;
+      font-weight: 600; font-size: 0.9rem;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
       width: 100%;
     }
+    .btn-primary:hover { filter: brightness(1.06); transform: translateY(-1px); }
+    .btn-primary:active { transform: scale(.98); }
+    .btn-primary.ghost { background: var(--bg-main); color: var(--text-main); border: 1.5px solid var(--border-color); box-shadow: none; }
+    .btn-primary.auto { width: auto; }
 
-    .btn-primary:hover {
-      opacity: 0.92;
-      transform: translateY(-1px);
+    .btn-small, .chip {
+      background: var(--bg-main);
+      border: 1.5px solid var(--border-color);
+      color: var(--text-main);
+      border-radius: 50px;
+      padding: 6px 14px;
+      font-size: .8rem; font-weight: 600;
+      cursor: pointer;
     }
+    .btn-small:hover, .chip:hover { border-color: var(--primary); transform: translateY(-1px); }
+    .chip.active { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
+    .btn-small.danger:hover { background: var(--danger); color: #fff; border-color: var(--danger); }
 
-    /* Progress Bar */
+    .icon-btn {
+      background: var(--bg-main); border: 1.5px solid var(--border-color); color: var(--text-main);
+      width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; line-height: 1;
+      display: inline-flex; align-items: center; justify-content: center; flex: none;
+    }
+    .icon-btn:hover { background: var(--primary); color: var(--on-primary); }
+
+    .row { display: flex; gap: 10px; }
+    .row > * { min-width: 0; }
+    .empty { color: var(--text-muted); font-size: .88rem; }
+    .status-note { font-size: 0.78rem; color: var(--text-muted); margin-top: 6px; font-style: italic; }
+
+    /* ================= PROGRESS ================= */
     .progress-container {
       background: var(--bg-main);
-      border-radius: 50px;
-      height: 14px;
-      width: 100%;
+      border-radius: 50px; height: 14px; width: 100%;
       border: 1px solid var(--border-color);
-      overflow: hidden;
-      margin: 12px 0 16px 0;
+      overflow: hidden; margin: 12px 0 8px;
     }
-
     .progress-fill {
       background: linear-gradient(90deg, var(--accent), var(--primary));
-      height: 100%;
-      width: 0%;
-      transition: width 0.4s ease;
+      height: 100%; width: 0%;
+      transition: width .5s cubic-bezier(.3,.9,.3,1);
       border-radius: 50px;
     }
 
-    /* Task & Priority Items */
+    /* ================= TASK ITEMS ================= */
     .task-item, .exam-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex; justify-content: space-between; align-items: center;
       background: var(--bg-main);
       border: 1px solid var(--border-color);
-      padding: 11px 14px;
-      border-radius: 12px;
-      margin-bottom: 10px;
-      gap: 10px;
+      padding: 11px 14px; border-radius: 12px;
+      margin-bottom: 10px; gap: 10px;
+      animation: popIn .25s ease;
     }
-
-    .task-item.done span {
-      text-decoration: line-through;
-      opacity: 0.5;
-    }
+    @keyframes popIn { from { opacity: 0; transform: scale(.97); } to { opacity: 1; transform: scale(1); } }
+    .task-main { display: flex; align-items: flex-start; gap: 10px; flex: 1; min-width: 0; }
+    .task-main input[type="checkbox"] { width: 18px; height: 18px; margin-top: 3px; flex: none; }
+    .task-title { font-weight: 600; word-break: break-word; }
+    .task-meta { display: flex; gap: 6px; margin-top: 4px; flex-wrap: wrap; align-items: center; font-size: .75rem; color: var(--text-muted); }
+    .task-item.done .task-title { text-decoration: line-through; opacity: .5; }
+    .del-btn { background: none; border: none; cursor: pointer; font-size: 1rem; padding: 4px; border-radius: 8px; flex: none; }
+    .del-btn:hover { background: color-mix(in srgb, var(--danger) 18%, transparent); }
 
     .badge {
-      background: var(--accent);
-      color: #2F3E46;
-      padding: 3px 9px;
-      border-radius: 50px;
-      font-size: 0.73rem;
-      font-weight: 600;
+      background: var(--secondary); color: var(--on-primary);
+      padding: 3px 9px; border-radius: 50px;
+      font-size: 0.72rem; font-weight: 600;
     }
+    .badge.High { background: var(--danger); color: #fff; }
+    .badge.Low { background: var(--accent); color: var(--on-primary); }
 
-    /* Schedule Slots */
-    .schedule-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 9px;
-    }
+    .countdown { font-weight: 700; color: var(--heading); white-space: nowrap; font-size: .9rem; }
+    .countdown.soon { color: var(--danger); }
+    .countdown.past { color: var(--text-muted); font-weight: 500; }
+    .exam-info { flex: 1; min-width: 0; }
+    .exam-info strong { display: block; word-break: break-word; }
+    .exam-info small { color: var(--text-muted); }
 
+    /* ================= SCHEDULE ================= */
+    .schedule-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
     .time-label {
-      min-width: 85px;
-      font-weight: 600;
-      font-size: 0.8rem;
-      color: var(--primary);
-      background: var(--bg-main);
-      border: 1px solid var(--border-color);
-      padding: 7px 8px;
-      border-radius: 8px;
-      text-align: center;
+      min-width: 86px; font-weight: 600; font-size: 0.78rem; color: var(--heading);
+      background: var(--bg-main); border: 1px solid var(--border-color);
+      padding: 9px 6px; border-radius: 10px; text-align: center; flex: none;
     }
+    .schedule-row input { margin-bottom: 0; }
+    .planner-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+    .planner-head h2 { margin-bottom: 0; }
+    .planner-head input { width: 160px; margin-bottom: 0; padding: 7px 10px; }
+    .date-label { font-size: .85rem; color: var(--text-muted); font-weight: 500; margin-bottom: 12px; }
 
-    .schedule-row input {
-      margin-bottom: 0;
-    }
-
-    /* Mood & Water */
-    .mood-grid {
-      display: flex;
-      justify-content: space-between;
-      gap: 6px;
-      margin-top: 8px;
-    }
-
+    /* ================= MOOD & WATER ================= */
+    .mood-grid { display: flex; justify-content: space-between; gap: 6px; margin-top: 8px; }
     .mood-btn {
-      flex: 1;
-      background: var(--bg-main);
-      border: 2px solid var(--border-color);
-      border-radius: 14px;
-      padding: 10px 4px;
-      text-align: center;
-      cursor: pointer;
-      font-size: 1.4rem;
+      flex: 1; background: var(--bg-main);
+      border: 2px solid var(--border-color); border-radius: 14px;
+      padding: 10px 2px; text-align: center; cursor: pointer; font-size: 1.4rem;
+      color: var(--text-main);
     }
+    .mood-btn span { display: block; font-size: 0.66rem; font-weight: 600; margin-top: 3px; }
+    .mood-btn:hover { transform: translateY(-2px); }
+    .mood-btn.selected { background: var(--accent); color: var(--on-primary); border-color: var(--primary); transform: scale(1.06); }
 
-    .mood-btn span {
-      display: block;
-      font-size: 0.68rem;
-      font-weight: 600;
-      margin-top: 3px;
-    }
-
-    .mood-btn.selected {
-      background: var(--accent);
-      border-color: var(--primary);
-      transform: scale(1.05);
-    }
-
-    .water-glasses {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin: 12px 0;
-    }
-
+    .water-glasses { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
     .glass {
-      width: 44px;
-      height: 52px;
-      border: 2px solid var(--border-color);
-      border-radius: 6px 6px 12px 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1.2rem;
-      background: var(--bg-main);
-      user-select: none;
+      width: 44px; height: 52px;
+      border: 2px solid var(--border-color); border-radius: 6px 6px 12px 12px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1.2rem; background: var(--bg-main);
+      user-select: none; padding: 0;
     }
+    .glass:hover { transform: translateY(-2px); }
+    .glass.filled { background: var(--accent); box-shadow: 0 3px 10px color-mix(in srgb, var(--accent) 45%, transparent); }
 
-    .glass.filled {
-      background: var(--accent);
-      box-shadow: 0 3px 8px rgba(156, 197, 161, 0.3);
-    }
-
-    /* Calendar Widget */
+    /* ================= CALENDAR ================= */
     .mini-calendar {
-      background: var(--bg-main);
-      border: 1.5px solid var(--border-color);
-      border-radius: 16px;
-      padding: 14px;
-      text-align: center;
+      background: var(--bg-main); border: 1.5px solid var(--border-color);
+      border-radius: 16px; padding: 14px; text-align: center;
     }
-
-    .cal-header {
-      font-weight: 600;
-      color: var(--primary);
-      margin-bottom: 10px;
-      font-size: 0.95rem;
-    }
-
-    .cal-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 4px;
-      font-size: 0.8rem;
-    }
-
-    .cal-day-name {
-      font-weight: 600;
-      color: var(--text-muted);
-      padding: 4px 0;
-    }
-
+    .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; gap: 8px; }
+    .cal-title { font-weight: 600; color: var(--heading); font-size: 0.95rem; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; font-size: 0.8rem; }
+    .cal-day-name { font-weight: 600; color: var(--text-muted); padding: 4px 0; font-size: .72rem; }
     .cal-date {
-      padding: 6px 0;
-      border-radius: 8px;
-      background: var(--bg-card);
+      position: relative; aspect-ratio: 1 / 1; min-height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 10px; background: var(--bg-card);
       border: 1px solid var(--border-color);
-      cursor: pointer;
+      color: var(--text-main); cursor: pointer; font-size: .82rem; padding: 0;
     }
-
-    .cal-date:hover {
-      background: var(--primary);
-      color: #fff;
+    .cal-date:hover { background: var(--primary); color: var(--on-primary); transform: scale(1.06); }
+    .cal-date.today { border: 2px solid var(--primary); font-weight: 700; }
+    .cal-date.selected-date { background: var(--secondary); color: var(--on-primary); font-weight: 700; }
+    .cal-date.has-items::after {
+      content: ""; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%);
+      width: 5px; height: 5px; border-radius: 50%; background: var(--heading);
     }
+    .cal-date.selected-date.has-items::after { background: var(--on-primary); }
+    .cal-blank { visibility: hidden; }
+    .cal-foot { display: flex; justify-content: center; margin-top: 10px; }
 
-    .cal-date.today {
-      border: 2px solid var(--primary);
-      font-weight: 700;
-    }
+    /* ================= WEEK & HABITS ================= */
+    .week-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: 14px; }
+    .day-box { background: var(--bg-main); border: 1.5px solid var(--border-color); border-radius: 14px; padding: 12px; }
+    .day-box h3 { font-size: 0.95rem; color: var(--heading); margin-bottom: 8px; border-bottom: 1px dashed var(--border-color); padding-bottom: 4px; }
+    .day-box textarea { height: 95px; resize: vertical; background: var(--bg-card); margin-bottom: 0; }
 
-    .cal-date.selected-date {
-      background: var(--secondary);
-      color: #fff;
-      font-weight: 700;
-    }
+    .habit-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85rem; min-width: 520px; }
+    .habit-table th, .habit-table td { border: 1px solid var(--border-color); padding: 8px 6px; text-align: center; }
+    .habit-table th { background: var(--bg-main); color: var(--heading); font-weight: 600; }
+    .habit-table td:first-child { text-align: left; font-weight: 500; }
+    .habit-table input[type="checkbox"] { width: 17px; height: 17px; }
+    .card-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+    .card-head h2 { margin-bottom: 0; }
 
-    /* Week Grid & Habit Table */
-    .week-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 14px;
-    }
-
-    .day-box {
-      background: var(--bg-main);
-      border: 1.5px solid var(--border-color);
-      border-radius: 14px;
-      padding: 12px;
-    }
-
-    .day-box h3 {
-      font-size: 0.95rem;
-      color: var(--primary);
-      margin-bottom: 8px;
-      border-bottom: 1px dashed var(--border-color);
-      padding-bottom: 4px;
-    }
-
-    .day-box textarea {
-      height: 85px;
-      resize: vertical;
-      background: var(--bg-card);
-      margin-bottom: 0;
-    }
-
-    .habit-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      font-size: 0.85rem;
-    }
-
-    .habit-table th, .habit-table td {
-      border: 1px solid var(--border-color);
-      padding: 6px;
-      text-align: center;
-    }
-
-    .habit-table th {
-      background: var(--bg-main);
-      color: var(--primary);
-      font-weight: 600;
-    }
-
-    .habit-table td:first-child {
-      text-align: left;
-      font-weight: 500;
-    }
-
-    /* Sticker Board */
+    /* ================= STICKERS ================= */
+    .sticker-cats { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
     .sticker-toolbar {
-      display: flex;
-      gap: 8px;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(42px, 1fr)); gap: 6px;
+      max-height: 140px; overflow-y: auto; padding: 6px;
+      background: var(--bg-main); border: 1.5px solid var(--border-color); border-radius: 12px;
       margin-bottom: 10px;
-      flex-wrap: wrap;
     }
-
     .sticker-btn {
-      background: var(--bg-main);
-      border: 1.5px solid var(--border-color);
-      border-radius: 10px;
-      padding: 6px 8px;
-      cursor: pointer;
-      font-size: 1.1rem;
+      background: var(--bg-card); border: 1.5px solid var(--border-color);
+      border-radius: 10px; padding: 6px 0; cursor: pointer; font-size: 1.25rem; line-height: 1.2;
     }
-
+    .sticker-btn:hover { transform: scale(1.15); border-color: var(--primary); }
+    .sticker-btn:active { transform: scale(.92); }
+    .sticker-extras { display: flex; gap: 8px; margin-bottom: 10px; }
+    .sticker-extras input { margin-bottom: 0; }
+    .sticker-actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
+    .sticker-actions .spacer { flex: 1; }
     .sticker-canvas {
-      min-height: 90px;
+      --sticker-size: 1.9rem;
+      min-height: 110px;
       background: var(--bg-main);
       border: 1.5px dashed var(--border-color);
-      border-radius: 12px;
-      padding: 10px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+      border-radius: 12px; padding: 10px;
+      display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start;
     }
-
+    .sticker-canvas:empty::before {
+      content: "Tap a sticker above to decorate your board ✨";
+      color: var(--text-muted); font-size: .82rem; font-style: italic; margin: auto;
+    }
     .placed-sticker {
-      font-size: 1.5rem;
-      cursor: grab;
-      user-select: none;
+      font-size: var(--sticker-size); line-height: 1.1;
+      background: none; border: none; cursor: pointer; padding: 2px 4px; border-radius: 10px;
+      animation: stickerIn .3s cubic-bezier(.3,1.6,.5,1);
     }
+    .placed-sticker:hover { background: color-mix(in srgb, var(--danger) 16%, transparent); transform: scale(.92) rotate(-6deg); }
+    .placed-sticker.leaving { animation: stickerOut .18s ease forwards; }
+    @keyframes stickerIn { from { transform: scale(0) rotate(-30deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
+    @keyframes stickerOut { to { transform: scale(0); opacity: 0; } }
 
-    /* Pomodoro Timer Styling */
+    /* ================= POMODORO ================= */
     .pomodoro-display {
-      text-align: center;
-      background: var(--bg-main);
-      border: 2px solid var(--border-color);
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 16px;
+      text-align: center; background: var(--bg-main);
+      border: 2px solid var(--border-color); border-radius: 20px;
+      padding: 22px 16px; margin-bottom: 16px;
     }
-
-    .timer-modes {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-    }
-
+    .timer-modes { display: flex; justify-content: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
     .mode-btn {
-      background: var(--bg-card);
-      border: 1.5px solid var(--border-color);
-      padding: 7px 14px;
-      border-radius: 50px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.8rem;
-      color: var(--text-main);
+      background: var(--bg-card); border: 1.5px solid var(--border-color);
+      padding: 7px 14px; border-radius: 50px; cursor: pointer;
+      font-weight: 600; font-size: 0.8rem; color: var(--text-main);
     }
-
-    .mode-btn.active {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
-    }
-
+    .mode-btn:hover { border-color: var(--primary); }
+    .mode-btn.active { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
+    .timer-label { font-size: .85rem; color: var(--text-muted); font-weight: 500; }
     .timer-clock {
-      font-size: 3.8rem;
-      font-weight: 700;
-      font-family: 'Playfair Display', serif;
-      color: var(--primary);
-      letter-spacing: 2px;
-      margin: 10px 0;
+      font-size: clamp(3rem, 12vw, 4.2rem); font-weight: 700;
+      font-family: 'Playfair Display', serif; color: var(--heading);
+      letter-spacing: 2px; margin: 6px 0; font-variant-numeric: tabular-nums;
     }
-
-    .timer-controls {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .technique-card {
-      background: var(--bg-main);
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 12px;
-    }
-
-    .technique-card h4 {
-      color: var(--primary);
-      font-size: 0.95rem;
-      margin-bottom: 4px;
-    }
-
-    .technique-card p {
-      font-size: 0.83rem;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
+    .timer-clock.running { animation: breathe 2.4s ease-in-out infinite; }
+    @keyframes breathe { 50% { opacity: .78; } }
+    .timer-controls { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .technique-card { background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 14px; padding: 14px; margin-bottom: 12px; }
+    .technique-card h4 { color: var(--heading); font-size: 0.95rem; margin-bottom: 4px; }
+    .technique-card p { font-size: 0.83rem; color: var(--text-muted); margin-bottom: 10px; }
 
     .sound-btn {
-      background: var(--bg-main);
-      border: 1px solid var(--border-color);
-      padding: 8px 14px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-main);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-right: 8px;
-      margin-bottom: 8px;
+      background: var(--bg-main); border: 1.5px solid var(--border-color);
+      padding: 9px 14px; border-radius: 12px; cursor: pointer;
+      font-size: 0.85rem; font-weight: 600; color: var(--text-main);
+      display: inline-flex; align-items: center; gap: 6px;
+      margin: 0 8px 8px 0;
     }
+    .sound-btn:hover { border-color: var(--primary); transform: translateY(-1px); }
+    .sound-btn.playing { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
+    .sound-btn.playing .eq { display: inline-block; }
+    .eq { display: none; width: 14px; height: 12px; background:
+      linear-gradient(currentColor,currentColor) 0 100%/3px 40% no-repeat,
+      linear-gradient(currentColor,currentColor) 5px 100%/3px 80% no-repeat,
+      linear-gradient(currentColor,currentColor) 10px 100%/3px 55% no-repeat;
+      animation: eq .9s ease-in-out infinite alternate; }
+    @keyframes eq { to { transform: scaleY(.6); } }
+    .volume-row { display: flex; align-items: center; gap: 10px; margin-top: 6px; font-size: .85rem; color: var(--text-muted); }
 
-    .sound-btn.playing {
-      background: var(--primary);
-      color: white;
-    }
-
-    /* Crossword Game */
-    .crossword-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 45px);
-      gap: 6px;
-      justify-content: center;
-      margin: 16px 0;
-    }
-
+    /* ================= CROSSWORD & GARDEN ================= */
+    .crossword-grid { display: flex; gap: 6px; justify-content: center; margin: 16px 0; flex-wrap: wrap; }
     .cw-cell {
-      width: 45px;
-      height: 45px;
-      text-align: center;
-      font-size: 1.2rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      background: var(--bg-main);
-      border: 2px solid var(--border-color);
-      border-radius: 8px;
-      color: var(--text-main);
+      width: 46px; height: 46px; padding: 0; margin: 0;
+      text-align: center; font-size: 1.25rem; font-weight: 700; text-transform: uppercase;
+      background: var(--bg-main); border: 2px solid var(--border-color);
+      border-radius: 10px; color: var(--text-main);
     }
+    .cw-cell.ok { border-color: var(--success); background: color-mix(in srgb, var(--success) 22%, var(--bg-main)); }
+    .cw-cell.bad { border-color: var(--danger); animation: shake .35s; }
+    @keyframes shake { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+    .cw-clue { font-weight: 500; font-size: .92rem; text-align: center; }
+    .cw-actions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
 
-    .status-note {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-top: 6px;
-      font-style: italic;
+    .garden-arena { text-align: center; }
+    #plantDisplay { font-size: 4.5rem; margin: 12px 0; display: inline-block; transition: transform .25s; }
+    #plantDisplay.bounce { animation: bounce .5s; }
+    @keyframes bounce { 40% { transform: scale(1.25) translateY(-8px); } }
+
+    /* ================= TOAST ================= */
+    .toast-wrap {
+      position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom)); transform: translateX(-50%);
+      display: flex; flex-direction: column; gap: 8px; align-items: center; z-index: 100; pointer-events: none;
+      width: min(92vw, 420px);
+    }
+    .toast {
+      background: var(--bg-card); color: var(--text-main);
+      border: 2px solid var(--primary); border-radius: 14px;
+      padding: 11px 18px; font-size: .88rem; font-weight: 500;
+      box-shadow: var(--shadow); text-align: center;
+      animation: toastIn .3s ease, toastOut .3s ease 2.9s forwards;
+    }
+    @keyframes toastIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes toastOut { to { opacity: 0; transform: translateY(8px); } }
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width: 760px) {
+      .container { padding: 14px 12px; }
+      header { padding: 14px 16px; border-radius: 20px; }
+      .card { padding: 16px; border-radius: 18px; }
+      .tabs-nav { overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
+      .tabs-nav::-webkit-scrollbar { display: none; }
+      .tab-btn { flex: 0 0 auto; padding: 10px 14px; font-size: .8rem; }
+      .header-controls { width: 100%; }
+      .theme-select { flex: 1; min-width: 0; }
+      .time-label { min-width: 74px; font-size: .72rem; }
+      .glass { width: 38px; height: 46px; }
+    }
+    @media (max-width: 420px) {
+      .personalize-box input { width: 120px; }
+      .cw-cell { width: 40px; height: 40px; }
+      .mood-btn { font-size: 1.2rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <!-- Header with Personalization & Theme Controls -->
+    <!-- ================= HEADER ================= -->
     <header>
       <div class="brand">
         <h1>✨ Flow Space 🌸</h1>
         <div class="personalize-box">
-          <span>Hello,</span>
-          <input type="text" id="userNameInput" placeholder="Your Name ✨" />
+          <label for="userNameInput">Hello,</label>
+          <input type="text" id="userNameInput" placeholder="Your Name ✨" maxlength="30" autocomplete="given-name" />
         </div>
       </div>
       <div class="header-controls">
-        <select class="theme-select" id="colorThemeSelect">
-          <option value="lavender">🎨 Lavender Dreams (Light)</option>
-          <option value="matcha">🍵 Matcha Mint (Light)</option>
-          <option value="rose">🌹 Rose Quartz (Light)</option>
-          <option value="peach">🍑 Sunset Peach (Light)</option>
-          <option value="ultramarine">🌌 Ultramarine Night (Dark)</option>
-          <option value="obsidian">✨ Obsidian Gold (Dark)</option>
-          <option value="emerald">🌲 Midnight Emerald (Dark)</option>
-          <option value="amethyst">🔮 Deep Amethyst (Dark)</option>
+        <select class="theme-select" id="colorThemeSelect" aria-label="Choose a theme">
+          <optgroup label="☀️ Light Themes">
+            <option value="lavender">🎨 Lavender Dreams</option>
+            <option value="matcha">🍵 Matcha Mint</option>
+            <option value="rose">🌹 Rose Quartz</option>
+            <option value="peach">🍑 Sunset Peach</option>
+          </optgroup>
+          <optgroup label="🌙 Dark Themes">
+            <option value="ultramarine">🌌 Ultramarine Night</option>
+            <option value="obsidian">✨ Obsidian Gold</option>
+            <option value="emerald">🌲 Midnight Emerald</option>
+            <option value="amethyst">🔮 Deep Amethyst</option>
+          </optgroup>
         </select>
-        <button class="theme-btn" id="themeToggleBtn">
-          🌙 Dark Mode
-        </button>
+        <button class="theme-btn" id="themeToggleBtn" type="button">🌙 Dark Mode</button>
       </div>
     </header>
 
-    <!-- Motivational Quote Banner -->
-    <div class="quote-banner" id="quoteBanner">
+    <div class="quote-banner" id="quoteBanner" title="Click for a new quote">
       ✨ "Small daily progress adds up to huge results. You've got this!" 🌸
     </div>
 
-    <!-- Navigation Tabs -->
-    <div class="tabs-nav">
-      <button class="tab-btn active" data-tab="studyTab">📚 Study Dashboard</button>
-      <button class="tab-btn" data-tab="dayTab">🌷 Day Planner</button>
-      <button class="tab-btn" data-tab="weekTab">🗓️ Week & Habits</button>
-      <button class="tab-btn" data-tab="pomodoroTab">⏱️ Focus & Timer</button>
-      <button class="tab-btn" data-tab="gameTab">🎮 Crossword & Zen</button>
+    <!-- ================= TABS ================= -->
+    <div class="tabs-wrap">
+      <div class="tabs-nav" role="tablist">
+        <button class="tab-btn active" data-tab="studyTab" role="tab" type="button">📚 Study Dashboard</button>
+        <button class="tab-btn" data-tab="dayTab" role="tab" type="button">🌷 Day Planner</button>
+        <button class="tab-btn" data-tab="weekTab" role="tab" type="button">🗓️ Week &amp; Habits</button>
+        <button class="tab-btn" data-tab="pomodoroTab" role="tab" type="button">⏱️ Focus &amp; Timer</button>
+        <button class="tab-btn" data-tab="gameTab" role="tab" type="button">🎮 Crossword &amp; Zen</button>
+      </div>
     </div>
 
     <!-- ================= TAB 1: STUDY DASHBOARD ================= -->
-    <div id="studyTab" class="tab-pane active">
+    <div id="studyTab" class="tab-pane active" role="tabpanel">
       <div class="grid-2">
         <div>
-          <!-- Top Priority Quick To-Do Box -->
           <div class="card" style="border-color: var(--primary);">
             <h2>🔥 Top Priority Focus</h2>
-            <form id="topPriorityForm" style="display: flex; gap: 8px; margin-bottom: 12px;">
-              <input type="text" id="topPriorityInput" placeholder="Add urgent task..." style="margin-bottom:0;" required />
-              <button type="submit" class="btn-primary" style="width: auto; padding: 0 16px;">Set</button>
+            <form id="topPriorityForm" class="row" style="margin-bottom: 12px;">
+              <input type="text" id="topPriorityInput" placeholder="Add urgent task..." style="margin-bottom:0;" maxlength="120" required />
+              <button type="submit" class="btn-primary auto" style="padding: 0 18px;">Set</button>
             </form>
             <div id="topPriorityList"></div>
           </div>
@@ -771,11 +649,11 @@
           <div class="card">
             <h2>📚 Add Study Task</h2>
             <form id="taskForm">
-              <input type="text" id="taskTitleInput" placeholder="What are you studying? (e.g. Organic Chemistry Ch. 3)" required />
-              <input type="text" id="taskSubjectInput" placeholder="Subject / Tag (e.g. Chemistry, Math)" />
-              <div style="display: flex; gap: 10px;">
-                <input type="date" id="taskDateInput" />
-                <select id="taskPriorityInput">
+              <input type="text" id="taskTitleInput" placeholder="What are you studying? (e.g. Organic Chemistry Ch. 3)" maxlength="150" required />
+              <input type="text" id="taskSubjectInput" placeholder="Subject / Tag (e.g. Chemistry, Math)" maxlength="30" />
+              <div class="row">
+                <input type="date" id="taskDateInput" aria-label="Due date" />
+                <select id="taskPriorityInput" aria-label="Priority">
                   <option value="High">High 🔥</option>
                   <option value="Medium" selected>Medium 🌿</option>
                   <option value="Low">Low ☁️</option>
@@ -789,21 +667,25 @@
               <span id="progressText">0 / 0 completed</span>
               <span id="progressPercent">0%</span>
             </div>
-            <div class="progress-container">
+            <div class="progress-container" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBar">
               <div class="progress-fill" id="progressFill"></div>
             </div>
           </div>
         </div>
 
         <div>
-          <!-- Interactive Mini Calendar Widget -->
           <div class="card">
             <h2>📅 Interactive Calendar</h2>
-            <div class="mini-calendar" id="miniCalendarWidget">
-              <div class="cal-header" id="calMonthYear">November 2026</div>
+            <div class="mini-calendar">
+              <div class="cal-head">
+                <button type="button" class="icon-btn" id="calPrev" aria-label="Previous month">‹</button>
+                <div class="cal-title" id="calMonthYear"></div>
+                <button type="button" class="icon-btn" id="calNext" aria-label="Next month">›</button>
+              </div>
               <div class="cal-grid" id="calGridDays"></div>
+              <div class="cal-foot"><button type="button" class="chip" id="calToday">Jump to today</button></div>
             </div>
-            <p class="status-note" style="text-align: center; margin-top: 8px;">Click any date to instantly plan that day!</p>
+            <p class="status-note" style="text-align: center; margin-top: 8px;">Click any date to instantly plan that day! Dots mark days with tasks or events.</p>
           </div>
 
           <div class="card">
@@ -812,10 +694,10 @@
           </div>
 
           <div class="card">
-            <h2>⏳ Exam & Future Deadline Countdown</h2>
+            <h2>⏳ Exam &amp; Future Deadline Countdown</h2>
             <form id="examForm" style="margin-bottom: 12px;">
-              <input type="text" id="examNameInput" placeholder="Event / Exam Name (e.g. Finals)" required />
-              <input type="date" id="examDateInput" required />
+              <input type="text" id="examNameInput" placeholder="Event / Exam Name (e.g. Finals)" maxlength="80" required />
+              <input type="date" id="examDateInput" aria-label="Event date" required />
               <button type="submit" class="btn-primary" style="background: linear-gradient(135deg, var(--secondary), var(--accent));">+ Add Event Countdown</button>
             </form>
             <div id="examListContainer"></div>
@@ -825,59 +707,61 @@
     </div>
 
     <!-- ================= TAB 2: DAY PLANNER ================= -->
-    <div id="dayTab" class="tab-pane">
+    <div id="dayTab" class="tab-pane" role="tabpanel">
       <div class="grid-2">
         <div class="card">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-            <h2 style="margin-bottom: 0;">⏰ Schedule</h2>
-            <input type="date" id="plannerDatePicker" style="width: 170px; margin-bottom: 0; padding: 6px 10px;" />
+          <div class="planner-head">
+            <h2>⏰ Schedule</h2>
+            <input type="date" id="plannerDatePicker" aria-label="Planner date" />
           </div>
+          <div class="date-label" id="plannerDateLabel"></div>
           <div id="scheduleContainer"></div>
-          <p class="status-note">✨ Auto-saves per selected date!</p>
+          <p class="status-note">✨ Everything on this page auto-saves for the selected date!</p>
         </div>
 
         <div>
           <div class="card">
             <h2>👑 Top 3 Priorities Today</h2>
-            <input type="text" id="prio1" placeholder="1. Most important study goal..." />
-            <input type="text" id="prio2" placeholder="2. Second priority..." />
-            <input type="text" id="prio3" placeholder="3. Third priority..." />
+            <input type="text" data-field="prio" data-i="0" placeholder="1. Most important study goal..." maxlength="120" />
+            <input type="text" data-field="prio" data-i="1" placeholder="2. Second priority..." maxlength="120" />
+            <input type="text" data-field="prio" data-i="2" placeholder="3. Third priority..." maxlength="120" />
           </div>
 
           <div class="card">
-            <h2>🌸 Mood & Hydration</h2>
+            <h2>🌸 Mood &amp; Hydration</h2>
             <div class="mood-grid" id="moodGrid">
-              <div class="mood-btn" data-mood="🥰 Radiant">🥰<span>Radiant</span></div>
-              <div class="mood-btn" data-mood="😊 Happy">😊<span>Happy</span></div>
-              <div class="mood-btn" data-mood="🌿 Calm">🌿<span>Calm</span></div>
-              <div class="mood-btn" data-mood="😴 Tired">😴<span>Tired</span></div>
-              <div class="mood-btn" data-mood="🥺 Stressed">🥺<span>Stressed</span></div>
+              <button type="button" class="mood-btn" data-mood="🥰 Radiant">🥰<span>Radiant</span></button>
+              <button type="button" class="mood-btn" data-mood="😊 Happy">😊<span>Happy</span></button>
+              <button type="button" class="mood-btn" data-mood="🌿 Calm">🌿<span>Calm</span></button>
+              <button type="button" class="mood-btn" data-mood="😴 Tired">😴<span>Tired</span></button>
+              <button type="button" class="mood-btn" data-mood="🥺 Stressed">🥺<span>Stressed</span></button>
             </div>
             <p class="status-note" id="moodStatusText" style="margin-top: 10px;">Current mood: Not logged yet</p>
 
             <div class="water-glasses" id="waterGlassesContainer" style="margin-top: 16px;"></div>
-            <p class="status-note" id="waterStatusText">0 / 8 glasses completed today</p>
+            <p class="status-note" id="waterStatusText">0 / 8 glasses completed</p>
           </div>
 
           <div class="card">
-            <h2>✨ Gratitude & Customizable Stickers</h2>
-            <input type="text" id="grat1" placeholder="🌸 1. I am grateful for..." />
-            <input type="text" id="grat2" placeholder="🌸 2. I am grateful for..." />
-            
-            <label style="font-size: 0.85rem; font-weight: 600; color: var(--primary); display: block; margin-top: 10px; margin-bottom: 6px;">Sticker Board (Click to add, click placed sticker to delete):</label>
-            <div class="sticker-toolbar">
-              <button class="sticker-btn" onclick="addSticker('🌸')">🌸</button>
-              <button class="sticker-btn" onclick="addSticker('🍓')">🍓</button>
-              <button class="sticker-btn" onclick="addSticker('⭐')">⭐</button>
-              <button class="sticker-btn" onclick="addSticker('☕')">☕</button>
-              <button class="sticker-btn" onclick="addSticker('🦋')">🦋</button>
-              <button class="sticker-btn" onclick="addSticker('🧸')">🧸</button>
-              <button class="sticker-btn" onclick="addSticker('📚')">📚</button>
-              <button class="sticker-btn" onclick="addSticker('💻')">💻</button>
-              <button class="sticker-btn" onclick="addSticker('🎧')">🎧</button>
-              <button class="sticker-btn" onclick="addSticker('✨')">✨</button>
-              <button class="sticker-btn" onclick="addSticker('🌿')">🌿</button>
-              <button class="sticker-btn" onclick="addSticker('🤍')">🤍</button>
+            <h2>✨ Gratitude &amp; Sticker Board</h2>
+            <input type="text" data-field="grat" data-i="0" placeholder="🌸 1. I am grateful for..." maxlength="150" />
+            <input type="text" data-field="grat" data-i="1" placeholder="🌸 2. I am grateful for..." maxlength="150" />
+
+            <label class="card-sub" style="display:block; font-weight:600; color: var(--heading); margin-top: 6px;">Sticker Board — tap to add, tap a placed sticker to remove it</label>
+            <div class="sticker-cats" id="stickerCats"></div>
+            <div class="sticker-toolbar" id="stickerToolbar"></div>
+            <div class="sticker-extras">
+              <input type="text" id="customSticker" placeholder="Paste any emoji ✨" maxlength="8" aria-label="Custom emoji sticker" />
+              <button type="button" class="btn-small" id="addCustomSticker">Add</button>
+            </div>
+            <div class="sticker-actions">
+              <span class="card-sub" style="margin:0;">Size:</span>
+              <button type="button" class="chip" data-size="1.4rem">S</button>
+              <button type="button" class="chip" data-size="1.9rem">M</button>
+              <button type="button" class="chip" data-size="2.7rem">L</button>
+              <span class="spacer"></span>
+              <button type="button" class="btn-small" id="undoSticker">↩ Undo</button>
+              <button type="button" class="btn-small danger" id="clearStickers">Clear all</button>
             </div>
             <div class="sticker-canvas" id="stickerCanvas"></div>
           </div>
@@ -885,28 +769,24 @@
       </div>
     </div>
 
-    <!-- ================= TAB 3: WEEK PLANNER & HABITS ================= -->
-    <div id="weekTab" class="tab-pane">
+    <!-- ================= TAB 3: WEEK & HABITS ================= -->
+    <div id="weekTab" class="tab-pane" role="tabpanel">
       <div class="card">
-        <h2>🗓️ Weekly Overview & Goals</h2>
-        <input type="text" id="weeklyFocus" placeholder="✨ Main Focus / Mantra of the Week..." style="margin-bottom: 16px;" />
+        <h2>🗓️ Weekly Overview &amp; Goals</h2>
+        <input type="text" id="weeklyFocus" placeholder="✨ Main Focus / Mantra of the Week..." maxlength="150" style="margin-bottom: 16px;" />
         <div class="week-grid" id="weekGridContainer"></div>
       </div>
 
       <div class="card">
-        <h2>🌿 Weekly Study & Self-Care Habit Tracker</h2>
+        <div class="card-head">
+          <h2>🌿 Weekly Study &amp; Self-Care Habit Tracker</h2>
+          <button type="button" class="btn-small" id="resetHabits">Reset week</button>
+        </div>
         <div style="overflow-x: auto;">
           <table class="habit-table" id="habitTable">
             <thead>
               <tr>
-                <th>Habit</th>
-                <th>Mon</th>
-                <th>Tue</th>
-                <th>Wed</th>
-                <th>Thu</th>
-                <th>Fri</th>
-                <th>Sat</th>
-                <th>Sun</th>
+                <th>Habit</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
               </tr>
             </thead>
             <tbody id="habitTableBody"></tbody>
@@ -915,623 +795,1054 @@
       </div>
     </div>
 
-    <!-- ================= TAB 4: POMODORO & FOCUS TECHNIQUES ================= -->
-    <div id="pomodoroTab" class="tab-pane">
+    <!-- ================= TAB 4: FOCUS & TIMER ================= -->
+    <div id="pomodoroTab" class="tab-pane" role="tabpanel">
       <div class="grid-2">
-        <div class="card">
-          <h2>⏱️ Aesthetic Pomodoro Timer</h2>
-          <div class="pomodoro-display">
-            <div class="timer-modes">
-              <button class="mode-btn active" data-time="1500">Pomodoro (25m)</button>
-              <button class="mode-btn" data-time="3120">Flowtime (52m)</button>
-              <button class="mode-btn" data-time="300">Short Break (5m)</button>
-              <button class="mode-btn" data-time="900">Long Break (15m)</button>
+        <div>
+          <div class="card">
+            <h2>⏱️ Aesthetic Pomodoro Timer</h2>
+            <div class="pomodoro-display">
+              <div class="timer-modes">
+                <button type="button" class="mode-btn active" data-time="1500" data-focus="1" data-label="Pomodoro">Pomodoro (25m)</button>
+                <button type="button" class="mode-btn" data-time="3120" data-focus="1" data-label="Flowtime">Flowtime (52m)</button>
+                <button type="button" class="mode-btn" data-time="300" data-focus="0" data-label="Short Break">Short Break (5m)</button>
+                <button type="button" class="mode-btn" data-time="900" data-focus="0" data-label="Long Break">Long Break (15m)</button>
+              </div>
+              <div class="timer-label" id="timerLabel">Pomodoro</div>
+              <div class="timer-clock" id="timerClock">25:00</div>
+              <div class="progress-container" style="margin: 4px auto 16px; max-width: 320px;"><div class="progress-fill" id="timerProgress"></div></div>
+              <div class="timer-controls">
+                <button type="button" class="btn-primary auto" id="timerStartBtn" style="padding: 10px 24px;">Start</button>
+                <button type="button" class="btn-primary auto ghost" id="timerPauseBtn" style="padding: 10px 24px;">Pause</button>
+                <button type="button" class="btn-primary auto" id="timerResetBtn" style="padding: 10px 24px; background: var(--text-muted); color: var(--bg-main);">Reset</button>
+              </div>
+              <p class="status-note" id="pomodoroCountText" style="margin-top: 14px;">Completed focus sessions today: 0 🍅</p>
             </div>
-            <div class="timer-clock" id="timerClock">25:00</div>
-            <div class="timer-controls">
-              <button class="btn-primary" id="timerStartBtn" style="width: auto; padding: 10px 24px;">Start</button>
-              <button class="btn-primary" id="timerPauseBtn" style="width: auto; padding: 10px 24px; background: var(--bg-main); color: var(--text-main); border: 1.5px solid var(--border-color);">Pause</button>
-              <button class="btn-primary" id="timerResetBtn" style="width: auto; padding: 10px 24px; background: var(--text-muted);">Reset</button>
-            </div>
-            <p class="status-note" id="pomodoroCountText" style="margin-top: 14px;">Completed focus sessions today: 0 🍅</p>
           </div>
 
-          <div class="card" style="margin-bottom: 0;">
+          <div class="card">
             <h2>🎵 Ambient Focus Sounds</h2>
-            <button class="sound-btn" id="soundRainBtn">🌧️ Soft Rain</button>
-            <button class="sound-btn" id="soundCafeBtn">☕ Lo-Fi Cafe</button>
-            <button class="sound-btn" id="soundForestBtn">🌲 Forest Breeze</button>
+            <button type="button" class="sound-btn" id="soundRainBtn" data-sound="rain" aria-pressed="false">🌧️ Soft Rain <i class="eq"></i></button>
+            <button type="button" class="sound-btn" id="soundCafeBtn" data-sound="cafe" aria-pressed="false">☕ Lo-Fi Cafe <i class="eq"></i></button>
+            <button type="button" class="sound-btn" id="soundForestBtn" data-sound="forest" aria-pressed="false">🌲 Forest Breeze <i class="eq"></i></button>
+            <div class="volume-row">
+              <span>🔈</span>
+              <input type="range" id="volumeSlider" min="0" max="100" value="60" aria-label="Ambient volume" />
+              <span>🔊</span>
+              <button type="button" class="btn-small" id="stopSoundsBtn">Stop all</button>
+            </div>
+            <p class="status-note">Sounds are generated live in your browser — no downloads. Mix as many as you like.</p>
           </div>
         </div>
 
         <div>
           <div class="card">
             <h2>🧠 Study Techniques with Built-In Timers</h2>
-            
+
             <div class="technique-card">
               <h4>1. Pomodoro Technique 🍅</h4>
-              <p>25 mins focus, 5 mins rest.</p>
-              <button class="btn-primary" onclick="launchTechniqueTimer(1500, 'Pomodoro Session')">Start 25m Timer</button>
+              <p>25 mins of deep focus, then a 5 min rest. Repeat and take a long break after four rounds.</p>
+              <button type="button" class="btn-primary" data-technique="1500" data-focus="1" data-label="Pomodoro Session">Start 25m Timer</button>
             </div>
 
             <div class="technique-card">
               <h4>2. Feynman Technique 💡</h4>
-              <p>Explain concepts out loud in simple terms.</p>
-              <button class="btn-primary" onclick="launchTechniqueTimer(900, 'Feynman Practice')">Start 15m Timer</button>
+              <p>Explain a concept out loud in simple words, as if teaching a friend. Gaps in your explanation show what to review.</p>
+              <button type="button" class="btn-primary" data-technique="900" data-focus="1" data-label="Feynman Practice">Start 15m Timer</button>
             </div>
 
             <div class="technique-card">
               <h4>3. The Blurting Method 🧠</h4>
-              <p>Write everything from memory on a blank page.</p>
-              <button class="btn-primary" onclick="launchTechniqueTimer(600, 'Blurting Session')">Start 10m Timer</button>
+              <p>Write everything you remember on a blank page, then check your notes and fill in what you missed.</p>
+              <button type="button" class="btn-primary" data-technique="600" data-focus="1" data-label="Blurting Session">Start 10m Timer</button>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ================= TAB 5: CROSSWORD & ZEN GARDEN ================= -->
-    <div id="gameTab" class="tab-pane">
+    <!-- ================= TAB 5: CROSSWORD & ZEN ================= -->
+    <div id="gameTab" class="tab-pane" role="tabpanel">
       <div class="grid-2">
-        <!-- Crossword Game -->
         <div class="card">
-          <h2>🧩 Quick Study Crossword</h2>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">Fill in study terms! Clue: 25-minute study intervals (POMO)</p>
-          <div class="crossword-grid" id="crosswordGrid">
-            <input type="text" maxlength="1" class="cw-cell" data-ans="P" />
-            <input type="text" maxlength="1" class="cw-cell" data-ans="O" />
-            <input type="text" maxlength="1" class="cw-cell" data-ans="M" />
-            <input type="text" maxlength="1" class="cw-cell" data-ans="O" />
+          <h2>🧩 Quick Study Crossword <span class="badge" id="cwCounter">1 / 8</span></h2>
+          <p class="cw-clue" id="cwClue"></p>
+          <div class="crossword-grid" id="crosswordGrid"></div>
+          <div class="cw-actions">
+            <button type="button" class="btn-primary auto" id="checkCrossword" style="padding: 10px 22px;">Check Answer ✨</button>
+            <button type="button" class="btn-primary auto ghost" id="nextCrossword" style="padding: 10px 22px;">Next Puzzle →</button>
           </div>
-          <button class="btn-primary" id="checkCrossword" style="max-width: 180px; margin: 0 auto;">Check Answer ✨</button>
           <p class="status-note" id="cwStatus" style="margin-top: 10px; text-align: center;"></p>
         </div>
 
-        <!-- Virtual Zen Garden -->
         <div class="card">
           <h2>🌸 Virtual Zen Garden Break</h2>
-          <div class="garden-arena" style="text-align: center;">
-            <div style="font-weight: 600; font-size: 0.9rem; margin-bottom: 10px;">Water Drops: <span id="waterDropCount">0</span> 💧</div>
-            <div style="font-size: 4.5rem; margin: 15px 0;" id="plantDisplay">🌱</div>
-            <p id="plantMessage" style="font-size: 0.88rem; color: var(--primary); margin-bottom: 14px;">Your seed is resting peacefully.</p>
-            <button class="btn-primary" id="waterPlantBtn" style="max-width: 200px; margin: 0 auto;">💦 Water Plant</button>
+          <div class="garden-arena">
+            <div style="font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;">Water Drops: <span id="waterDropCount">0</span> 💧</div>
+            <div id="plantDisplay" aria-live="polite">🌱</div>
+            <p id="plantMessage" style="font-size: 0.88rem; color: var(--heading); margin-bottom: 14px;">Your seed is resting peacefully.</p>
+            <div class="cw-actions">
+              <button type="button" class="btn-primary auto" id="waterPlantBtn" style="padding: 10px 24px;">💦 Water Plant</button>
+              <button type="button" class="btn-primary auto ghost" id="newSeedBtn" style="padding: 10px 24px;" hidden>🌱 Plant New Seed</button>
+            </div>
+            <p class="status-note" id="gardenStats">Gardens grown: 0</p>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
+  <div class="toast-wrap" id="toastWrap" aria-live="polite"></div>
 
-      // 1. Personalization & Quotes
-      const userNameInput = document.getElementById('userNameInput');
-      if (userNameInput) {
-        userNameInput.value = localStorage.getItem('fs_username') || '';
-        userNameInput.addEventListener('input', (e) => localStorage.setItem('fs_username', e.target.value));
+  <script>
+    (function () {
+      'use strict';
+
+      /* ================= HELPERS ================= */
+      var $ = function (s, r) { return (r || document).querySelector(s); };
+      var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+      var store = {
+        get: function (k, d) { try { var v = localStorage.getItem(k); return v === null ? d : v; } catch (e) { return d; } },
+        set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } },
+        remove: function (k) { try { localStorage.removeItem(k); } catch (e) {} },
+        getJSON: function (k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+        setJSON: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+      };
+
+      function esc(s) {
+        return String(s).replace(/[&<>"']/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+      }
+      function pad(n) { return String(n).padStart(2, '0'); }
+      function dateKey(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+      function todayKey() { return dateKey(new Date()); }
+      function parseKey(k) { var p = k.split('-').map(Number); return new Date(p[0], p[1] - 1, p[2]); }
+      function daysUntil(k) { return Math.round((parseKey(k) - parseKey(todayKey())) / 86400000); }
+      function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+      function debounce(fn, ms) { var t; return function () { var a = arguments, c = this; clearTimeout(t); t = setTimeout(function () { fn.apply(c, a); }, ms); }; }
+
+      function toast(msg) {
+        var wrap = $('#toastWrap');
+        var el = document.createElement('div');
+        el.className = 'toast';
+        el.textContent = msg;
+        wrap.appendChild(el);
+        setTimeout(function () { el.remove(); }, 3300);
       }
 
-      const quotes = [
+      /* ================= THEMES ================= */
+      var THEMES = {
+        lavender:    { mode: 'light' },
+        matcha:      { mode: 'light' },
+        rose:        { mode: 'light' },
+        peach:       { mode: 'light' },
+        ultramarine: { mode: 'dark' },
+        obsidian:    { mode: 'dark' },
+        emerald:     { mode: 'dark' },
+        amethyst:    { mode: 'dark' }
+      };
+      var root = document.documentElement;
+      var themeSelect = $('#colorThemeSelect');
+      var themeBtn = $('#themeToggleBtn');
+      var lastLight = store.get('fs_last_light', 'lavender');
+      var lastDark = store.get('fs_last_dark', 'ultramarine');
+      if (!THEMES[lastLight] || THEMES[lastLight].mode !== 'light') lastLight = 'lavender';
+      if (!THEMES[lastDark] || THEMES[lastDark].mode !== 'dark') lastDark = 'ultramarine';
+
+      function applyTheme(key, persist) {
+        if (!THEMES[key]) key = 'lavender';
+        var mode = THEMES[key].mode;
+        root.setAttribute('data-theme', key);
+        themeSelect.value = key;
+        themeBtn.textContent = mode === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+        themeBtn.setAttribute('aria-label', mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+        if (mode === 'light') lastLight = key; else lastDark = key;
+        var bg = getComputedStyle(root).getPropertyValue('--bg-main').trim();
+        var meta = $('meta[name="theme-color"]');
+        if (meta && bg) meta.setAttribute('content', bg);
+        if (persist !== false) {
+          store.set('fs_theme', key);
+          store.set('fs_last_light', lastLight);
+          store.set('fs_last_dark', lastDark);
+        }
+      }
+      themeSelect.addEventListener('change', function () { applyTheme(themeSelect.value); });
+      themeBtn.addEventListener('click', function () {
+        var cur = root.getAttribute('data-theme');
+        var isDark = THEMES[cur] && THEMES[cur].mode === 'dark';
+        applyTheme(isDark ? lastLight : lastDark);
+      });
+      applyTheme(root.getAttribute('data-theme'), false);
+
+      /* ================= PERSONALIZATION & QUOTES ================= */
+      var userNameInput = $('#userNameInput');
+      userNameInput.value = store.get('fs_username', '');
+
+      var quotes = [
         '✨ "Small daily progress adds up to huge results. You\'ve got this!" 🌸',
         '🌿 "Success is the sum of small efforts, repeated day in and day out." ☕',
-        '🌸 "Plant your study seeds today so you can harvest your dreams tomorrow." 🌷'
+        '🌸 "Plant your study seeds today so you can harvest your dreams tomorrow." 🌷',
+        '💫 "You don\'t have to be perfect, you just have to begin." 🤍',
+        '🍓 "Focus on the step in front of you, not the whole staircase." ✨',
+        '🦋 "Rest is part of the process. Breathe, then keep going." 🌿',
+        '📚 "Every expert was once a beginner who refused to quit." 💻',
+        '☕ "Consistency beats intensity. Show up for 25 minutes." 🍅'
       ];
-      document.getElementById('quoteBanner').textContent = quotes[Math.floor(Math.random() * quotes.length)];
-
-      // 2. Themes & Dark Mode Control
-      const htmlEl = document.documentElement;
-      const colorThemeSelect = document.getElementById('colorThemeSelect');
-      const themeToggleBtn = document.getElementById('themeToggleBtn');
-
-      const lightThemes = {
-        lavender: { '--bg-main': '#F2EBF7', '--bg-card': '#FFF0F5', '--primary': '#E8A0BF', '--secondary': '#B7A6E0', '--accent': '#9CC5A1', '--highlight': '#F9D5A7', '--text-main': '#4A3B47', '--border-color': '#E2D1E9' },
-        matcha: { '--bg-main': '#F1F8F2', '--bg-card': '#E3F2E1', '--primary': '#52B788', '--secondary': '#74C69D', '--accent': '#D8F3DC', '--highlight': '#B7E4C7', '--text-main': '#1B4332', '--border-color': '#B7E4C7' },
-        rose: { '--bg-main': '#FFF0F3', '--bg-card': '#FFCCD5', '--primary': '#FF4D6D', '--secondary': '#FF758F', '--accent': '#FFB3C1', '--highlight': '#FFCCD5', '--text-main': '#590D22', '--border-color': '#FFB3C1' },
-        peach: { '--bg-main': '#FFF5EE', '--bg-card': '#FFE5D9', '--primary': '#F4A261', '--secondary': '#E76F51', '--accent': '#2A9D8F', '--highlight': '#E9C46A', '--text-main': '#264653', '--border-color': '#F4A261' }
-      };
-
-      const savedTheme = localStorage.getItem('fs_theme_mode') || 'light';
-      const savedThemeKey = localStorage.getItem('fs_colortheme') || 'lavender';
-
-      if (savedTheme === 'dark') {
-        htmlEl.removeAttribute('data-dark-theme');
-        htmlEl.setAttribute('data-dark-theme', ['ultramarine','obsidian','emerald','amethyst'].includes(savedThemeKey) ? savedThemeKey : 'ultramarine');
-        themeToggleBtn.textContent = '☀️ Light Mode';
-      } else {
-        htmlEl.removeAttribute('data-dark-theme');
-        applyLightTheme(savedThemeKey);
-        themeToggleBtn.textContent = '🌙 Dark Mode';
+      var quoteIdx = Math.floor(Math.random() * quotes.length);
+      function showQuote() {
+        var name = userNameInput.value.trim();
+        $('#quoteBanner').textContent = (name ? 'Hi ' + name + ' 💕  ' : '') + quotes[quoteIdx];
       }
-      if (colorThemeSelect) colorThemeSelect.value = savedThemeKey;
+      $('#quoteBanner').addEventListener('click', function () { quoteIdx = (quoteIdx + 1) % quotes.length; showQuote(); });
+      userNameInput.addEventListener('input', function () { store.set('fs_username', userNameInput.value); showQuote(); });
+      showQuote();
 
-      function applyLightTheme(key) {
-        const t = lightThemes[key] || lightThemes.lavender;
-        for (let prop in t) htmlEl.style.setProperty(prop, t[prop]);
-      }
-
-      if (colorThemeSelect) {
-        colorThemeSelect.addEventListener('change', (e) => {
-          const val = e.target.value;
-          localStorage.setItem('fs_colortheme', val);
-          if (['ultramarine', 'obsidian', 'emerald', 'amethyst'].includes(val)) {
-            htmlEl.setAttribute('data-dark-theme', val);
-            localStorage.setItem('fs_theme_mode', 'dark');
-            themeToggleBtn.textContent = '☀️ Light Mode';
-          } else {
-            htmlEl.removeAttribute('data-dark-theme');
-            localStorage.setItem('fs_theme_mode', 'light');
-            applyLightTheme(val);
-            themeToggleBtn.textContent = '🌙 Dark Mode';
-          }
+      /* ================= TABS ================= */
+      var tabBtns = $$('.tab-btn');
+      var tabPanes = $$('.tab-pane');
+      function showTab(id, save) {
+        var found = false;
+        tabBtns.forEach(function (b) {
+          var on = b.getAttribute('data-tab') === id;
+          if (on) found = true;
+          b.classList.toggle('active', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+          if (on && b.scrollIntoView) { try { b.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' }); } catch (e) {} }
         });
+        if (!found) return;
+        tabPanes.forEach(function (p) { p.classList.toggle('active', p.id === id); });
+        if (save !== false) store.set('fs_tab', id);
       }
+      tabBtns.forEach(function (b) { b.addEventListener('click', function () { showTab(b.getAttribute('data-tab')); }); });
+      showTab(store.get('fs_tab', 'studyTab'), false);
 
-      if (themeToggleBtn) {
-        themeToggleBtn.addEventListener('click', () => {
-          const isDark = htmlEl.hasAttribute('data-dark-theme');
-          if (isDark) {
-            htmlEl.removeAttribute('data-dark-theme');
-            localStorage.setItem('fs_theme_mode', 'light');
-            applyLightTheme('lavender');
-            colorThemeSelect.value = 'lavender';
-            themeToggleBtn.textContent = '🌙 Dark Mode';
-          } else {
-            htmlEl.setAttribute('data-dark-theme', 'ultramarine');
-            localStorage.setItem('fs_theme_mode', 'dark');
-            colorThemeSelect.value = 'ultramarine';
-            themeToggleBtn.textContent = '☀️ Light Mode';
-          }
+      /* ================= DATA: TASKS / EXAMS / PRIORITIES ================= */
+      var tasks = store.getJSON('fs_tasks', []);
+      if (!Array.isArray(tasks)) tasks = [];
+      tasks.forEach(function (t) { if (!t.id) t.id = uid(); });
+      var exams = store.getJSON('fs_exams', []);
+      if (!Array.isArray(exams)) exams = [];
+      var topPriorities = store.getJSON('fs_toppriorities', []);
+      if (!Array.isArray(topPriorities)) topPriorities = [];
+      topPriorities.forEach(function (t) { if (!t.id) t.id = uid(); });
+
+      function saveTasks() { store.setJSON('fs_tasks', tasks); }
+      function saveExams() { store.setJSON('fs_exams', exams); }
+      function saveTop() { store.setJSON('fs_toppriorities', topPriorities); }
+
+      /* ---------- Top priorities ---------- */
+      function renderTop() {
+        var el = $('#topPriorityList');
+        if (!topPriorities.length) { el.innerHTML = '<p class="empty">No top focus items.</p>'; return; }
+        el.innerHTML = topPriorities.map(function (t) {
+          return '<div class="task-item ' + (t.done ? 'done' : '') + '">' +
+            '<div class="task-main"><input type="checkbox" data-act="toggle" data-id="' + t.id + '" ' + (t.done ? 'checked' : '') + ' aria-label="Mark done" />' +
+            '<span class="task-title">⭐ ' + esc(t.text) + '</span></div>' +
+            '<button type="button" class="del-btn" data-act="del" data-id="' + t.id + '" aria-label="Delete">❌</button></div>';
+        }).join('');
+      }
+      $('#topPriorityList').addEventListener('change', function (e) {
+        var cb = e.target.closest('[data-act="toggle"]'); if (!cb) return;
+        var t = topPriorities.filter(function (x) { return x.id === cb.getAttribute('data-id'); })[0];
+        if (t) { t.done = cb.checked; saveTop(); renderTop(); }
+      });
+      $('#topPriorityList').addEventListener('click', function (e) {
+        var b = e.target.closest('[data-act="del"]'); if (!b) return;
+        topPriorities = topPriorities.filter(function (x) { return x.id !== b.getAttribute('data-id'); });
+        saveTop(); renderTop();
+      });
+      $('#topPriorityForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var inp = $('#topPriorityInput');
+        var val = inp.value.trim(); if (!val) return;
+        topPriorities.push({ id: uid(), text: val, done: false });
+        saveTop(); inp.value = ''; renderTop();
+      });
+
+      /* ---------- Study tasks ---------- */
+      function renderTasks() {
+        var el = $('#taskListContainer');
+        var done = tasks.filter(function (t) { return t.done; }).length;
+        var pct = tasks.length ? Math.round(done / tasks.length * 100) : 0;
+        $('#progressFill').style.width = pct + '%';
+        $('#progressText').textContent = done + ' / ' + tasks.length + ' completed';
+        $('#progressPercent').textContent = pct + '%';
+        $('#progressBar').setAttribute('aria-valuenow', pct);
+
+        if (!tasks.length) { el.innerHTML = '<p class="empty">No study tasks yet. 🌸</p>'; return; }
+        var sorted = tasks.slice().sort(function (a, b) {
+          return (a.done ? 1 : 0) - (b.done ? 1 : 0) || (a.date || '9999').localeCompare(b.date || '9999');
         });
+        var today = todayKey();
+        el.innerHTML = sorted.map(function (t) {
+          var overdue = t.date && !t.done && t.date < today;
+          return '<div class="task-item ' + (t.done ? 'done' : '') + '">' +
+            '<div class="task-main"><input type="checkbox" data-act="toggle" data-id="' + t.id + '" ' + (t.done ? 'checked' : '') + ' aria-label="Mark done" />' +
+            '<div><div class="task-title">' + esc(t.title) + '</div><div class="task-meta">' +
+            (t.subject ? '<span class="badge">' + esc(t.subject) + '</span>' : '') +
+            '<span class="badge ' + esc(t.priority) + '">' + esc(t.priority) + '</span>' +
+            (t.date ? '<span' + (overdue ? ' style="color:var(--danger);font-weight:600"' : '') + '>📅 ' + esc(t.date) + (overdue ? ' · overdue' : '') + '</span>' : '') +
+            '</div></div></div>' +
+            '<button type="button" class="del-btn" data-act="del" data-id="' + t.id + '" aria-label="Delete task">🗑️</button></div>';
+        }).join('');
       }
+      $('#taskListContainer').addEventListener('change', function (e) {
+        var cb = e.target.closest('[data-act="toggle"]'); if (!cb) return;
+        var t = tasks.filter(function (x) { return x.id === cb.getAttribute('data-id'); })[0];
+        if (t) { t.done = cb.checked; saveTasks(); renderTasks(); renderCalendar(); }
+      });
+      $('#taskListContainer').addEventListener('click', function (e) {
+        var b = e.target.closest('[data-act="del"]'); if (!b) return;
+        tasks = tasks.filter(function (x) { return x.id !== b.getAttribute('data-id'); });
+        saveTasks(); renderTasks(); renderCalendar();
+      });
+      $('#taskForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var title = $('#taskTitleInput').value.trim(); if (!title) return;
+        tasks.unshift({
+          id: uid(), title: title,
+          subject: $('#taskSubjectInput').value.trim(),
+          date: $('#taskDateInput').value,
+          priority: $('#taskPriorityInput').value,
+          done: false
+        });
+        saveTasks(); e.target.reset();
+        $('#taskPriorityInput').value = 'Medium';
+        renderTasks(); renderCalendar();
+      });
 
-      // 3. Interactive Mini Calendar
+      /* ---------- Exams ---------- */
+      function renderExams() {
+        var el = $('#examListContainer');
+        if (!exams.length) { el.innerHTML = '<p class="empty">No countdowns yet. Add an exam or deadline above ⏳</p>'; return; }
+        var sorted = exams.slice().sort(function (a, b) { return a.date.localeCompare(b.date); });
+        el.innerHTML = sorted.map(function (x) {
+          var d = daysUntil(x.date);
+          var txt, cls = '';
+          if (d < 0) { txt = 'Passed'; cls = 'past'; }
+          else if (d === 0) { txt = 'Today! 🔥'; cls = 'soon'; }
+          else if (d === 1) { txt = '1 day left'; cls = 'soon'; }
+          else { txt = d + ' days left'; if (d <= 7) cls = 'soon'; }
+          return '<div class="exam-item"><div class="exam-info"><strong>' + esc(x.name) + '</strong><small>📅 ' + esc(x.date) + '</small></div>' +
+            '<div class="countdown ' + cls + '">' + txt + '</div>' +
+            '<button type="button" class="del-btn" data-id="' + x.id + '" aria-label="Delete event">🗑️</button></div>';
+        }).join('');
+      }
+      $('#examListContainer').addEventListener('click', function (e) {
+        var b = e.target.closest('.del-btn'); if (!b) return;
+        exams = exams.filter(function (x) { return x.id !== b.getAttribute('data-id'); });
+        saveExams(); renderExams(); renderCalendar();
+      });
+      $('#examForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var name = $('#examNameInput').value.trim();
+        var date = $('#examDateInput').value;
+        if (!name || !date) return;
+        exams.push({ id: uid(), name: name, date: date });
+        saveExams(); e.target.reset(); renderExams(); renderCalendar();
+      });
+
+      /* ================= CALENDAR + DAY PLANNER LINK ================= */
+      var selectedDate = todayKey();
+      var viewYear = new Date().getFullYear();
+      var viewMonth = new Date().getMonth();
+      var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      var DOW = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
       function renderCalendar() {
-        const calGridDays = document.getElementById('calGridDays');
-        const calMonthYear = document.getElementById('calMonthYear');
-        if (!calGridDays) return;
-        calGridDays.innerHTML = '';
-        const now = new Date();
-        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        if (calMonthYear) calMonthYear.textContent = `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
-
-        const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-        days.forEach(d => {
-          const el = document.createElement('div');
-          el.className = 'cal-day-name';
-          el.textContent = d;
-          calGridDays.appendChild(el);
-        });
-
-        const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
-        const totalDays = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
-
-        for (let i = 0; i < firstDay; i++) {
-          calGridDays.appendChild(document.createElement('div'));
+        var grid = $('#calGridDays');
+        $('#calMonthYear').textContent = MONTHS[viewMonth] + ' ' + viewYear;
+        var marked = {};
+        tasks.forEach(function (t) { if (t.date && !t.done) marked[t.date] = true; });
+        exams.forEach(function (x) { marked[x.date] = true; });
+        var today = todayKey();
+        var html = DOW.map(function (d) { return '<div class="cal-day-name">' + d + '</div>'; }).join('');
+        var first = new Date(viewYear, viewMonth, 1).getDay();
+        var total = new Date(viewYear, viewMonth + 1, 0).getDate();
+        for (var i = 0; i < first; i++) html += '<div class="cal-blank"></div>';
+        for (var d = 1; d <= total; d++) {
+          var k = viewYear + '-' + pad(viewMonth + 1) + '-' + pad(d);
+          var cls = 'cal-date' + (k === today ? ' today' : '') + (k === selectedDate ? ' selected-date' : '') + (marked[k] ? ' has-items' : '');
+          html += '<button type="button" class="' + cls + '" data-date="' + k + '" aria-label="' + MONTHS[viewMonth] + ' ' + d + '">' + d + '</button>';
         }
-        for (let d = 1; d <= totalDays; d++) {
-          const el = document.createElement('div');
-          const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-          el.className = 'cal-date' + (d === now.getDate() ? ' today' : '');
-          el.textContent = d;
-          el.addEventListener('click', () => {
-            document.querySelectorAll('.cal-date').forEach(cd => cd.classList.remove('selected-date'));
-            el.classList.add('selected-date');
-            const picker = document.getElementById('plannerDatePicker');
-            if (picker) {
-              picker.value = dateStr;
-              loadSchedule(dateStr);
-            }
-            // Switch to Day Planner Tab
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-            document.querySelector('[data-tab="dayTab"]').classList.add('active');
-            document.getElementById('dayTab').classList.add('active');
+        grid.innerHTML = html;
+      }
+      $('#calGridDays').addEventListener('click', function (e) {
+        var b = e.target.closest('.cal-date'); if (!b) return;
+        selectDate(b.getAttribute('data-date'));
+        showTab('dayTab');
+      });
+      $('#calPrev').addEventListener('click', function () { viewMonth--; if (viewMonth < 0) { viewMonth = 11; viewYear--; } renderCalendar(); });
+      $('#calNext').addEventListener('click', function () { viewMonth++; if (viewMonth > 11) { viewMonth = 0; viewYear++; } renderCalendar(); });
+      $('#calToday').addEventListener('click', function () {
+        var n = new Date(); viewYear = n.getFullYear(); viewMonth = n.getMonth();
+        selectDate(todayKey());
+      });
+
+      /* ================= DAY PLANNER ================= */
+      var HOURS = ['06:00 AM', '08:00 AM', '10:00 AM', '12:00 PM', '02:00 PM', '04:00 PM', '06:00 PM', '08:00 PM', '10:00 PM'];
+      var dayData = emptyDay();
+      var picker = $('#plannerDatePicker');
+
+      function emptyDay() { return { sched: Array(HOURS.length).fill(''), prio: ['', '', ''], grat: ['', ''], mood: '', water: 0 }; }
+
+      function saveDay() { store.setJSON('fs_day_' + selectedDate, dayData); }
+
+      function loadDay(key) {
+        var d = store.getJSON('fs_day_' + key, null);
+        var migrated = false;
+        if (!d) {
+          d = emptyDay();
+          HOURS.forEach(function (_, i) {   // migrate legacy per-slot keys
+            var v = store.get('sched_' + key + '_' + i, '');
+            if (v) { d.sched[i] = v; migrated = true; }
           });
-          calGridDays.appendChild(el);
+        }
+        var base = emptyDay();
+        dayData = {
+          sched: (d.sched || base.sched).concat(base.sched).slice(0, HOURS.length),
+          prio: (d.prio || base.prio).concat(base.prio).slice(0, 3),
+          grat: (d.grat || base.grat).concat(base.grat).slice(0, 2),
+          mood: d.mood || '',
+          water: Math.max(0, Math.min(8, parseInt(d.water, 10) || 0))
+        };
+        if (migrated) saveDay();
+
+        $('#scheduleContainer').innerHTML = HOURS.map(function (hr, i) {
+          return '<div class="schedule-row"><div class="time-label">' + hr + '</div>' +
+            '<input type="text" data-field="sched" data-i="' + i + '" value="' + esc(dayData.sched[i]) + '" placeholder="Plan for ' + hr + '..." maxlength="150" /></div>';
+        }).join('');
+        $$('#dayTab input[data-field="prio"], #dayTab input[data-field="grat"]').forEach(function (inp) {
+          inp.value = dayData[inp.getAttribute('data-field')][+inp.getAttribute('data-i')] || '';
+        });
+        $('#plannerDateLabel').textContent = parseKey(key).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }) + (key === todayKey() ? '  ·  Today 🌸' : '');
+        renderMood();
+        renderWater();
+      }
+
+      var saveDayDebounced = debounce(saveDay, 150);
+      $('#dayTab').addEventListener('input', function (e) {
+        var t = e.target;
+        var f = t.getAttribute && t.getAttribute('data-field');
+        if (!f) return;
+        dayData[f][+t.getAttribute('data-i')] = t.value;
+        saveDayDebounced();
+      });
+      window.addEventListener('beforeunload', saveDay);
+
+      function selectDate(key) {
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(key)) return;
+        saveDay();
+        selectedDate = key;
+        var d = parseKey(key);
+        viewYear = d.getFullYear(); viewMonth = d.getMonth();
+        picker.value = key;
+        loadDay(key);
+        renderCalendar();
+      }
+      picker.addEventListener('change', function () { if (picker.value) selectDate(picker.value); });
+
+      /* ---------- Mood ---------- */
+      var moodBtns = $$('.mood-btn');
+      function renderMood() {
+        moodBtns.forEach(function (b) { b.classList.toggle('selected', b.getAttribute('data-mood') === dayData.mood); });
+        $('#moodStatusText').textContent = 'Current mood: ' + (dayData.mood || 'Not logged yet');
+      }
+      moodBtns.forEach(function (b) {
+        b.addEventListener('click', function () {
+          var m = b.getAttribute('data-mood');
+          dayData.mood = dayData.mood === m ? '' : m;
+          saveDay(); renderMood();
+        });
+      });
+
+      /* ---------- Water ---------- */
+      function renderWater() {
+        var c = $('#waterGlassesContainer');
+        var html = '';
+        for (var i = 1; i <= 8; i++) {
+          html += '<button type="button" class="glass ' + (i <= dayData.water ? 'filled' : '') + '" data-n="' + i + '" aria-label="Glass ' + i + '">' + (i <= dayData.water ? '💧' : '🥛') + '</button>';
+        }
+        c.innerHTML = html;
+        $('#waterStatusText').textContent = dayData.water + ' / 8 glasses completed ✨';
+      }
+      $('#waterGlassesContainer').addEventListener('click', function (e) {
+        var g = e.target.closest('.glass'); if (!g) return;
+        var n = +g.getAttribute('data-n');
+        dayData.water = dayData.water === n ? n - 1 : n;
+        saveDay(); renderWater();
+        if (dayData.water === 8) toast('💧 Hydration goal reached! Great job!');
+      });
+
+      /* ================= STICKERS ================= */
+      var STICKER_SETS = {
+        '💖 Cute': ['🌸', '🍓', '🧸', '🦋', '🤍', '💖', '🎀', '🌷', '🍰', '🐰', '🐱', '🌈', '🍑', '🫧', '🪩', '💫'],
+        '📚 Study': ['📚', '💻', '🎧', '✏️', '📝', '📖', '🧠', '💡', '🎯', '🏆', '⏰', '📅', '🔬', '🧪', '🎓', '✅'],
+        '🌿 Nature': ['🌿', '🍃', '🌻', '🌼', '🌙', '☀️', '⭐', '✨', '🌊', '🍄', '🪴', '🌲', '🍂', '❄️', '🔥', '🌺'],
+        '☕ Treats': ['☕', '🍵', '🧋', '🍪', '🍩', '🍙', '🍎', '🍋', '🥐', '🍫', '🍿', '🥑', '🍒', '🥞', '🍡', '🧁'],
+        '😊 Mood': ['😊', '🥰', '😴', '🥺', '😎', '🤩', '😌', '🙌', '💪', '🎉', '🫶', '😤', '🤓', '🥳', '🌟', '🙏']
+      };
+      var stickers = store.getJSON('fs_stickers', []);
+      if (!Array.isArray(stickers)) stickers = [];
+      var stickerSize = store.get('fs_sticker_size', '1.9rem');
+      var activeCat = Object.keys(STICKER_SETS)[0];
+      var canvas = $('#stickerCanvas');
+
+      function saveStickers() { store.setJSON('fs_stickers', stickers); }
+      function renderStickerCats() {
+        $('#stickerCats').innerHTML = Object.keys(STICKER_SETS).map(function (k) {
+          return '<button type="button" class="chip ' + (k === activeCat ? 'active' : '') + '" data-cat="' + esc(k) + '">' + esc(k) + '</button>';
+        }).join('');
+        $('#stickerToolbar').innerHTML = STICKER_SETS[activeCat].map(function (e) {
+          return '<button type="button" class="sticker-btn" data-emoji="' + e + '" aria-label="Add ' + e + ' sticker">' + e + '</button>';
+        }).join('');
+      }
+      function renderStickerBoard() {
+        canvas.style.setProperty('--sticker-size', stickerSize);
+        canvas.innerHTML = stickers.map(function (s) {
+          return '<button type="button" class="placed-sticker" data-id="' + s.id + '" aria-label="Remove sticker ' + esc(s.e) + '" title="Tap to remove">' + esc(s.e) + '</button>';
+        }).join('');
+        $$('[data-size]').forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-size') === stickerSize); });
+      }
+      function addSticker(emoji) {
+        if (!emoji) return;
+        if (stickers.length >= 150) { toast('Your board is full — remove a few stickers first 🌸'); return; }
+        stickers.push({ id: uid(), e: emoji });
+        saveStickers();
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'placed-sticker'; b.setAttribute('data-id', stickers[stickers.length - 1].id);
+        b.setAttribute('aria-label', 'Remove sticker ' + emoji); b.title = 'Tap to remove'; b.textContent = emoji;
+        canvas.appendChild(b);
+      }
+      $('#stickerCats').addEventListener('click', function (e) {
+        var b = e.target.closest('[data-cat]'); if (!b) return;
+        activeCat = b.getAttribute('data-cat'); renderStickerCats();
+      });
+      $('#stickerToolbar').addEventListener('click', function (e) {
+        var b = e.target.closest('[data-emoji]'); if (b) addSticker(b.getAttribute('data-emoji'));
+      });
+      canvas.addEventListener('click', function (e) {
+        var b = e.target.closest('.placed-sticker'); if (!b) return;
+        var id = b.getAttribute('data-id');
+        stickers = stickers.filter(function (s) { return s.id !== id; });
+        saveStickers();
+        b.classList.add('leaving');
+        setTimeout(function () { b.remove(); }, 170);
+      });
+      function addCustom() {
+        var inp = $('#customSticker');
+        var v = inp.value.trim();
+        if (!v) return;
+        var seg = (window.Intl && Intl.Segmenter) ? Array.from(new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(v)).map(function (s) { return s.segment; }) : Array.from(v);
+        seg.slice(0, 6).forEach(function (g) { if (g.trim()) addSticker(g); });
+        inp.value = '';
+      }
+      $('#addCustomSticker').addEventListener('click', addCustom);
+      $('#customSticker').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); addCustom(); } });
+      $$('[data-size]').forEach(function (b) {
+        b.addEventListener('click', function () { stickerSize = b.getAttribute('data-size'); store.set('fs_sticker_size', stickerSize); renderStickerBoard(); });
+      });
+      $('#undoSticker').addEventListener('click', function () {
+        if (!stickers.length) return;
+        stickers.pop(); saveStickers(); renderStickerBoard();
+      });
+      $('#clearStickers').addEventListener('click', function () {
+        if (!stickers.length) return;
+        if (window.confirm('Clear all stickers from the board?')) { stickers = []; saveStickers(); renderStickerBoard(); }
+      });
+      renderStickerCats();
+      renderStickerBoard();
+
+      /* ================= WEEK PLANNER & HABITS ================= */
+      var WEEK_DAYS = ['Monday 🌸', 'Tuesday 🌿', 'Wednesday 🍓', 'Thursday 💫', 'Friday 🤍', 'Saturday ✨', 'Sunday 🌷'];
+      var weekGrid = $('#weekGridContainer');
+      weekGrid.innerHTML = WEEK_DAYS.map(function (day, i) {
+        return '<div class="day-box"><h3>' + day + '</h3><textarea data-wk="' + i + '" placeholder="Daily study goals..." maxlength="600">' + esc(store.get('fs_week_day_' + i, '')) + '</textarea></div>';
+      }).join('');
+      weekGrid.addEventListener('input', function (e) {
+        var t = e.target.closest('textarea[data-wk]'); if (!t) return;
+        store.set('fs_week_day_' + t.getAttribute('data-wk'), t.value);
+      });
+      var weeklyFocus = $('#weeklyFocus');
+      weeklyFocus.value = store.get('fs_weekly_focus', '');
+      weeklyFocus.addEventListener('input', function () { store.set('fs_weekly_focus', weeklyFocus.value); });
+
+      var HABITS = ['Studied 2+ Hours', 'Reviewed Notes', 'Drank 8 Glasses', 'Slept 8 Hours', 'No Phone Scroll'];
+      function renderHabits() {
+        $('#habitTableBody').innerHTML = HABITS.map(function (h, hi) {
+          var cells = '';
+          for (var d = 0; d < 7; d++) {
+            var k = 'habit_' + hi + '_' + d;
+            cells += '<td><input type="checkbox" data-hkey="' + k + '" ' + (store.get('fs_' + k) === 'true' ? 'checked' : '') + ' aria-label="' + h + ' day ' + (d + 1) + '" /></td>';
+          }
+          return '<tr><td>' + h + '</td>' + cells + '</tr>';
+        }).join('');
+      }
+      $('#habitTableBody').addEventListener('change', function (e) {
+        var c = e.target.closest('input[data-hkey]'); if (!c) return;
+        store.set('fs_' + c.getAttribute('data-hkey'), c.checked ? 'true' : 'false');
+      });
+      $('#resetHabits').addEventListener('click', function () {
+        if (!window.confirm('Reset all habit check-marks for this week?')) return;
+        HABITS.forEach(function (_, hi) { for (var d = 0; d < 7; d++) store.remove('fs_habit_' + hi + '_' + d); });
+        renderHabits();
+      });
+      renderHabits();
+
+      /* ================= AUDIO ENGINE ================= */
+      var Audio_ = (function () {
+        var ctx = null, master = null;
+        var active = {};
+        var volume = parseFloat(store.get('fs_volume', '0.6'));
+        if (isNaN(volume)) volume = 0.6;
+
+        // Must be called from a user gesture. Creates/resumes the AudioContext.
+        function ensure() {
+          var AC = window.AudioContext || window.webkitAudioContext;
+          if (!AC) return null;
+          if (!ctx) {
+            try { ctx = new AC(); } catch (e) { return null; }
+            master = ctx.createGain();
+            master.gain.value = volume;
+            master.connect(ctx.destination);
+          }
+          if (ctx.state === 'suspended') { try { ctx.resume(); } catch (e) {} }
+          return ctx;
+        }
+
+        function noiseBuffer(type) {
+          var len = ctx.sampleRate * 6;
+          var buf = ctx.createBuffer(1, len, ctx.sampleRate);
+          var d = buf.getChannelData(0);
+          var i, w;
+          if (type === 'white') {
+            for (i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+          } else if (type === 'pink') {
+            var b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+            for (i = 0; i < len; i++) {
+              w = Math.random() * 2 - 1;
+              b0 = 0.99886 * b0 + w * 0.0555179; b1 = 0.99332 * b1 + w * 0.0750759;
+              b2 = 0.96900 * b2 + w * 0.1538520; b3 = 0.86650 * b3 + w * 0.3104856;
+              b4 = 0.55000 * b4 + w * 0.5329522; b5 = -0.7616 * b5 - w * 0.0168980;
+              d[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + w * 0.5362) * 0.11;
+              b6 = w * 0.115926;
+            }
+          } else { // brown
+            var last = 0;
+            for (i = 0; i < len; i++) {
+              w = Math.random() * 2 - 1;
+              last = (last + 0.02 * w) / 1.02;
+              d[i] = last * 3.5;
+            }
+          }
+          // short crossfade at the loop seam to avoid clicks
+          var fade = Math.floor(ctx.sampleRate * 0.05);
+          for (i = 0; i < fade; i++) {
+            var f = i / fade;
+            d[len - fade + i] = d[len - fade + i] * (1 - f) + d[i] * f;
+          }
+          return buf;
+        }
+
+        function noiseSource(type) {
+          var s = ctx.createBufferSource();
+          s.buffer = noiseBuffer(type);
+          s.loop = true;
+          s.loopEnd = (s.buffer.length - Math.floor(ctx.sampleRate * 0.05)) / ctx.sampleRate;
+          return s;
+        }
+
+        function lfo(freq, depth, target) {
+          var o = ctx.createOscillator(), g = ctx.createGain();
+          o.type = 'sine'; o.frequency.value = freq; g.gain.value = depth;
+          o.connect(g); g.connect(target);
+          o.start();
+          return o;
+        }
+
+        // ---- Sound recipes. Each returns { sources: [...], timers: [...] } connected to `out`.
+        var recipes = {
+          rain: function (out) {
+            var srcs = [];
+            var a = noiseSource('pink'), hp = ctx.createBiquadFilter(), lp = ctx.createBiquadFilter(), ga = ctx.createGain();
+            hp.type = 'highpass'; hp.frequency.value = 350;
+            lp.type = 'lowpass'; lp.frequency.value = 6500;
+            ga.gain.value = 0.55;
+            a.connect(hp); hp.connect(lp); lp.connect(ga); ga.connect(out);
+            var b = noiseSource('white'), bp = ctx.createBiquadFilter(), gb = ctx.createGain();
+            bp.type = 'bandpass'; bp.frequency.value = 3200; bp.Q.value = 0.6;
+            gb.gain.value = 0.10;
+            b.connect(bp); bp.connect(gb); gb.connect(out);
+            srcs.push(a, b, lfo(0.12, 0.05, gb.gain));
+            a.start(); b.start();
+            return { sources: srcs, timers: [] };
+          },
+          cafe: function (out) {
+            var srcs = [], timers = [];
+            // room tone
+            var n = noiseSource('brown'), lp = ctx.createBiquadFilter(), gn = ctx.createGain();
+            lp.type = 'lowpass'; lp.frequency.value = 520; gn.gain.value = 0.9;
+            n.connect(lp); lp.connect(gn); gn.connect(out);
+            n.start(); srcs.push(n);
+            // warm lo-fi pad (Am7 voicing) with slow tremolo
+            var padLp = ctx.createBiquadFilter(), padGain = ctx.createGain();
+            padLp.type = 'lowpass'; padLp.frequency.value = 900; padGain.gain.value = 0.07;
+            padLp.connect(padGain); padGain.connect(out);
+            [110, 164.81, 220, 261.63, 329.63].forEach(function (f, i) {
+              var o = ctx.createOscillator(), g = ctx.createGain();
+              o.type = i % 2 ? 'triangle' : 'sine';
+              o.frequency.value = f; o.detune.value = (i - 2) * 4;
+              g.gain.value = 0.2;
+              o.connect(g); g.connect(padLp); o.start(); srcs.push(o);
+            });
+            srcs.push(lfo(0.18, 0.03, padGain.gain));
+            // occasional soft cup clinks
+            function clink() {
+              if (!ctx) return;
+              var t = ctx.currentTime;
+              var o = ctx.createOscillator(), g = ctx.createGain();
+              o.type = 'sine';
+              o.frequency.value = 1800 + Math.random() * 1200;
+              g.gain.setValueAtTime(0.0001, t);
+              g.gain.exponentialRampToValueAtTime(0.035, t + 0.01);
+              g.gain.exponentialRampToValueAtTime(0.0001, t + 0.35);
+              o.connect(g); g.connect(out);
+              o.start(t); o.stop(t + 0.4);
+            }
+            function schedule() { return setTimeout(function () { clink(); rec.timer = schedule(); }, 3500 + Math.random() * 6000); }
+            var rec = { sources: srcs, timers: [] };
+            rec.timer = schedule();
+            rec.clear = function () { clearTimeout(rec.timer); };
+            return rec;
+          },
+          forest: function (out) {
+            var srcs = [];
+            var n = noiseSource('pink'), bp = ctx.createBiquadFilter(), gw = ctx.createGain();
+            bp.type = 'bandpass'; bp.frequency.value = 520; bp.Q.value = 0.7;
+            gw.gain.value = 0.45;
+            n.connect(bp); bp.connect(gw); gw.connect(out);
+            n.start(); srcs.push(n, lfo(0.07, 0.18, gw.gain), lfo(0.05, 160, bp.frequency));
+            var n2 = noiseSource('white'), hp = ctx.createBiquadFilter(), g2 = ctx.createGain();
+            hp.type = 'highpass'; hp.frequency.value = 5000; g2.gain.value = 0.015;
+            n2.connect(hp); hp.connect(g2); g2.connect(out);
+            n2.start(); srcs.push(n2, lfo(0.09, 0.01, g2.gain));
+            function chirp() {
+              if (!ctx) return;
+              var notes = 2 + Math.floor(Math.random() * 3);
+              var base = 2100 + Math.random() * 1500;
+              for (var i = 0; i < notes; i++) {
+                var t = ctx.currentTime + i * 0.13;
+                var o = ctx.createOscillator(), g = ctx.createGain();
+                o.type = 'sine';
+                o.frequency.setValueAtTime(base, t);
+                o.frequency.exponentialRampToValueAtTime(base * (1.15 + Math.random() * 0.3), t + 0.09);
+                g.gain.setValueAtTime(0.0001, t);
+                g.gain.exponentialRampToValueAtTime(0.05, t + 0.02);
+                g.gain.exponentialRampToValueAtTime(0.0001, t + 0.11);
+                o.connect(g); g.connect(out);
+                o.start(t); o.stop(t + 0.14);
+              }
+            }
+            var rec = { sources: srcs, timers: [] };
+            function schedule() { return setTimeout(function () { chirp(); rec.timer = schedule(); }, 2500 + Math.random() * 5500); }
+            rec.timer = schedule();
+            rec.clear = function () { clearTimeout(rec.timer); };
+            return rec;
+          }
+        };
+
+        function setButton(name, on) {
+          $$('[data-sound="' + name + '"]').forEach(function (b) {
+            b.classList.toggle('playing', on);
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+          });
+        }
+
+        function stop(name) {
+          var a = active[name];
+          if (!a) return;
+          delete active[name];
+          setButton(name, false);
+          var t = ctx.currentTime;
+          a.gain.gain.cancelScheduledValues(t);
+          a.gain.gain.setValueAtTime(a.gain.gain.value, t);
+          a.gain.gain.linearRampToValueAtTime(0, t + 0.35);
+          if (a.rec.clear) a.rec.clear();
+          setTimeout(function () {
+            a.rec.sources.forEach(function (s) { try { s.stop(); } catch (e) {} try { s.disconnect(); } catch (e) {} });
+            try { a.gain.disconnect(); } catch (e) {}
+          }, 450);
+        }
+
+        function start(name) {
+          var c = ensure();
+          if (!c) { toast('Sorry, your browser does not support Web Audio 😢'); return; }
+          var g = c.createGain();
+          g.gain.value = 0;
+          g.connect(master);
+          var rec;
+          try { rec = recipes[name](g); } catch (e) { toast('Could not start that sound'); return; }
+          active[name] = { gain: g, rec: rec };
+          g.gain.linearRampToValueAtTime(1, c.currentTime + 1.2);
+          setButton(name, true);
+        }
+
+        function toggle(name) {
+          if (active[name]) stop(name); else start(name);
+        }
+        function stopAll() { Object.keys(active).forEach(stop); }
+
+        function setVolume(v) {
+          volume = v;
+          store.set('fs_volume', String(v));
+          if (master) master.gain.setTargetAtTime(v, ctx.currentTime, 0.05);
+        }
+
+        // Gentle three-note chime for timer completion
+        function chime() {
+          var c = ensure();
+          if (!c) return;
+          var notes = [659.25, 783.99, 1046.5, 1318.5];
+          notes.forEach(function (f, i) {
+            var t = c.currentTime + i * 0.22;
+            [1, 2].forEach(function (mult, mi) {
+              var o = c.createOscillator(), g = c.createGain();
+              o.type = 'sine'; o.frequency.value = f * mult;
+              var peak = mi === 0 ? 0.22 : 0.06;
+              g.gain.setValueAtTime(0.0001, t);
+              g.gain.exponentialRampToValueAtTime(peak, t + 0.02);
+              g.gain.exponentialRampToValueAtTime(0.0001, t + 1.3);
+              o.connect(g); g.connect(c.destination);
+              o.start(t); o.stop(t + 1.4);
+            });
+          });
+        }
+
+        return { ensure: ensure, toggle: toggle, stopAll: stopAll, setVolume: setVolume, chime: chime, getVolume: function () { return volume; } };
+      })();
+
+      $$('[data-sound]').forEach(function (b) {
+        b.addEventListener('click', function () { Audio_.toggle(b.getAttribute('data-sound')); });
+      });
+      $('#stopSoundsBtn').addEventListener('click', function () { Audio_.stopAll(); });
+      var volSlider = $('#volumeSlider');
+      volSlider.value = Math.round(Audio_.getVolume() * 100);
+      volSlider.addEventListener('input', function () { Audio_.setVolume(volSlider.value / 100); });
+
+      /* ================= TIMER ================= */
+      var timer = { total: 1500, remaining: 1500, endAt: 0, handle: null, running: false, isFocus: true, label: 'Pomodoro' };
+      var clockEl = $('#timerClock');
+      var modeBtns = $$('.mode-btn');
+      var baseTitle = document.title;
+
+      function focusKey() { return 'fs_focus_' + todayKey(); }
+      function focusCount() { return parseInt(store.get(focusKey(), '0'), 10) || 0; }
+      function renderFocusCount() { $('#pomodoroCountText').textContent = 'Completed focus sessions today: ' + focusCount() + ' 🍅'; }
+
+      function fmt(sec) { return pad(Math.floor(sec / 60)) + ':' + pad(sec % 60); }
+      function renderTimer() {
+        clockEl.textContent = fmt(timer.remaining);
+        $('#timerLabel').textContent = timer.label + (timer.running ? ' · focus on 🌿' : '');
+        $('#timerProgress').style.width = (timer.total ? (1 - timer.remaining / timer.total) * 100 : 0) + '%';
+        clockEl.classList.toggle('running', timer.running);
+        $('#timerStartBtn').textContent = timer.running ? 'Running…' : (timer.remaining < timer.total ? 'Resume' : 'Start');
+        document.title = timer.running ? fmt(timer.remaining) + ' · ' + timer.label + ' ✨' : baseTitle;
+      }
+      function stopTick() { clearInterval(timer.handle); timer.handle = null; timer.running = false; }
+
+      function tick() {
+        timer.remaining = Math.max(0, Math.ceil((timer.endAt - Date.now()) / 1000));
+        if (timer.remaining <= 0) { complete(); return; }
+        renderTimer();
+      }
+      function startTimer() {
+        Audio_.ensure(); // unlock audio inside the user gesture so the chime can play later
+        if (timer.running) return;
+        if (timer.remaining <= 0) timer.remaining = timer.total;
+        timer.endAt = Date.now() + timer.remaining * 1000;
+        timer.running = true;
+        timer.handle = setInterval(tick, 250);
+        renderTimer();
+      }
+      function pauseTimer() {
+        if (!timer.running) return;
+        timer.remaining = Math.max(0, Math.ceil((timer.endAt - Date.now()) / 1000));
+        stopTick(); renderTimer();
+      }
+      function resetTimer() { stopTick(); timer.remaining = timer.total; renderTimer(); }
+      function setDuration(sec, label, isFocus) {
+        stopTick();
+        timer.total = sec; timer.remaining = sec; timer.label = label; timer.isFocus = isFocus;
+        renderTimer();
+      }
+      function complete() {
+        stopTick();
+        timer.remaining = 0;
+        if (timer.isFocus) {
+          store.set(focusKey(), String(focusCount() + 1));
+          renderFocusCount();
+        }
+        renderTimer();
+        Audio_.chime();
+        toast(timer.isFocus ? '🎉 ' + timer.label + ' complete! Take a well-deserved break.' : '☀️ Break over — ready for the next round?');
+        timer.remaining = timer.total;
+        setTimeout(renderTimer, 50);
+      }
+
+      modeBtns.forEach(function (b) {
+        b.addEventListener('click', function () {
+          modeBtns.forEach(function (x) { x.classList.remove('active'); });
+          b.classList.add('active');
+          setDuration(+b.getAttribute('data-time'), b.getAttribute('data-label'), b.getAttribute('data-focus') === '1');
+        });
+      });
+      $('#timerStartBtn').addEventListener('click', startTimer);
+      $('#timerPauseBtn').addEventListener('click', pauseTimer);
+      $('#timerResetBtn').addEventListener('click', resetTimer);
+
+      $$('[data-technique]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          modeBtns.forEach(function (x) { x.classList.remove('active'); });
+          setDuration(+b.getAttribute('data-technique'), b.getAttribute('data-label'), b.getAttribute('data-focus') === '1');
+          showTab('pomodoroTab');
+          startTimer();
+        });
+      });
+      document.addEventListener('visibilitychange', function () { if (!document.hidden && timer.running) tick(); });
+      renderFocusCount();
+      renderTimer();
+
+      /* ================= CROSSWORD ================= */
+      var PUZZLES = [
+        { clue: 'Nickname for 25-minute study intervals (POMO-doro)', word: 'POMO' },
+        { clue: 'Paying close attention to one thing', word: 'FOCUS' },
+        { clue: 'Short summary at the end of a lesson', word: 'RECAP' },
+        { clue: 'Written down during a lecture', word: 'NOTES' },
+        { clue: 'The test you are studying for', word: 'EXAM' },
+        { clue: 'Rest between study sessions', word: 'BREAK' },
+        { clue: 'Short test to check what you know', word: 'QUIZ' },
+        { clue: 'Where you sit to study, often with a lamp', word: 'DESK' }
+      ];
+      var cwIndex = (parseInt(store.get('fs_cw_index', '0'), 10) || 0) % PUZZLES.length;
+      var cwGrid = $('#crosswordGrid');
+      var cwSolved = false;
+
+      function renderCrossword() {
+        var p = PUZZLES[cwIndex];
+        cwSolved = false;
+        $('#cwClue').textContent = 'Clue: ' + p.clue + ' (' + p.word.length + ' letters)';
+        $('#cwCounter').textContent = (cwIndex + 1) + ' / ' + PUZZLES.length;
+        $('#cwStatus').textContent = '';
+        cwGrid.innerHTML = p.word.split('').map(function (_, i) {
+          return '<input type="text" maxlength="1" class="cw-cell" data-i="' + i + '" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Letter ' + (i + 1) + '" />';
+        }).join('');
+      }
+      function cwCells() { return $$('.cw-cell', cwGrid); }
+      cwGrid.addEventListener('input', function (e) {
+        var c = e.target.closest('.cw-cell'); if (!c) return;
+        c.classList.remove('ok', 'bad');
+        c.value = c.value.replace(/[^a-zA-Z]/g, '').toUpperCase().slice(-1);
+        if (c.value) { var n = c.nextElementSibling; if (n) n.focus(); }
+      });
+      cwGrid.addEventListener('keydown', function (e) {
+        var c = e.target.closest('.cw-cell'); if (!c) return;
+        if (e.key === 'Backspace' && !c.value && c.previousElementSibling) { c.previousElementSibling.focus(); }
+        else if (e.key === 'ArrowLeft' && c.previousElementSibling) { c.previousElementSibling.focus(); }
+        else if (e.key === 'ArrowRight' && c.nextElementSibling) { c.nextElementSibling.focus(); }
+        else if (e.key === 'Enter') { checkCrossword(); }
+      });
+      cwGrid.addEventListener('focusin', function (e) { if (e.target.select) e.target.select(); });
+
+      function checkCrossword() {
+        var p = PUZZLES[cwIndex];
+        var cells = cwCells();
+        var status = $('#cwStatus');
+        var typed = cells.map(function (c) { return c.value.toUpperCase(); });
+        if (typed.some(function (v) { return !v; })) { status.textContent = '✏️ Fill in every box first!'; status.style.color = 'var(--text-muted)'; return; }
+        var allOk = true;
+        cells.forEach(function (c, i) {
+          var ok = typed[i] === p.word[i];
+          if (!ok) allOk = false;
+          c.classList.remove('ok', 'bad');
+          void c.offsetWidth; // restart animation
+          c.classList.add(ok ? 'ok' : 'bad');
+        });
+        if (allOk) {
+          status.textContent = '🎉 Correct! ' + (p.word === 'POMO' ? 'Pomodoro champion!' : 'Brilliant work!');
+          status.style.color = 'var(--success)';
+          if (!cwSolved) { cwSolved = true; store.set('fs_cw_solved', String((parseInt(store.get('fs_cw_solved', '0'), 10) || 0) + 1)); }
+        } else {
+          status.textContent = '❌ Not quite right. Red boxes need another look!';
+          status.style.color = 'var(--danger)';
         }
       }
+      $('#checkCrossword').addEventListener('click', checkCrossword);
+      $('#nextCrossword').addEventListener('click', function () {
+        cwIndex = (cwIndex + 1) % PUZZLES.length;
+        store.set('fs_cw_index', String(cwIndex));
+        renderCrossword();
+        var first = cwCells()[0]; if (first) first.focus();
+      });
+      renderCrossword();
+
+      /* ================= ZEN GARDEN ================= */
+      var drops = parseInt(store.get('fs_garden_drops', '0'), 10) || 0;
+      var gardens = parseInt(store.get('fs_gardens', '0'), 10) || 0;
+      var STAGES = ['🌱', '🌿', '🌷', '🌸', '👑✨'];
+      var STAGE_MSG = [
+        'Your seed is resting peacefully.',
+        'A tiny sprout is stretching toward the light.',
+        'Look, a bud is forming. Keep going!',
+        'Your flower is in full bloom.',
+        'Royal Blossom achieved! 🌸'
+      ];
+      function renderGarden(animate) {
+        var idx = Math.min(Math.floor(drops / 4), STAGES.length - 1);
+        $('#waterDropCount').textContent = drops;
+        var plant = $('#plantDisplay');
+        plant.textContent = STAGES[idx];
+        $('#plantMessage').textContent = STAGE_MSG[idx];
+        $('#newSeedBtn').hidden = idx < STAGES.length - 1;
+        $('#waterPlantBtn').hidden = idx >= STAGES.length - 1;
+        $('#gardenStats').textContent = 'Gardens grown: ' + gardens + ' · ' + (idx < STAGES.length - 1 ? (4 - (drops % 4)) + ' more drop(s) to the next stage' : 'fully grown!');
+        if (animate) { plant.classList.remove('bounce'); void plant.offsetWidth; plant.classList.add('bounce'); }
+      }
+      $('#waterPlantBtn').addEventListener('click', function () {
+        drops++;
+        store.set('fs_garden_drops', String(drops));
+        renderGarden(true);
+        if (Math.floor(drops / 4) >= STAGES.length - 1 && (drops % 4 === 0 || drops === 16)) toast('🌸 Your Royal Blossom has fully grown!');
+      });
+      $('#newSeedBtn').addEventListener('click', function () {
+        gardens++; drops = 0;
+        store.set('fs_gardens', String(gardens));
+        store.set('fs_garden_drops', '0');
+        renderGarden(true);
+      });
+      renderGarden(false);
+
+      /* ================= INIT ================= */
+      renderTop();
+      renderTasks();
+      renderExams();
+      picker.value = selectedDate;
+      loadDay(selectedDate);
       renderCalendar();
 
-      // 4. Tabs
-      const tabBtns = document.querySelectorAll('.tab-btn');
-      const tabPanes = document.querySelectorAll('.tab-pane');
-      tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          tabBtns.forEach(b => b.classList.remove('active'));
-          tabPanes.forEach(p => p.classList.remove('active'));
-          btn.classList.add('active');
-          document.getElementById(btn.getAttribute('data-tab')).classList.add('active');
-        });
-      });
-
-      // 5. Top Priority To-Do List
-      let topPriorities = JSON.parse(localStorage.getItem('fs_toppriorities') || '[]');
-      const topPriorityForm = document.getElementById('topPriorityForm');
-      const topPriorityList = document.getElementById('topPriorityList');
-
-      function renderTopPriorities() {
-        if (!topPriorityList) return;
-        topPriorityList.innerHTML = '';
-        if (topPriorities.length === 0) {
-          topPriorityList.innerHTML = '<p style="font-size:0.82rem; color:var(--text-muted);">No top focus items.</p>';
-          return;
+      // Roll the planner over to the new day if the page stays open past midnight
+      var lastToday = todayKey();
+      setInterval(function () {
+        var now = todayKey();
+        if (now !== lastToday) {
+          var wasOnToday = selectedDate === lastToday;
+          lastToday = now;
+          renderFocusCount(); renderTasks(); renderExams();
+          if (wasOnToday) selectDate(now); else renderCalendar();
         }
-        topPriorities.forEach((item, idx) => {
-          const div = document.createElement('div');
-          div.className = 'task-item';
-          div.innerHTML = `
-            <span>⭐ <strong>${item.text}</strong></span>
-            <button onclick="removeTopPrio(${idx})" style="background:none;border:none;cursor:pointer;">❌</button>
-          `;
-          topPriorityList.appendChild(div);
-        });
-      }
-      window.removeTopPrio = (i) => {
-        topPriorities.splice(i, 1);
-        localStorage.setItem('fs_toppriorities', JSON.stringify(topPriorities));
-        renderTopPriorities();
-      };
-
-      if (topPriorityForm) {
-        topPriorityForm.addEventListener('submit', (e) => {
-          e.preventDefault();
-          const val = document.getElementById('topPriorityInput').value.trim();
-          if (!val) return;
-          topPriorities.push({ text: val });
-          localStorage.setItem('fs_toppriorities', JSON.stringify(topPriorities));
-          document.getElementById('topPriorityInput').value = '';
-          renderTopPriorities();
-        });
-      }
-      renderTopPriorities();
-
-      // 6. Study Tasks & Progress
-      let tasks = JSON.parse(localStorage.getItem('fs_tasks') || '[]');
-      const taskForm = document.getElementById('taskForm');
-      const taskListContainer = document.getElementById('taskListContainer');
-      const progressFill = document.getElementById('progressFill');
-      const progressText = document.getElementById('progressText');
-      const progressPercent = document.getElementById('progressPercent');
-
-      function renderTasks() {
-        if (!taskListContainer) return;
-        if (tasks.length === 0) {
-          taskListContainer.innerHTML = '<p style="color: var(--text-muted); font-size: 0.88rem;">No study tasks yet. 🌸</p>';
-          if (progressFill) progressFill.style.width = '0%';
-          if (progressText) progressText.textContent = '0 / 0 completed';
-          if (progressPercent) progressPercent.textContent = '0%';
-          return;
-        }
-        taskListContainer.innerHTML = '';
-        let completed = 0;
-        tasks.forEach((t, idx) => {
-          if (t.done) completed++;
-          const div = document.createElement('div');
-          div.className = `task-item ${t.done ? 'done' : ''}`;
-          div.innerHTML = `
-            <div style="display:flex; align-items:center; gap:10px; flex:1; cursor:pointer;">
-              <input type="checkbox" ${t.done ? 'checked' : ''} data-index="${idx}" style="width:18px;height:18px;accent-color:var(--primary);" />
-              <div>
-                <strong>${t.title}</strong>
-                <div style="display:flex; gap:6px; margin-top:3px; flex-wrap:wrap;">
-                  ${t.subject ? `<span class="badge">${t.subject}</span>` : ''}
-                  <span class="badge">${t.priority}</span>
-                  ${t.date ? `<small>📅 ${t.date}</small>` : ''}
-                </div>
-              </div>
-            </div>
-            <button data-delete="${idx}" style="background:none;border:none;cursor:pointer;">🗑️</button>
-          `;
-          taskListContainer.appendChild(div);
-        });
-
-        const pct = Math.round((completed / tasks.length) * 100);
-        if (progressFill) progressFill.style.width = pct + '%';
-        if (progressText) progressText.textContent = `${completed} / ${tasks.length} completed`;
-        if (progressPercent) progressPercent.textContent = pct + '%';
-
-        taskListContainer.querySelectorAll('input[type="checkbox"]').forEach(chk => {
-          chk.addEventListener('change', (e) => {
-            tasks[e.target.getAttribute('data-index')].done = e.target.checked;
-            localStorage.setItem('fs_tasks', JSON.stringify(tasks));
-            renderTasks();
-          });
-        });
-        taskListContainer.querySelectorAll('button[data-delete]').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            tasks.splice(e.target.getAttribute('data-delete'), 1);
-            localStorage.setItem('fs_tasks', JSON.stringify(tasks));
-            renderTasks();
-          });
-        });
-      }
-
-      if (taskForm) {
-        taskForm.addEventListener('submit', (e) => {
-          e.preventDefault();
-          const title = document.getElementById('taskTitleInput').value.trim();
-          const subject = document.getElementById('taskSubjectInput').value.trim();
-          const date = document.getElementById('taskDateInput').value;
-          const priority = document.getElementById('taskPriorityInput').value;
-          if (!title) return;
-          tasks.unshift({ title, subject, date, priority, done: false });
-          localStorage.setItem('fs_tasks', JSON.stringify(tasks));
-          taskForm.reset();
-          renderTasks();
-        });
-      }
-      renderTasks();
-
-      // 7. Future Date Planner & Schedule
-      const plannerDatePicker = document.getElementById('plannerDatePicker');
-      const todayStr = new Date().toISOString().split('T')[0];
-      if (plannerDatePicker) {
-        plannerDatePicker.value = todayStr;
-        plannerDatePicker.addEventListener('change', () => loadSchedule(plannerDatePicker.value));
-      }
-
-      const hours = ['06:00 AM', '08:00 AM', '10:00 AM', '12:00 PM', '02:00 PM', '04:00 PM', '06:00 PM', '08:00 PM', '10:00 PM'];
-      const scheduleContainer = document.getElementById('scheduleContainer');
-
-      function loadSchedule(dateKey) {
-        if (!scheduleContainer) return;
-        scheduleContainer.innerHTML = '';
-        hours.forEach((hr, idx) => {
-          const storageKey = `sched_${dateKey}_${idx}`;
-          const val = localStorage.getItem(storageKey) || '';
-          const row = document.createElement('div');
-          row.className = 'schedule-row';
-          row.innerHTML = `
-            <div class="time-label">${hr}</div>
-            <input type="text" value="${val}" placeholder="Plan for ${hr}..." data-skey="${storageKey}" />
-          `;
-          scheduleContainer.appendChild(row);
-        });
-
-        scheduleContainer.querySelectorAll('input').forEach(inp => {
-          inp.addEventListener('input', (e) => {
-            localStorage.setItem(e.target.getAttribute('data-skey'), e.target.value);
-          });
-        });
-      }
-      loadSchedule(todayStr);
-
-      // 8. Week Planner Grid (Restored 7 distinct boxes)
-      const weekGridContainer = document.getElementById('weekGridContainer');
-      const days = ['Monday 🌸', 'Tuesday 🌿', 'Wednesday 🍓', 'Thursday 💫', 'Friday 🤍', 'Saturday ✨', 'Sunday 🌷'];
-      if (weekGridContainer) {
-        days.forEach((day, idx) => {
-          const key = 'week_day_' + idx;
-          const val = localStorage.getItem('fs_' + key) || '';
-          const box = document.createElement('div');
-          box.className = 'day-box';
-          box.innerHTML = `
-            <h3>${day}</h3>
-            <textarea id="${key}" placeholder="Daily study goals...">${val}</textarea>
-          `;
-          weekGridContainer.appendChild(box);
-          box.querySelector('textarea').addEventListener('input', (e) => {
-            localStorage.setItem('fs_' + key, e.target.value);
-          });
-        });
-      }
-
-      // Habits
-      const habits = ['Studied 2+ Hours', 'Reviewed Notes', 'Drank 8 Glasses', 'Slept 8 Hours', 'No Phone Scroll'];
-      const habitTableBody = document.getElementById('habitTableBody');
-      if (habitTableBody) {
-        habits.forEach((habit, hIdx) => {
-          const tr = document.createElement('tr');
-          let html = `<td>${habit}</td>`;
-          for (let d = 0; d < 7; d++) {
-            const hKey = `habit_${hIdx}_${d}`;
-            const checked = localStorage.getItem('fs_' + hKey) === 'true' ? 'checked' : '';
-            html += `<td><input type="checkbox" data-hkey="${hKey}" ${checked} style="width:16px;height:16px;accent-color:var(--primary);" /></td>`;
-          }
-          tr.innerHTML = html;
-          habitTableBody.appendChild(tr);
-        });
-
-        habitTableBody.querySelectorAll('input[type="checkbox"]').forEach(chk => {
-          chk.addEventListener('change', (e) => {
-            localStorage.setItem('fs_' + e.target.getAttribute('data-hkey'), e.target.checked);
-          });
-        });
-      }
-
-      // 9. Mood & Water
-      const moodBtns = document.querySelectorAll('.mood-btn');
-      const moodStatusText = document.getElementById('moodStatusText');
-      const savedMood = localStorage.getItem('fs_mood');
-      if (savedMood) {
-        if (moodStatusText) moodStatusText.textContent = 'Current mood: ' + savedMood;
-        moodBtns.forEach(b => { if (b.getAttribute('data-mood') === savedMood) b.classList.add('selected'); });
-      }
-      moodBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          moodBtns.forEach(b => b.classList.remove('selected'));
-          btn.classList.add('selected');
-          const mood = btn.getAttribute('data-mood');
-          localStorage.setItem('fs_mood', mood);
-          if (moodStatusText) moodStatusText.textContent = 'Current mood: ' + mood;
-        });
-      });
-
-      const waterContainer = document.getElementById('waterGlassesContainer');
-      const waterStatusText = document.getElementById('waterStatusText');
-      let waterCount = parseInt(localStorage.getItem('fs_water') || '0', 10);
-      function renderWater() {
-        if (!waterContainer) return;
-        waterContainer.innerHTML = '';
-        for (let i = 1; i <= 8; i++) {
-          const glass = document.createElement('div');
-          glass.className = `glass ${i <= waterCount ? 'filled' : ''}`;
-          glass.innerHTML = i <= waterCount ? '💧' : '🥛';
-          glass.addEventListener('click', () => {
-            waterCount = (waterCount === i) ? i - 1 : i;
-            localStorage.setItem('fs_water', waterCount);
-            renderWater();
-          });
-          waterContainer.appendChild(glass);
-        }
-        if (waterStatusText) waterStatusText.textContent = `${waterCount} / 8 glasses completed today ✨`;
-      }
-      renderWater();
-
-      // 10. Stickers Feature
-      window.addSticker = function(emoji) {
-        const canvas = document.getElementById('stickerCanvas');
-        if (!canvas) return;
-        const span = document.createElement('span');
-        span.className = 'placed-sticker';
-        span.textContent = emoji;
-        span.onclick = () => span.remove();
-        canvas.appendChild(span);
-      };
-
-      // 11. Pomodoro Timer & Technique Timers
-      let timerInterval = null;
-      let currentTime = 1500;
-      let totalSeconds = 1500;
-      let isRunning = false;
-      let focusCount = parseInt(localStorage.getItem('fs_focus_count') || '0', 10);
-
-      const timerClock = document.getElementById('timerClock');
-      const timerStartBtn = document.getElementById('timerStartBtn');
-      const timerPauseBtn = document.getElementById('timerPauseBtn');
-      const timerResetBtn = document.getElementById('timerResetBtn');
-      const pomodoroCountText = document.getElementById('pomodoroCountText');
-      const modeBtns = document.querySelectorAll('.mode-btn');
-
-      if (pomodoroCountText) pomodoroCountText.textContent = `Completed focus sessions today: ${focusCount} 🍅`;
-
-      function updateClockDisplay() {
-        const mins = Math.floor(currentTime / 60);
-        const secs = currentTime % 60;
-        if (timerClock) {
-          timerClock.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-        }
-      }
-
-      modeBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          modeBtns.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          const t = parseInt(btn.getAttribute('data-time'), 10);
-          currentTime = t;
-          totalSeconds = t;
-          clearInterval(timerInterval);
-          isRunning = false;
-          updateClockDisplay();
-        });
-      });
-
-      window.launchTechniqueTimer = function(seconds, label) {
-        currentTime = seconds;
-        totalSeconds = seconds;
-        clearInterval(timerInterval);
-        isRunning = true;
-        updateClockDisplay();
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-        document.querySelector('[data-tab="pomodoroTab"]').classList.add('active');
-        document.getElementById('pomodoroTab').classList.add('active');
-        
-        timerInterval = setInterval(() => {
-          if (currentTime > 0) {
-            currentTime--;
-            updateClockDisplay();
-          } else {
-            clearInterval(timerInterval);
-            isRunning = false;
-            focusCount++;
-            localStorage.setItem('fs_focus_count', focusCount);
-            if (pomodoroCountText) pomodoroCountText.textContent = `Completed focus sessions today: ${focusCount} 🍅`;
-            alert(`🎉 ${label} completed successfully!`);
-          }
-        }, 1000);
-      };
-
-      if (timerStartBtn) {
-        timerStartBtn.addEventListener('click', () => {
-          if (isRunning) return;
-          isRunning = true;
-          timerInterval = setInterval(() => {
-            if (currentTime > 0) {
-              currentTime--;
-              updateClockDisplay();
-            } else {
-              clearInterval(timerInterval);
-              isRunning = false;
-              focusCount++;
-              localStorage.setItem('fs_focus_count', focusCount);
-              if (pomodoroCountText) pomodoroCountText.textContent = `Completed focus sessions today: ${focusCount} 🍅`;
-              alert('🎉 Focus session completed! Take a well-deserved break.');
-            }
-          }, 1000);
-        });
-      }
-
-      if (timerPauseBtn) {
-        timerPauseBtn.addEventListener('click', () => {
-          clearInterval(timerInterval);
-          isRunning = false;
-        });
-      }
-
-      if (timerResetBtn) {
-        timerResetBtn.addEventListener('click', () => {
-          clearInterval(timerInterval);
-          isRunning = false;
-          currentTime = totalSeconds;
-          updateClockDisplay();
-        });
-      }
-      updateClockDisplay();
-
-      // 12. Crossword Game & Zen Garden
-      const checkCrossword = document.getElementById('checkCrossword');
-      if (checkCrossword) {
-        checkCrossword.addEventListener('click', () => {
-          const cells = document.querySelectorAll('.cw-cell');
-          let word = '';
-          cells.forEach(c => word += c.value.toUpperCase());
-          const status = document.getElementById('cwStatus');
-          if (word === 'POMO') {
-            status.textContent = '🎉 Correct! Pomodoro champion!';
-            status.style.color = 'var(--accent)';
-          } else {
-            status.textContent = '❌ Not quite right. Try again!';
-            status.style.color = '#E76F51';
-          }
-        });
-      }
-
-      let waterDrops = parseInt(localStorage.getItem('fs_garden_drops') || '0', 10);
-      const waterDropCount = document.getElementById('waterDropCount');
-      const plantDisplay = document.getElementById('plantDisplay');
-      const plantMessage = document.getElementById('plantMessage');
-      const waterPlantBtn = document.getElementById('waterPlantBtn');
-
-      const stages = ['🌱', '🌿', '🌷', '🌸', '👑✨'];
-      function updateGarden() {
-        if (!waterDropCount) return;
-        waterDropCount.textContent = waterDrops;
-        let idx = Math.min(Math.floor(waterDrops / 4), stages.length - 1);
-        plantDisplay.textContent = stages[idx];
-        plantMessage.textContent = idx === 4 ? 'Royal Blossom achieved! 🌸' : 'Growing nicely with your focus!';
-      }
-      if (waterPlantBtn) {
-        waterPlantBtn.addEventListener('click', () => {
-          waterDrops++;
-          localStorage.setItem('fs_garden_drops', waterDrops);
-          updateGarden();
-        });
-      }
-      updateGarden();
-
-    });
+      }, 60000);
+    })();
   </script>
 </body>
 </html>

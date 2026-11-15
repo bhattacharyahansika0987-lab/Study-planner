@@ -6,9 +6,9 @@
   <title>Flow Space ✨</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
   <style>
-    /* ================= COLOR PALETTES ================= */
+    /* ================= DYNAMIC THEME PALETTES ================= */
     :root {
-      /* Default Light: Lavender background + Baby Pink/Peach cards */
+      /* Default Light: Lavender Dreams */
       --bg-main: #F2EBF7;
       --bg-card: #FFF0F5;
       --primary: #E8A0BF;
@@ -21,8 +21,7 @@
       --shadow: 0 10px 30px rgba(183, 166, 224, 0.2);
     }
 
-    [data-theme="dark"] {
-      /* Dark Mode: Ultramarine Starry Night Blue */
+    [data-dark-theme="ultramarine"] {
       --bg-main: #0B132B;
       --bg-card: #1C2541;
       --primary: #64B5F6;
@@ -32,6 +31,45 @@
       --text-main: #E0FBFC;
       --text-muted: #8D99AE;
       --border-color: #243B53;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    [data-dark-theme="obsidian"] {
+      --bg-main: #12100E;
+      --bg-card: #1D1A16;
+      --primary: #D4AF37;
+      --secondary: #B8923A;
+      --accent: #F2D888;
+      --highlight: #D4AF37;
+      --text-main: #F5EBD7;
+      --text-muted: #b8a892;
+      --border-color: #3A3226;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    [data-dark-theme="emerald"] {
+      --bg-main: #081C15;
+      --bg-card: #1B4332;
+      --primary: #52B788;
+      --secondary: #74C69D;
+      --accent: #D8F3DC;
+      --highlight: #95D5B2;
+      --text-main: #E8F5E9;
+      --text-muted: #95D5B2;
+      --border-color: #2D6A4F;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    [data-dark-theme="amethyst"] {
+      --bg-main: #1A0B2E;
+      --bg-card: #2D1B4E;
+      --primary: #D8B4FE;
+      --secondary: #C084FC;
+      --accent: #F3E8FF;
+      --highlight: #E879F9;
+      --text-main: #FAF5FF;
+      --text-muted: #D8B4FE;
+      --border-color: #4C1D95;
       --shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
     }
 
@@ -330,10 +368,6 @@
       font-weight: 600;
     }
 
-    [data-theme="dark"] .badge {
-      color: #0B132B;
-    }
-
     /* Schedule Slots */
     .schedule-row {
       display: flex;
@@ -450,18 +484,82 @@
       border-radius: 8px;
       background: var(--bg-card);
       border: 1px solid var(--border-color);
+      cursor: pointer;
+    }
+
+    .cal-date:hover {
+      background: var(--primary);
+      color: #fff;
     }
 
     .cal-date.today {
-      background: var(--primary);
+      border: 2px solid var(--primary);
+      font-weight: 700;
+    }
+
+    .cal-date.selected-date {
+      background: var(--secondary);
       color: #fff;
       font-weight: 700;
+    }
+
+    /* Week Grid & Habit Table */
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+    }
+
+    .day-box {
+      background: var(--bg-main);
+      border: 1.5px solid var(--border-color);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .day-box h3 {
+      font-size: 0.95rem;
+      color: var(--primary);
+      margin-bottom: 8px;
+      border-bottom: 1px dashed var(--border-color);
+      padding-bottom: 4px;
+    }
+
+    .day-box textarea {
+      height: 85px;
+      resize: vertical;
+      background: var(--bg-card);
+      margin-bottom: 0;
+    }
+
+    .habit-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 0.85rem;
+    }
+
+    .habit-table th, .habit-table td {
+      border: 1px solid var(--border-color);
+      padding: 6px;
+      text-align: center;
+    }
+
+    .habit-table th {
+      background: var(--bg-main);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .habit-table td:first-child {
+      text-align: left;
+      font-weight: 500;
     }
 
     /* Sticker Board */
     .sticker-toolbar {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       margin-bottom: 10px;
       flex-wrap: wrap;
     }
@@ -469,10 +567,10 @@
     .sticker-btn {
       background: var(--bg-main);
       border: 1.5px solid var(--border-color);
-      border-radius: 12px;
-      padding: 6px 10px;
+      border-radius: 10px;
+      padding: 6px 8px;
       cursor: pointer;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
 
     .sticker-canvas {
@@ -484,13 +582,103 @@
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      position: relative;
     }
 
     .placed-sticker {
       font-size: 1.5rem;
       cursor: grab;
       user-select: none;
+    }
+
+    /* Pomodoro Timer Styling */
+    .pomodoro-display {
+      text-align: center;
+      background: var(--bg-main);
+      border: 2px solid var(--border-color);
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    .timer-modes {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .mode-btn {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      padding: 7px 14px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: var(--text-main);
+    }
+
+    .mode-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .timer-clock {
+      font-size: 3.8rem;
+      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+      color: var(--primary);
+      letter-spacing: 2px;
+      margin: 10px 0;
+    }
+
+    .timer-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .technique-card {
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .technique-card h4 {
+      color: var(--primary);
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .technique-card p {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .sound-btn {
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      padding: 8px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    .sound-btn.playing {
+      background: var(--primary);
+      color: white;
     }
 
     /* Crossword Game */
@@ -526,7 +714,7 @@
 <body>
 
   <div class="container">
-    <!-- Header with Personalization & Color Palette Picker -->
+    <!-- Header with Personalization & Theme Controls -->
     <header>
       <div class="brand">
         <h1>✨ Flow Space 🌸</h1>
@@ -537,10 +725,14 @@
       </div>
       <div class="header-controls">
         <select class="theme-select" id="colorThemeSelect">
-          <option value="lavender">🎨 Lavender Dreams</option>
-          <option value="matcha">🍵 Matcha Mint</option>
-          <option value="rose">🌹 Rose Quartz</option>
-          <option value="peach">🍑 Sunset Peach</option>
+          <option value="lavender">🎨 Lavender Dreams (Light)</option>
+          <option value="matcha">🍵 Matcha Mint (Light)</option>
+          <option value="rose">🌹 Rose Quartz (Light)</option>
+          <option value="peach">🍑 Sunset Peach (Light)</option>
+          <option value="ultramarine">🌌 Ultramarine Night (Dark)</option>
+          <option value="obsidian">✨ Obsidian Gold (Dark)</option>
+          <option value="emerald">🌲 Midnight Emerald (Dark)</option>
+          <option value="amethyst">🔮 Deep Amethyst (Dark)</option>
         </select>
         <button class="theme-btn" id="themeToggleBtn">
           🌙 Dark Mode
@@ -604,15 +796,14 @@
         </div>
 
         <div>
-          <!-- Mini Calendar Widget -->
+          <!-- Interactive Mini Calendar Widget -->
           <div class="card">
-            <h2>📅 Calendar & Time Tracker</h2>
+            <h2>📅 Interactive Calendar</h2>
             <div class="mini-calendar" id="miniCalendarWidget">
               <div class="cal-header" id="calMonthYear">November 2026</div>
-              <div class="cal-grid" id="calGridDays">
-                <!-- Populated via JS -->
-              </div>
+              <div class="cal-grid" id="calGridDays"></div>
             </div>
+            <p class="status-note" style="text-align: center; margin-top: 8px;">Click any date to instantly plan that day!</p>
           </div>
 
           <div class="card">
@@ -669,11 +860,11 @@
           </div>
 
           <div class="card">
-            <h2>✨ Gratitude & Stickers</h2>
+            <h2>✨ Gratitude & Customizable Stickers</h2>
             <input type="text" id="grat1" placeholder="🌸 1. I am grateful for..." />
             <input type="text" id="grat2" placeholder="🌸 2. I am grateful for..." />
             
-            <label style="font-size: 0.85rem; font-weight: 600; color: var(--primary); display: block; margin-top: 10px; margin-bottom: 6px;">Sticker Board (Click to add!):</label>
+            <label style="font-size: 0.85rem; font-weight: 600; color: var(--primary); display: block; margin-top: 10px; margin-bottom: 6px;">Sticker Board (Click to add, click placed sticker to delete):</label>
             <div class="sticker-toolbar">
               <button class="sticker-btn" onclick="addSticker('🌸')">🌸</button>
               <button class="sticker-btn" onclick="addSticker('🍓')">🍓</button>
@@ -681,6 +872,12 @@
               <button class="sticker-btn" onclick="addSticker('☕')">☕</button>
               <button class="sticker-btn" onclick="addSticker('🦋')">🦋</button>
               <button class="sticker-btn" onclick="addSticker('🧸')">🧸</button>
+              <button class="sticker-btn" onclick="addSticker('📚')">📚</button>
+              <button class="sticker-btn" onclick="addSticker('💻')">💻</button>
+              <button class="sticker-btn" onclick="addSticker('🎧')">🎧</button>
+              <button class="sticker-btn" onclick="addSticker('✨')">✨</button>
+              <button class="sticker-btn" onclick="addSticker('🌿')">🌿</button>
+              <button class="sticker-btn" onclick="addSticker('🤍')">🤍</button>
             </div>
             <div class="sticker-canvas" id="stickerCanvas"></div>
           </div>
@@ -718,7 +915,7 @@
       </div>
     </div>
 
-    <!-- ================= TAB 4: POMODORO & FOCUS ================= -->
+    <!-- ================= TAB 4: POMODORO & FOCUS TECHNIQUES ================= -->
     <div id="pomodoroTab" class="tab-pane">
       <div class="grid-2">
         <div class="card">
@@ -749,18 +946,24 @@
 
         <div>
           <div class="card">
-            <h2>🧠 Proven Study Techniques Hub</h2>
-            <div class="card" style="background: var(--bg-main); margin-bottom: 12px; padding: 14px;">
-              <h4 style="color: var(--primary); font-size: 0.95rem; margin-bottom: 4px;">1. Pomodoro Technique 🍅</h4>
-              <p style="font-size: 0.83rem; color: var(--text-muted);">25 mins focus, 5 mins rest.</p>
+            <h2>🧠 Study Techniques with Built-In Timers</h2>
+            
+            <div class="technique-card">
+              <h4>1. Pomodoro Technique 🍅</h4>
+              <p>25 mins focus, 5 mins rest.</p>
+              <button class="btn-primary" onclick="launchTechniqueTimer(1500, 'Pomodoro Session')">Start 25m Timer</button>
             </div>
-            <div class="card" style="background: var(--bg-main); margin-bottom: 12px; padding: 14px;">
-              <h4 style="color: var(--primary); font-size: 0.95rem; margin-bottom: 4px;">2. Feynman Technique 💡</h4>
-              <p style="font-size: 0.83rem; color: var(--text-muted);">Explain concepts out loud in simple terms.</p>
+
+            <div class="technique-card">
+              <h4>2. Feynman Technique 💡</h4>
+              <p>Explain concepts out loud in simple terms.</p>
+              <button class="btn-primary" onclick="launchTechniqueTimer(900, 'Feynman Practice')">Start 15m Timer</button>
             </div>
-            <div class="card" style="background: var(--bg-main); margin-bottom: 0; padding: 14px;">
-              <h4 style="color: var(--primary); font-size: 0.95rem; margin-bottom: 4px;">3. The Blurting Method 🧠</h4>
-              <p style="font-size: 0.83rem; color: var(--text-muted);">Write everything from memory on a blank page.</p>
+
+            <div class="technique-card">
+              <h4>3. The Blurting Method 🧠</h4>
+              <p>Write everything from memory on a blank page.</p>
+              <button class="btn-primary" onclick="launchTechniqueTimer(600, 'Blurting Session')">Start 10m Timer</button>
             </div>
           </div>
         </div>
@@ -802,10 +1005,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
 
-      // 1. Date & Personalization
-      const dateOpts = { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' };
-      const dateEl = document.getElementById('currentDate');
-      
+      // 1. Personalization & Quotes
       const userNameInput = document.getElementById('userNameInput');
       if (userNameInput) {
         userNameInput.value = localStorage.getItem('fs_username') || '';
@@ -819,61 +1019,82 @@
       ];
       document.getElementById('quoteBanner').textContent = quotes[Math.floor(Math.random() * quotes.length)];
 
-      // 2. Color Themes & Dark Mode
+      // 2. Themes & Dark Mode Control
       const htmlEl = document.documentElement;
       const colorThemeSelect = document.getElementById('colorThemeSelect');
       const themeToggleBtn = document.getElementById('themeToggleBtn');
 
-      const themes = {
+      const lightThemes = {
         lavender: { '--bg-main': '#F2EBF7', '--bg-card': '#FFF0F5', '--primary': '#E8A0BF', '--secondary': '#B7A6E0', '--accent': '#9CC5A1', '--highlight': '#F9D5A7', '--text-main': '#4A3B47', '--border-color': '#E2D1E9' },
         matcha: { '--bg-main': '#F1F8F2', '--bg-card': '#E3F2E1', '--primary': '#52B788', '--secondary': '#74C69D', '--accent': '#D8F3DC', '--highlight': '#B7E4C7', '--text-main': '#1B4332', '--border-color': '#B7E4C7' },
         rose: { '--bg-main': '#FFF0F3', '--bg-card': '#FFCCD5', '--primary': '#FF4D6D', '--secondary': '#FF758F', '--accent': '#FFB3C1', '--highlight': '#FFCCD5', '--text-main': '#590D22', '--border-color': '#FFB3C1' },
         peach: { '--bg-main': '#FFF5EE', '--bg-card': '#FFE5D9', '--primary': '#F4A261', '--secondary': '#E76F51', '--accent': '#2A9D8F', '--highlight': '#E9C46A', '--text-main': '#264653', '--border-color': '#F4A261' }
       };
 
+      const savedTheme = localStorage.getItem('fs_theme_mode') || 'light';
       const savedThemeKey = localStorage.getItem('fs_colortheme') || 'lavender';
-      if (colorThemeSelect) colorThemeSelect.value = savedThemeKey;
-      
-      function applyTheme(key) {
-        if (htmlEl.getAttribute('data-theme') === 'dark') return;
-        const t = themes[key] || themes.lavender;
-        for (let prop in t) htmlEl.style.setProperty(prop, t[prop]);
-        localStorage.setItem('fs_colortheme', key);
+
+      if (savedTheme === 'dark') {
+        htmlEl.removeAttribute('data-dark-theme');
+        htmlEl.setAttribute('data-dark-theme', ['ultramarine','obsidian','emerald','amethyst'].includes(savedThemeKey) ? savedThemeKey : 'ultramarine');
+        themeToggleBtn.textContent = '☀️ Light Mode';
+      } else {
+        htmlEl.removeAttribute('data-dark-theme');
+        applyLightTheme(savedThemeKey);
+        themeToggleBtn.textContent = '🌙 Dark Mode';
       }
-      applyTheme(savedThemeKey);
+      if (colorThemeSelect) colorThemeSelect.value = savedThemeKey;
+
+      function applyLightTheme(key) {
+        const t = lightThemes[key] || lightThemes.lavender;
+        for (let prop in t) htmlEl.style.setProperty(prop, t[prop]);
+      }
 
       if (colorThemeSelect) {
-        colorThemeSelect.addEventListener('change', (e) => applyTheme(e.target.value));
-      }
-
-      const savedDarkMode = localStorage.getItem('fs_darkmode') === 'true';
-      if (savedDarkMode) {
-        htmlEl.setAttribute('data-theme', 'dark');
-        themeToggleBtn.textContent = '☀️ Light Mode';
+        colorThemeSelect.addEventListener('change', (e) => {
+          const val = e.target.value;
+          localStorage.setItem('fs_colortheme', val);
+          if (['ultramarine', 'obsidian', 'emerald', 'amethyst'].includes(val)) {
+            htmlEl.setAttribute('data-dark-theme', val);
+            localStorage.setItem('fs_theme_mode', 'dark');
+            themeToggleBtn.textContent = '☀️ Light Mode';
+          } else {
+            htmlEl.removeAttribute('data-dark-theme');
+            localStorage.setItem('fs_theme_mode', 'light');
+            applyLightTheme(val);
+            themeToggleBtn.textContent = '🌙 Dark Mode';
+          }
+        });
       }
 
       if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', () => {
-          const isDark = htmlEl.getAttribute('data-theme') === 'dark';
+          const isDark = htmlEl.hasAttribute('data-dark-theme');
           if (isDark) {
-            htmlEl.setAttribute('data-theme', 'light');
-            localStorage.setItem('fs_darkmode', 'false');
+            htmlEl.removeAttribute('data-dark-theme');
+            localStorage.setItem('fs_theme_mode', 'light');
+            applyLightTheme('lavender');
+            colorThemeSelect.value = 'lavender';
             themeToggleBtn.textContent = '🌙 Dark Mode';
-            applyTheme(colorThemeSelect.value);
           } else {
-            htmlEl.setAttribute('data-theme', 'dark');
-            localStorage.setItem('fs_darkmode', 'true');
+            htmlEl.setAttribute('data-dark-theme', 'ultramarine');
+            localStorage.setItem('fs_theme_mode', 'dark');
+            colorThemeSelect.value = 'ultramarine';
             themeToggleBtn.textContent = '☀️ Light Mode';
           }
         });
       }
 
-      // 3. Mini Calendar Widget
+      // 3. Interactive Mini Calendar
       function renderCalendar() {
         const calGridDays = document.getElementById('calGridDays');
+        const calMonthYear = document.getElementById('calMonthYear');
         if (!calGridDays) return;
         calGridDays.innerHTML = '';
         const now = new Date();
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        if (calMonthYear) calMonthYear.textContent = `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+
         const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
         days.forEach(d => {
           const el = document.createElement('div');
@@ -890,8 +1111,23 @@
         }
         for (let d = 1; d <= totalDays; d++) {
           const el = document.createElement('div');
+          const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
           el.className = 'cal-date' + (d === now.getDate() ? ' today' : '');
           el.textContent = d;
+          el.addEventListener('click', () => {
+            document.querySelectorAll('.cal-date').forEach(cd => cd.classList.remove('selected-date'));
+            el.classList.add('selected-date');
+            const picker = document.getElementById('plannerDatePicker');
+            if (picker) {
+              picker.value = dateStr;
+              loadSchedule(dateStr);
+            }
+            // Switch to Day Planner Tab
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            document.querySelector('[data-tab="dayTab"]').classList.add('active');
+            document.getElementById('dayTab').classList.add('active');
+          });
           calGridDays.appendChild(el);
         }
       }
@@ -1061,7 +1297,89 @@
       }
       loadSchedule(todayStr);
 
-      // 8. Stickers Feature
+      // 8. Week Planner Grid (Restored 7 distinct boxes)
+      const weekGridContainer = document.getElementById('weekGridContainer');
+      const days = ['Monday 🌸', 'Tuesday 🌿', 'Wednesday 🍓', 'Thursday 💫', 'Friday 🤍', 'Saturday ✨', 'Sunday 🌷'];
+      if (weekGridContainer) {
+        days.forEach((day, idx) => {
+          const key = 'week_day_' + idx;
+          const val = localStorage.getItem('fs_' + key) || '';
+          const box = document.createElement('div');
+          box.className = 'day-box';
+          box.innerHTML = `
+            <h3>${day}</h3>
+            <textarea id="${key}" placeholder="Daily study goals...">${val}</textarea>
+          `;
+          weekGridContainer.appendChild(box);
+          box.querySelector('textarea').addEventListener('input', (e) => {
+            localStorage.setItem('fs_' + key, e.target.value);
+          });
+        });
+      }
+
+      // Habits
+      const habits = ['Studied 2+ Hours', 'Reviewed Notes', 'Drank 8 Glasses', 'Slept 8 Hours', 'No Phone Scroll'];
+      const habitTableBody = document.getElementById('habitTableBody');
+      if (habitTableBody) {
+        habits.forEach((habit, hIdx) => {
+          const tr = document.createElement('tr');
+          let html = `<td>${habit}</td>`;
+          for (let d = 0; d < 7; d++) {
+            const hKey = `habit_${hIdx}_${d}`;
+            const checked = localStorage.getItem('fs_' + hKey) === 'true' ? 'checked' : '';
+            html += `<td><input type="checkbox" data-hkey="${hKey}" ${checked} style="width:16px;height:16px;accent-color:var(--primary);" /></td>`;
+          }
+          tr.innerHTML = html;
+          habitTableBody.appendChild(tr);
+        });
+
+        habitTableBody.querySelectorAll('input[type="checkbox"]').forEach(chk => {
+          chk.addEventListener('change', (e) => {
+            localStorage.setItem('fs_' + e.target.getAttribute('data-hkey'), e.target.checked);
+          });
+        });
+      }
+
+      // 9. Mood & Water
+      const moodBtns = document.querySelectorAll('.mood-btn');
+      const moodStatusText = document.getElementById('moodStatusText');
+      const savedMood = localStorage.getItem('fs_mood');
+      if (savedMood) {
+        if (moodStatusText) moodStatusText.textContent = 'Current mood: ' + savedMood;
+        moodBtns.forEach(b => { if (b.getAttribute('data-mood') === savedMood) b.classList.add('selected'); });
+      }
+      moodBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          moodBtns.forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          const mood = btn.getAttribute('data-mood');
+          localStorage.setItem('fs_mood', mood);
+          if (moodStatusText) moodStatusText.textContent = 'Current mood: ' + mood;
+        });
+      });
+
+      const waterContainer = document.getElementById('waterGlassesContainer');
+      const waterStatusText = document.getElementById('waterStatusText');
+      let waterCount = parseInt(localStorage.getItem('fs_water') || '0', 10);
+      function renderWater() {
+        if (!waterContainer) return;
+        waterContainer.innerHTML = '';
+        for (let i = 1; i <= 8; i++) {
+          const glass = document.createElement('div');
+          glass.className = `glass ${i <= waterCount ? 'filled' : ''}`;
+          glass.innerHTML = i <= waterCount ? '💧' : '🥛';
+          glass.addEventListener('click', () => {
+            waterCount = (waterCount === i) ? i - 1 : i;
+            localStorage.setItem('fs_water', waterCount);
+            renderWater();
+          });
+          waterContainer.appendChild(glass);
+        }
+        if (waterStatusText) waterStatusText.textContent = `${waterCount} / 8 glasses completed today ✨`;
+      }
+      renderWater();
+
+      // 10. Stickers Feature
       window.addSticker = function(emoji) {
         const canvas = document.getElementById('stickerCanvas');
         if (!canvas) return;
@@ -1072,7 +1390,107 @@
         canvas.appendChild(span);
       };
 
-      // 9. Crossword Game
+      // 11. Pomodoro Timer & Technique Timers
+      let timerInterval = null;
+      let currentTime = 1500;
+      let totalSeconds = 1500;
+      let isRunning = false;
+      let focusCount = parseInt(localStorage.getItem('fs_focus_count') || '0', 10);
+
+      const timerClock = document.getElementById('timerClock');
+      const timerStartBtn = document.getElementById('timerStartBtn');
+      const timerPauseBtn = document.getElementById('timerPauseBtn');
+      const timerResetBtn = document.getElementById('timerResetBtn');
+      const pomodoroCountText = document.getElementById('pomodoroCountText');
+      const modeBtns = document.querySelectorAll('.mode-btn');
+
+      if (pomodoroCountText) pomodoroCountText.textContent = `Completed focus sessions today: ${focusCount} 🍅`;
+
+      function updateClockDisplay() {
+        const mins = Math.floor(currentTime / 60);
+        const secs = currentTime % 60;
+        if (timerClock) {
+          timerClock.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+      }
+
+      modeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          modeBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const t = parseInt(btn.getAttribute('data-time'), 10);
+          currentTime = t;
+          totalSeconds = t;
+          clearInterval(timerInterval);
+          isRunning = false;
+          updateClockDisplay();
+        });
+      });
+
+      window.launchTechniqueTimer = function(seconds, label) {
+        currentTime = seconds;
+        totalSeconds = seconds;
+        clearInterval(timerInterval);
+        isRunning = true;
+        updateClockDisplay();
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+        document.querySelector('[data-tab="pomodoroTab"]').classList.add('active');
+        document.getElementById('pomodoroTab').classList.add('active');
+        
+        timerInterval = setInterval(() => {
+          if (currentTime > 0) {
+            currentTime--;
+            updateClockDisplay();
+          } else {
+            clearInterval(timerInterval);
+            isRunning = false;
+            focusCount++;
+            localStorage.setItem('fs_focus_count', focusCount);
+            if (pomodoroCountText) pomodoroCountText.textContent = `Completed focus sessions today: ${focusCount} 🍅`;
+            alert(`🎉 ${label} completed successfully!`);
+          }
+        }, 1000);
+      };
+
+      if (timerStartBtn) {
+        timerStartBtn.addEventListener('click', () => {
+          if (isRunning) return;
+          isRunning = true;
+          timerInterval = setInterval(() => {
+            if (currentTime > 0) {
+              currentTime--;
+              updateClockDisplay();
+            } else {
+              clearInterval(timerInterval);
+              isRunning = false;
+              focusCount++;
+              localStorage.setItem('fs_focus_count', focusCount);
+              if (pomodoroCountText) pomodoroCountText.textContent = `Completed focus sessions today: ${focusCount} 🍅`;
+              alert('🎉 Focus session completed! Take a well-deserved break.');
+            }
+          }, 1000);
+        });
+      }
+
+      if (timerPauseBtn) {
+        timerPauseBtn.addEventListener('click', () => {
+          clearInterval(timerInterval);
+          isRunning = false;
+        });
+      }
+
+      if (timerResetBtn) {
+        timerResetBtn.addEventListener('click', () => {
+          clearInterval(timerInterval);
+          isRunning = false;
+          currentTime = totalSeconds;
+          updateClockDisplay();
+        });
+      }
+      updateClockDisplay();
+
+      // 12. Crossword Game & Zen Garden
       const checkCrossword = document.getElementById('checkCrossword');
       if (checkCrossword) {
         checkCrossword.addEventListener('click', () => {
@@ -1090,7 +1508,6 @@
         });
       }
 
-      // 10. Zen Garden Game
       let waterDrops = parseInt(localStorage.getItem('fs_garden_drops') || '0', 10);
       const waterDropCount = document.getElementById('waterDropCount');
       const plantDisplay = document.getElementById('plantDisplay');

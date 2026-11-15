@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,52 +7,43 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-primary: #fffdf9;
-      --bg-secondary: #ffffff;
-      --bg-cream: #fdf6ec;
-      --pink-soft: #fce4ec;
-      --pink-baby: #f8bbd0;
-      --pink-accent: #f06292;
-      --pink-deep: #ec407a;
-      --gold-shimmer: #d4af37;
-      --text-main: #4a3b40;
-      --text-muted: #8c767e;
-      --border-color: #f8bbd0;
-      --card-shadow: 0 8px 24px rgba(244, 143, 177, 0.18);
-      --glitter-bg: radial-gradient(circle at 20% 20%, rgba(255, 223, 186, 0.35) 0%, transparent 40%),
-                    radial-gradient(circle at 80% 30%, rgba(248, 187, 208, 0.4) 0%, transparent 45%),
-                    radial-gradient(circle at 50% 80%, rgba(255, 249, 230, 0.5) 0%, transparent 50%),
-                    linear-gradient(135deg, #fffdf9 0%, #fff0f5 50%, #fdf6ec 100%);
+      --bg-main: #FFFFFF;
+      --bg-card: #FFFFFF;
+      --bg-cream: #FFF0F5;
+      --pastel-green: #D8F3DC;
+      --soft-green: #E8F5E9;
+      --baby-pink: #FFD1DC;
+      --deep-pink: #FF6B8B;
+      --text-main: #2F3E46;
+      --text-muted: #6C757D;
+      --border-color: #FFD1DC;
+      --shadow: 0 8px 24px rgba(255, 209, 220, 0.25);
     }
 
-    body.dark-mode {
-      --bg-primary: #1a1318;
-      --bg-secondary: #261c23;
-      --bg-cream: #2f222b;
-      --pink-soft: #3d2935;
-      --pink-baby: #5c3b4e;
-      --pink-accent: #ff80ab;
-      --pink-deep: #f50057;
-      --text-main: #fce4ec;
-      --text-muted: #c4a7b3;
-      --border-color: #5c3b4e;
-      --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
-      --glitter-bg: radial-gradient(circle at 20% 20%, rgba(255, 128, 171, 0.1) 0%, transparent 40%),
-                    radial-gradient(circle at 80% 30%, rgba(186, 104, 200, 0.1) 0%, transparent 45%),
-                    linear-gradient(135deg, #1a1318 0%, #241720 50%, #1c1419 100%);
+    [data-theme="dark"] {
+      --bg-main: #141E19;
+      --bg-card: #1D2D24;
+      --bg-cream: #231922;
+      --pastel-green: #2D6A4F;
+      --soft-green: #1B4332;
+      --baby-pink: #FF9EBB;
+      --deep-pink: #FF6B8B;
+      --text-main: #E8F5E9;
+      --text-muted: #95D5B2;
+      --border-color: #2D6A4F;
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     }
 
     body {
       font-family: 'Poppins', sans-serif;
-      background: var(--glitter-bg);
-      background-attachment: fixed;
+      background-color: var(--bg-main);
       color: var(--text-main);
       min-height: 100vh;
       padding-bottom: 50px;
@@ -60,43 +51,40 @@
       overflow-x: hidden;
     }
 
-    /* Subtle Sparkle Overlay */
+    /* Subtle Sparkle & Glow Pattern */
     body::before {
       content: "";
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       pointer-events: none;
       background-image: 
-        radial-gradient(2px 2px at 40px 60px, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 200px 150px, #ffe57f, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 350px 80px, #f8bbd0, rgba(0,0,0,0)),
-        radial-gradient(1.5px 1.5px at 120px 280px, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 85% 25%, #ffe57f, rgba(0,0,0,0)),
-        radial-gradient(2.5px 2.5px at 70% 70%, #f8bbd0, rgba(0,0,0,0));
-      background-repeat: repeat;
-      background-size: 400px 400px;
-      opacity: 0.7;
+        radial-gradient(2px 2px at 50px 70px, var(--baby-pink), rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 250px 180px, var(--pastel-green), rgba(0,0,0,0)),
+        radial-gradient(2.5px 2.5px at 80% 20%, var(--baby-pink), rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 70% 80%, var(--pastel-green), rgba(0,0,0,0));
+      background-size: 500px 500px;
+      opacity: 0.6;
       z-index: 0;
     }
 
     .container {
-      max-width: 1050px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 28px 20px;
+      padding: 24px 20px;
       position: relative;
       z-index: 1;
     }
 
-    /* Header & Dark Mode Button */
+    /* Header */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: var(--bg-secondary);
+      background: var(--bg-card);
       border: 2px solid var(--border-color);
       border-radius: 24px;
       padding: 20px 28px;
-      box-shadow: var(--card-shadow);
+      box-shadow: var(--shadow);
       margin-bottom: 24px;
       flex-wrap: wrap;
       gap: 15px;
@@ -105,15 +93,14 @@
     .brand h1 {
       font-family: 'Playfair Display', serif;
       font-size: 2.2rem;
-      color: var(--pink-accent);
+      color: var(--deep-pink);
       display: flex;
       align-items: center;
       gap: 10px;
-      letter-spacing: 0.5px;
     }
 
     .brand p {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--text-muted);
       margin-top: 2px;
     }
@@ -124,18 +111,17 @@
       gap: 12px;
     }
 
-    .date-badge {
+    .badge-date {
       background: var(--bg-cream);
       border: 1px solid var(--border-color);
       padding: 8px 16px;
       border-radius: 50px;
       font-size: 0.85rem;
       font-weight: 500;
-      color: var(--text-main);
     }
 
     .theme-btn {
-      background: var(--pink-soft);
+      background: var(--bg-cream);
       border: 1.5px solid var(--border-color);
       color: var(--text-main);
       padding: 9px 18px;
@@ -147,35 +133,48 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      box-shadow: 0 3px 10px rgba(240, 98, 146, 0.15);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
     .theme-btn:hover {
-      background: var(--pink-baby);
+      background: var(--baby-pink);
       transform: translateY(-1px);
     }
 
+    /* Quote Banner */
+    .quote-banner {
+      background: linear-gradient(135deg, var(--bg-cream), var(--soft-green));
+      border: 1.5px solid var(--border-color);
+      border-radius: 16px;
+      padding: 14px 22px;
+      text-align: center;
+      margin-bottom: 24px;
+      font-style: italic;
+      font-size: 0.95rem;
+      box-shadow: var(--shadow);
+    }
+
     /* Navigation Tabs */
-    .tabs {
+    .tabs-nav {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       margin-bottom: 24px;
       flex-wrap: wrap;
     }
 
     .tab-btn {
       flex: 1;
-      min-width: 160px;
-      background: var(--bg-secondary);
+      min-width: 170px;
+      background: var(--bg-card);
       border: 2px solid var(--border-color);
       color: var(--text-main);
-      padding: 13px 18px;
-      border-radius: 18px;
+      padding: 12px 16px;
+      border-radius: 16px;
       font-family: 'Poppins', sans-serif;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       cursor: pointer;
-      box-shadow: var(--card-shadow);
+      box-shadow: var(--shadow);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -183,18 +182,17 @@
     }
 
     .tab-btn.active, .tab-btn:hover {
-      background: linear-gradient(135deg, var(--pink-baby), var(--pink-soft));
-      border-color: var(--pink-accent);
-      color: var(--text-main);
+      background: linear-gradient(135deg, var(--baby-pink), var(--pastel-green));
+      border-color: var(--deep-pink);
       transform: translateY(-2px);
     }
 
-    .tab-content {
+    .tab-pane {
       display: none;
       animation: fadeIn 0.3s ease;
     }
 
-    .tab-content.active {
+    .tab-pane.active {
       display: block;
     }
 
@@ -203,33 +201,33 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Cards & Layout Grids */
+    /* Grid Layouts */
     .grid-2 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 20px;
     }
 
     .card {
-      background: var(--bg-secondary);
+      background: var(--bg-card);
       border: 2px solid var(--border-color);
-      border-radius: 22px;
+      border-radius: 20px;
       padding: 22px;
-      box-shadow: var(--card-shadow);
+      box-shadow: var(--shadow);
       margin-bottom: 20px;
     }
 
     .card h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.35rem;
-      color: var(--pink-accent);
+      font-size: 1.3rem;
+      color: var(--deep-pink);
       margin-bottom: 14px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    /* Forms & Inputs */
+    /* Inputs & Buttons */
     input, select, textarea {
       width: 100%;
       padding: 11px 14px;
@@ -244,21 +242,22 @@
     }
 
     input:focus, select:focus, textarea:focus {
-      border-color: var(--pink-accent);
-      box-shadow: 0 0 0 3px rgba(240, 98, 146, 0.15);
+      border-color: var(--deep-pink);
+      box-shadow: 0 0 0 3px rgba(255, 107, 139, 0.15);
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--pink-accent), var(--pink-deep));
+      background: linear-gradient(135deg, var(--deep-pink), var(--baby-pink));
       color: #fff;
       border: none;
-      padding: 11px 22px;
+      padding: 11px 20px;
       border-radius: 12px;
       font-family: 'Poppins', sans-serif;
       font-weight: 600;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(240, 98, 146, 0.35);
+      box-shadow: 0 4px 12px rgba(255, 107, 139, 0.3);
+      width: 100%;
     }
 
     .btn-primary:hover {
@@ -266,49 +265,73 @@
       transform: translateY(-1px);
     }
 
-    /* Task List Items */
-    .task-item {
+    /* Progress Bar */
+    .progress-container {
+      background: var(--bg-cream);
+      border-radius: 50px;
+      height: 14px;
+      width: 100%;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      margin: 12px 0 16px 0;
+    }
+
+    .progress-fill {
+      background: linear-gradient(90deg, var(--pastel-green), var(--deep-pink));
+      height: 100%;
+      width: 0%;
+      transition: width 0.4s ease;
+      border-radius: 50px;
+    }
+
+    /* Task & Exam Items */
+    .task-item, .exam-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
       background: var(--bg-cream);
       border: 1px solid var(--border-color);
-      padding: 12px 16px;
-      border-radius: 14px;
+      padding: 11px 14px;
+      border-radius: 12px;
       margin-bottom: 10px;
       gap: 10px;
     }
 
-    .task-item.done {
-      opacity: 0.6;
+    .task-item.done span {
       text-decoration: line-through;
+      opacity: 0.5;
     }
 
     .badge {
-      background: var(--pink-soft);
-      color: var(--pink-deep);
-      padding: 3px 10px;
+      background: var(--pastel-green);
+      color: var(--text-main);
+      padding: 3px 9px;
       border-radius: 50px;
-      font-size: 0.75rem;
+      font-size: 0.73rem;
       font-weight: 600;
     }
 
-    /* Daily Schedule Slots */
+    .priority-high { background: #ffcdd2; color: #b71c1c; }
+    .priority-med { background: #fff9c4; color: #f57f17; }
+    .priority-low { background: var(--pastel-green); color: #1b5e20; }
+
+    /* Schedule Slots */
     .schedule-row {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 10px;
+      gap: 10px;
+      margin-bottom: 9px;
     }
 
     .time-label {
       min-width: 85px;
       font-weight: 600;
-      font-size: 0.85rem;
-      color: var(--pink-accent);
-      background: var(--pink-soft);
-      padding: 8px 10px;
-      border-radius: 10px;
+      font-size: 0.8rem;
+      color: var(--deep-pink);
+      background: var(--bg-cream);
+      border: 1px solid var(--border-color);
+      padding: 7px 8px;
+      border-radius: 8px;
       text-align: center;
     }
 
@@ -316,184 +339,891 @@
       margin-bottom: 0;
     }
 
-    /* Weekly Grid */
-    .week-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-    }
-
-    .day-box {
-      background: var(--bg-cream);
-      border: 1.5px solid var(--border-color);
-      border-radius: 16px;
-      padding: 14px;
-    }
-
-    .day-box h3 {
-      font-size: 1rem;
-      color: var(--pink-accent);
-      margin-bottom: 8px;
-      border-bottom: 1px dashed var(--border-color);
-      padding-bottom: 5px;
-    }
-
-    .day-box textarea {
-      height: 95px;
-      resize: vertical;
-      background: var(--bg-secondary);
-      margin-bottom: 0;
-    }
-
     /* Mood Tracker */
     .mood-grid {
       display: flex;
       justify-content: space-between;
-      gap: 8px;
-      flex-wrap: wrap;
+      gap: 6px;
       margin-top: 8px;
     }
 
     .mood-btn {
       flex: 1;
-      min-width: 70px;
       background: var(--bg-cream);
       border: 2px solid var(--border-color);
-      border-radius: 16px;
-      padding: 12px 8px;
+      border-radius: 14px;
+      padding: 10px 4px;
       text-align: center;
       cursor: pointer;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
     }
 
     .mood-btn span {
       display: block;
-      font-size: 0.75rem;
-      color: var(--text-main);
-      margin-top: 4px;
-      font-weight: 500;
+      font-size: 0.68rem;
+      font-weight: 600;
+      margin-top: 3px;
     }
 
     .mood-btn.selected {
-      background: var(--pink-baby);
-      border-color: var(--pink-accent);
+      background: var(--pastel-green);
+      border-color: var(--deep-pink);
       transform: scale(1.05);
     }
 
     /* Water Tracker */
     .water-glasses {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
-      margin: 14px 0;
+      margin: 12px 0;
     }
 
     .glass {
-      width: 48px;
-      height: 58px;
-      border: 2px solid var(--pink-accent);
-      border-radius: 8px 8px 16px 16px;
+      width: 44px;
+      height: 52px;
+      border: 2px solid var(--border-color);
+      border-radius: 6px 6px 12px 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       background: var(--bg-cream);
       user-select: none;
     }
 
     .glass.filled {
-      background: linear-gradient(180deg, #b3e5fc 0%, #81d4fa 100%);
-      border-color: #29b6f6;
-      box-shadow: 0 4px 10px rgba(41, 182, 246, 0.3);
+      background: var(--pastel-green);
+      border-color: #2D6A4F;
+      box-shadow: 0 3px 8px rgba(45, 106, 79, 0.2);
     }
 
-    .save-toast {
-      font-size: 0.8rem;
-      color: var(--pink-accent);
-      margin-top: 6px;
+    /* Week & Habit Grids */
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+    }
+
+    .day-box {
+      background: var(--bg-cream);
+      border: 1.5px solid var(--border-color);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .day-box h3 {
+      font-size: 0.95rem;
+      color: var(--deep-pink);
+      margin-bottom: 8px;
+      border-bottom: 1px dashed var(--border-color);
+      padding-bottom: 4px;
+    }
+
+    .day-box textarea {
+      height: 85px;
+      resize: vertical;
+      background: var(--bg-card);
+      margin-bottom: 0;
+    }
+
+    .habit-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 0.85rem;
+    }
+
+    .habit-table th, .habit-table td {
+      border: 1px solid var(--border-color);
+      padding: 6px;
+      text-align: center;
+    }
+
+    .habit-table th {
+      background: var(--bg-cream);
+      color: var(--deep-pink);
+      font-weight: 600;
+    }
+
+    .habit-table td:first-child {
+      text-align: left;
       font-weight: 500;
+    }
+
+    /* Pomodoro Timer Styling */
+    .pomodoro-display {
+      text-align: center;
+      background: var(--bg-cream);
+      border: 2px solid var(--border-color);
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    .timer-modes {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .mode-btn {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      padding: 7px 14px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: var(--text-main);
+    }
+
+    .mode-btn.active {
+      background: var(--deep-pink);
+      color: #fff;
+      border-color: var(--deep-pink);
+    }
+
+    .timer-clock {
+      font-size: 3.8rem;
+      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+      color: var(--deep-pink);
+      letter-spacing: 2px;
+      margin: 10px 0;
+    }
+
+    .timer-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .technique-card {
+      background: var(--bg-cream);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .technique-card h4 {
+      color: var(--deep-pink);
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .technique-card p {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+    }
+
+    .sound-btn {
+      background: var(--soft-green);
+      border: 1px solid var(--border-color);
+      padding: 8px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    .sound-btn.playing {
+      background: var(--deep-pink);
+      color: white;
+    }
+
+    .status-note {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+      font-style: italic;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <!-- Top Header -->
+    <!-- Header -->
     <header>
       <div class="brand">
-        <h1>✨ Plan Your Day 🌸</h1>
-        <p>Your aesthetic study, daily schedule, & self-care sanctuary</p>
+        <h1>✨ Plan Your Day 🍓🌿</h1>
+        <p>Your strawberry matcha study sanctuary, task & wellness hub</p>
       </div>
       <div class="header-controls">
-        <div class="date-badge" id="currentDate">Loading date...</div>
-        <button class="theme-btn" id="themeToggle" onclick="toggleTheme()">
+        <div class="badge-date" id="currentDate">Loading...</div>
+        <button class="theme-btn" id="themeToggleBtn">
           🌙 Dark Mode
         </button>
       </div>
     </header>
 
-    <!-- Navigation Tabs -->
-    <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab('studyTab', this)">📚 Study Tasks</button>
-      <button class="tab-btn" onclick="switchTab('dayTab', this)">🌷 Day Planner</button>
-      <button class="tab-btn" onclick="switchTab('weekTab', this)">🗓️ Week Planner</button>
-      <button class="tab-btn" onclick="switchTab('wellnessTab', this)">💖 Mood, Water & Gratitude</button>
+    <!-- Motivational Quote Banner -->
+    <div class="quote-banner" id="quoteBanner">
+      ✨ "Small daily progress adds up to huge results. You've got this!" 🍓
     </div>
 
-    <!-- TAB 1: STUDY TASKS -->
-    <div id="studyTab" class="tab-content active">
+    <!-- Navigation Tabs -->
+    <div class="tabs-nav">
+      <button class="tab-btn active" data-tab="studyTab">📚 Study Dashboard</button>
+      <button class="tab-btn" data-tab="dayTab">🌷 Day Planner</button>
+      <button class="tab-btn" data-tab="weekTab">🗓️ Week & Habits</button>
+      <button class="tab-btn" data-tab="pomodoroTab">⏱️ Pomodoro & Focus</button>
+    </div>
+
+    <!-- ================= TAB 1: STUDY DASHBOARD ================= -->
+    <div id="studyTab" class="tab-pane active">
       <div class="grid-2">
         <!-- Add Task Card -->
         <div class="card">
-          <h2>✨ Add Study Task</h2>
-          <form action="/add" method="POST" onsubmit="saveLocalTask(event)">
-            <input type="text" id="taskTitle" name="title" placeholder="What are you studying today? (e.g., Biology Ch. 4)" required />
-            <input type="text" id="taskSubject" name="subject" placeholder="Subject / Category (e.g., Science, Math)" />
+          <h2>📚 Add Study Task</h2>
+          <form id="taskForm">
+            <input type="text" id="taskTitleInput" placeholder="What are you studying? (e.g. Organic Chemistry Ch. 3)" required />
+            <input type="text" id="taskSubjectInput" placeholder="Subject / Tag (e.g. Chemistry, Math)" />
             <div style="display: flex; gap: 10px;">
-              <input type="date" id="taskDate" name="due_date" />
-              <select id="taskPriority" name="priority">
-                <option value="High 🔥">High Priority 🔥</option>
-                <option value="Medium 🌸" selected>Medium Priority 🌸</option>
-                <option value="Low ☁️">Low Priority ☁️</option>
+              <input type="date" id="taskDateInput" />
+              <select id="taskPriorityInput">
+                <option value="High">High 🔥</option>
+                <option value="Medium" selected>Medium 🌿</option>
+                <option value="Low">Low ☁️</option>
               </select>
             </div>
-            <button type="submit" class="btn-primary" style="width: 100%;">+ Add to Study List</button>
+            <button type="submit" class="btn-primary">+ Add Task</button>
           </form>
+
+          <h2 style="margin-top: 22px;">📊 Daily Study Progress</h2>
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600;">
+            <span id="progressText">0 / 0 completed</span>
+            <span id="progressPercent">0%</span>
+          </div>
+          <div class="progress-container">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
         </div>
 
-        <!-- Study Checklist Card -->
-        <div class="card">
-          <h2>📝 Today's Study Checklist</h2>
-          <div id="studyTaskList"></div>
-
-          {% if tasks %}
-            <div style="margin-top: 12px; border-top: 1px dashed var(--border-color); padding-top: 12px;">
-              {% for task in tasks %}
-                <div class="task-item {% if task.completed or task.status == 'done' %}done{% endif %}">
-                  <div>
-                    <strong>{{ task.title or task.task or task[1] }}</strong>
-                    {% if task.subject %}<span class="badge">{{ task.subject }}</span>{% endif %}
-                  </div>
-                </div>
-              {% endfor %}
+        <!-- Tasks List & Exam Countdown -->
+        <div>
+          <div class="card">
+            <h2>✨ Today's Tasks</h2>
+            <div id="taskListContainer">
+              <!-- Dynamically populated tasks -->
             </div>
-          {% endif %}
+          </div>
+
+          <div class="card">
+            <h2>⏳ Exam & Deadline Countdown</h2>
+            <form id="examForm" style="margin-bottom: 12px;">
+              <input type="text" id="examNameInput" placeholder="Exam / Quiz Name (e.g. Physics Midterm)" required />
+              <input type="date" id="examDateInput" required />
+              <button type="submit" class="btn-primary" style="background: linear-gradient(135deg, #2D6A4F, #52B788);">+ Add Exam Countdown</button>
+            </form>
+            <div id="examListContainer"></div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- TAB 2: DAY PLANNER -->
-    <div id="dayTab" class="tab-content">
+    <!-- ================= TAB 2: DAY PLANNER ================= -->
+    <div id="dayTab" class="tab-pane">
+      <div class="grid-2">
+        <!-- Schedule Column -->
+        <div class="card">
+          <h2>⏰ Hourly Schedule (6 AM - 10 PM)</h2>
+          <div id="scheduleContainer"></div>
+          <p class="status-note">✨ Auto-saves as you type!</p>
+        </div>
+
+        <!-- Wellness & Priorities Column -->
+        <div>
+          <div class="card">
+            <h2>👑 Top 3 Priorities Today</h2>
+            <input type="text" id="prio1" placeholder="1. Most important study goal..." />
+            <input type="text" id="prio2" placeholder="2. Second priority..." />
+            <input type="text" id="prio3" placeholder="3. Third priority..." />
+          </div>
+
+          <div class="card">
+            <h2>🌸 How Are You Feeling Today?</h2>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px;">Tap your mood:</p>
+            <div class="mood-grid" id="moodGrid">
+              <div class="mood-btn" data-mood="🥰 Radiant">🥰<span>Radiant</span></div>
+              <div class="mood-btn" data-mood="😊 Happy">😊<span>Happy</span></div>
+              <div class="mood-btn" data-mood="🌿 Calm">🌿<span>Calm</span></div>
+              <div class="mood-btn" data-mood="😴 Tired">😴<span>Tired</span></div>
+              <div class="mood-btn" data-mood="🥺 Stressed">🥺<span>Stressed</span></div>
+            </div>
+            <p class="status-note" id="moodStatusText" style="margin-top: 10px;">Current mood: Not logged yet</p>
+          </div>
+
+          <div class="card">
+            <h2>💧 Hydration Tracker (8 Glasses)</h2>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Click a glass when you drink water:</p>
+            <div class="water-glasses" id="waterGlassesContainer"></div>
+            <p class="status-note" id="waterStatusText">0 / 8 glasses completed today</p>
+          </div>
+
+          <div class="card">
+            <h2>✨ Gratitude & Affirmation</h2>
+            <input type="text" id="grat1" placeholder="🍓 1. I am grateful for..." />
+            <input type="text" id="grat2" placeholder="🍓 2. I am grateful for..." />
+            <input type="text" id="grat3" placeholder="🍓 3. I am grateful for..." />
+            <textarea id="dailyAffirmation" rows="3" placeholder="Write a kind affirmation or daily reflection..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= TAB 3: WEEK PLANNER & HABITS ================= -->
+    <div id="weekTab" class="tab-pane">
+      <div class="card">
+        <h2>🗓️ Weekly Overview & Goals</h2>
+        <input type="text" id="weeklyFocus" placeholder="✨ Main Focus / Mantra of the Week..." style="margin-bottom: 16px;" />
+        <div class="week-grid" id="weekGridContainer"></div>
+      </div>
+
+      <div class="card">
+        <h2>🌿 Weekly Study & Self-Care Habit Tracker</h2>
+        <div style="overflow-x: auto;">
+          <table class="habit-table" id="habitTable">
+            <thead>
+              <tr>
+                <th>Habit</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+                <th>Sun</th>
+              </tr>
+            </thead>
+            <tbody id="habitTableBody">
+              <!-- Dynamically populated habits -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= TAB 4: POMODORO & FOCUS ================= -->
+    <div id="pomodoroTab" class="tab-pane">
       <div class="grid-2">
         <div class="card">
-          <h2>⏰ Daily Time-Block Schedule</h2>
-          <div id="scheduleContainer"></div>
-          <p class="save-toast">✨ Auto-saves as you type!</p>
+          <h2>⏱️ Aesthetic Pomodoro Timer</h2>
+          <div class="pomodoro-display">
+            <div class="timer-modes">
+              <button class="mode-btn active" data-time="1500">Pomodoro (25m)</button>
+              <button class="mode-btn" data-time="3120">Flowtime (52m)</button>
+              <button class="mode-btn" data-time="300">Short Break (5m)</button>
+              <button class="mode-btn" data-time="900">Long Break (15m)</button>
+            </div>
+            <div class="timer-clock" id="timerClock">25:00</div>
+            <div class="timer-controls">
+              <button class="btn-primary" id="timerStartBtn" style="width: auto; padding: 10px 24px;">Start</button>
+              <button class="btn-primary" id="timerPauseBtn" style="width: auto; padding: 10px 24px; background: var(--bg-cream); color: var(--text-main); border: 1.5px solid var(--border-color);">Pause</button>
+              <button class="btn-primary" id="timerResetBtn" style="width: auto; padding: 10px 24px; background: var(--text-muted);">Reset</button>
+            </div>
+            <p class="status-note" id="pomodoroCountText" style="margin-top: 14px;">Completed focus sessions today: 0 🍅</p>
+          </div>
+
+          <div class="card" style="margin-bottom: 0;">
+            <h2>🎵 Ambient Focus Sounds</h2>
+            <p style="font-size: 0.83rem; color: var(--text-muted); margin-bottom: 10px;">Toggle calming background sound:</p>
+            <button class="sound-btn" id="soundRainBtn">🌧️ Soft Rain</button>
+            <button class="sound-btn" id="soundCafeBtn">☕ Lo-Fi Cafe</button>
+            <button class="sound-btn" id="soundForestBtn">🌲 Forest Breeze</button>
+            <p class="status-note">Note: Uses gentle web audio synthesizer tones for calm background ambiance.</p>
+          </div>
         </div>
 
         <div>
           <div class="card">
-            <h2>👑 Top 3 Priorities Today</h2>
-            <input type="text" id="prio1" placeholder="1. Most important goal today..." oninput="saveField('prio1')" />
-            <input type="text" id="prio2" placeholder="
+            <h2>🧠 Proven Study Techniques Hub</h2>
+            <div class="technique-card">
+              <h4>1. Pomodoro Technique 🍅</h4>
+              <p>Work with intense focus for 25 minutes, then take a 5-minute rejuvenating break. Keeps burnout away!</p>
+            </div>
+            <div class="technique-card">
+              <h4>2. Feynman Technique 💡</h4>
+              <p>Study a concept, then explain it out loud in simple terms as if teaching a beginner. Instantly exposes knowledge gaps.</p>
+            </div>
+            <div class="technique-card">
+              <h4>3. Active Recall & Spaced Repetition 📝</h4>
+              <p>Test yourself instead of passively re-reading notes. Review difficult topics at increasing intervals.</p>
+            </div>
+            <div class="technique-card">
+              <h4>4. The Blurting Method 🧠</h4>
+              <p>Read a section, close your book, and "blurt" out everything you remember on a blank sheet, then check for missing details.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // 1. Date Display & Random Quotes
+      const dateOpts = { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' };
+      const dateEl = document.getElementById('currentDate');
+      if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-US', dateOpts);
+
+      const quotes = [
+        '✨ "Small daily progress adds up to huge results. You\'ve got this!" 🍓',
+        '🌿 "Success is the sum of small efforts, repeated day in and day out." ☕',
+        '🌸 "Plant your study seeds today so you can harvest your dreams tomorrow." 🌷',
+        '💫 "Believe in yourself and all that you are. Focus on your goals!" 🤍'
+      ];
+      const quoteEl = document.getElementById('quoteBanner');
+      if (quoteEl) quoteEl.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+
+      // 2. Dark Mode Toggle
+      const themeToggleBtn = document.getElementById('themeToggleBtn');
+      const htmlEl = document.documentElement;
+      const savedTheme = localStorage.getItem('pyd_theme') || 'light';
+      htmlEl.setAttribute('data-theme', savedTheme);
+      if (themeToggleBtn) {
+        themeToggleBtn.textContent = savedTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+        themeToggleBtn.addEventListener('click', () => {
+          const current = htmlEl.getAttribute('data-theme');
+          const next = current === 'dark' ? 'light' : 'dark';
+          htmlEl.setAttribute('data-theme', next);
+          localStorage.setItem('pyd_theme', next);
+          themeToggleBtn.textContent = next === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+        });
+      }
+
+      // 3. Robust Tab Switching
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      const tabPanes = document.querySelectorAll('.tab-pane');
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('data-tab');
+          tabBtns.forEach(b => b.classList.remove('active'));
+          tabPanes.forEach(p => p.classList.remove('active'));
+          btn.classList.add('active');
+          const targetPane = document.getElementById(targetId);
+          if (targetPane) targetPane.classList.add('active');
+        });
+      });
+
+      // 4. Study Tasks & Progress Bar
+      let tasks = JSON.parse(localStorage.getItem('pyd_tasks') || '[]');
+      const taskForm = document.getElementById('taskForm');
+      const taskListContainer = document.getElementById('taskListContainer');
+      const progressFill = document.getElementById('progressFill');
+      const progressText = document.getElementById('progressText');
+      const progressPercent = document.getElementById('progressPercent');
+
+      function renderTasks() {
+        if (!taskListContainer) return;
+        if (tasks.length === 0) {
+          taskListContainer.innerHTML = '<p style="color: var(--text-muted); font-size: 0.88rem;">No study tasks yet. Add one above! 🍓</p>';
+          if (progressFill) progressFill.style.width = '0%';
+          if (progressText) progressText.textContent = '0 / 0 completed';
+          if (progressPercent) progressPercent.textContent = '0%';
+          return;
+        }
+
+        taskListContainer.innerHTML = '';
+        let completedCount = 0;
+        tasks.forEach((t, idx) => {
+          if (t.done) completedCount++;
+          const div = document.createElement('div');
+          div.className = `task-item ${t.done ? 'done' : ''}`;
+          div.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 10px; flex: 1; cursor: pointer;">
+              <input type="checkbox" ${t.done ? 'checked' : ''} data-index="${idx}" style="width: 18px; height: 18px; accent-color: var(--deep-pink);" />
+              <div>
+                <strong>${t.title}</strong>
+                <div style="display: flex; gap: 6px; margin-top: 3px; align-items: center; flex-wrap: wrap;">
+                  ${t.subject ? `<span class="badge">${t.subject}</span>` : ''}
+                  <span class="badge priority-${t.priority.toLowerCase()}">${t.priority}</span>
+                  ${t.date ? `<small style="color: var(--text-muted);">📅 ${t.date}</small>` : ''}
+                </div>
+              </div>
+            </div>
+            <button data-delete="${idx}" style="background: none; border: none; cursor: pointer; font-size: 1.1rem;" title="Delete">🗑️</button>
+          `;
+          taskListContainer.appendChild(div);
+        });
+
+        const percent = Math.round((completedCount / tasks.length) * 100);
+        if (progressFill) progressFill.style.width = percent + '%';
+        if (progressText) progressText.textContent = `${completedCount} / ${tasks.length} completed`;
+        if (progressPercent) progressPercent.textContent = percent + '%';
+
+        // Bind events
+        taskListContainer.querySelectorAll('input[type="checkbox"]').forEach(chk => {
+          chk.addEventListener('change', (e) => {
+            const i = e.target.getAttribute('data-index');
+            tasks[i].done = e.target.checked;
+            localStorage.setItem('pyd_tasks', JSON.stringify(tasks));
+            renderTasks();
+          });
+        });
+        taskListContainer.querySelectorAll('button[data-delete]').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const i = e.target.getAttribute('data-delete');
+            tasks.splice(i, 1);
+            localStorage.setItem('pyd_tasks', JSON.stringify(tasks));
+            renderTasks();
+          });
+        });
+      }
+
+      if (taskForm) {
+        taskForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const title = document.getElementById('taskTitleInput').value.trim();
+          const subject = document.getElementById('taskSubjectInput').value.trim();
+          const date = document.getElementById('taskDateInput').value;
+          const priority = document.getElementById('taskPriorityInput').value;
+          if (!title) return;
+          tasks.unshift({ title, subject, date, priority, done: false });
+          localStorage.setItem('pyd_tasks', JSON.stringify(tasks));
+          taskForm.reset();
+          renderTasks();
+        });
+      }
+      renderTasks();
+
+      // 5. Exam Countdowns
+      let exams = JSON.parse(localStorage.getItem('pyd_exams') || '[]');
+      const examForm = document.getElementById('examForm');
+      const examListContainer = document.getElementById('examListContainer');
+
+      function renderExams() {
+        if (!examListContainer) return;
+        if (exams.length === 0) {
+          examListContainer.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem;">No upcoming exams added yet.</p>';
+          return;
+        }
+        examListContainer.innerHTML = '';
+        exams.forEach((ex, idx) => {
+          const today = new Date();
+          today.setHours(0,0,0,0);
+          const examDate = new Date(ex.date);
+          const diffTime = examDate - today;
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+          const div = document.createElement('div');
+          div.className = 'exam-item';
+          div.innerHTML = `
+            <div>
+              <strong>${ex.name}</strong>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">📅 ${ex.date}</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="badge" style="background: var(--baby-pink); font-weight: 700;">${diffDays >= 0 ? diffDays + ' days left' : 'Passed'}</span>
+              <button data-delete-exam="${idx}" style="background: none; border: none; cursor: pointer;">🗑️</button>
+            </div>
+          `;
+          examListContainer.appendChild(div);
+        });
+
+        examListContainer.querySelectorAll('button[data-delete-exam]').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const i = e.target.getAttribute('data-delete-exam');
+            exams.splice(i, 1);
+            localStorage.setItem('pyd_exams', JSON.stringify(exams));
+            renderExams();
+          });
+        });
+      }
+
+      if (examForm) {
+        examForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const name = document.getElementById('examNameInput').value.trim();
+          const date = document.getElementById('examDateInput').value;
+          if (!name || !date) return;
+          exams.push({ name, date });
+          localStorage.setItem('pyd_exams', JSON.stringify(exams));
+          examForm.reset();
+          renderExams();
+        });
+      }
+      renderExams();
+
+      // 6. Day Planner Schedule & Auto-Save Fields
+      const hours = ['06:00 AM', '08:00 AM', '10:00 AM', '12:00 PM', '02:00 PM', '04:00 PM', '06:00 PM', '08:00 PM', '10:00 PM'];
+      const scheduleContainer = document.getElementById('scheduleContainer');
+      if (scheduleContainer) {
+        hours.forEach((hr, idx) => {
+          const key = 'sched_' + idx;
+          const val = localStorage.getItem('pyd_' + key) || '';
+          const row = document.createElement('div');
+          row.className = 'schedule-row';
+          row.innerHTML = `
+            <div class="time-label">${hr}</div>
+            <input type="text" id="${key}" value="${val}" placeholder="Plan for ${hr}..." />
+          `;
+          scheduleContainer.appendChild(row);
+          const inputEl = row.querySelector('input');
+          inputEl.addEventListener('input', (e) => {
+            localStorage.setItem('pyd_' + key, e.target.value);
+          });
+        });
+      }
+
+      const autoSaveFields = ['prio1', 'prio2', 'prio3', 'grat1', 'grat2', 'grat3', 'dailyAffirmation', 'weeklyFocus'];
+      autoSaveFields.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          if (localStorage.getItem('pyd_' + id)) el.value = localStorage.getItem('pyd_' + id);
+          el.addEventListener('input', (e) => {
+            localStorage.setItem('pyd_' + id, e.target.value);
+          });
+        }
+      });
+
+      // 7. Mood Tracker
+      const moodBtns = document.querySelectorAll('.mood-btn');
+      const moodStatusText = document.getElementById('moodStatusText');
+      const savedMood = localStorage.getItem('pyd_mood');
+      if (savedMood) {
+        if (moodStatusText) moodStatusText.textContent = 'Current mood: ' + savedMood;
+        moodBtns.forEach(b => {
+          if (b.getAttribute('data-mood') === savedMood) b.classList.add('selected');
+        });
+      }
+      moodBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          moodBtns.forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          const mood = btn.getAttribute('data-mood');
+          localStorage.setItem('pyd_mood', mood);
+          if (moodStatusText) moodStatusText.textContent = 'Current mood: ' + mood;
+        });
+      });
+
+      // 8. Water Tracker (8 glasses)
+      const waterContainer = document.getElementById('waterGlassesContainer');
+      const waterStatusText = document.getElementById('waterStatusText');
+      let waterCount = parseInt(localStorage.getItem('pyd_water') || '0', 10);
+
+      function renderWater() {
+        if (!waterContainer) return;
+        waterContainer.innerHTML = '';
+        for (let i = 1; i <= 8; i++) {
+          const glass = document.createElement('div');
+          glass.className = `glass ${i <= waterCount ? 'filled' : ''}`;
+          glass.innerHTML = i <= waterCount ? '💧' : '🥛';
+          glass.addEventListener('click', () => {
+            waterCount = (waterCount === i) ? i - 1 : i;
+            localStorage.setItem('pyd_water', waterCount);
+            renderWater();
+          });
+          waterContainer.appendChild(glass);
+        }
+        if (waterStatusText) waterStatusText.textContent = `${waterCount} / 8 glasses completed today ✨`;
+      }
+      renderWater();
+
+      // 9. Week Planner Grid & Habit Tracker
+      const weekGridContainer = document.getElementById('weekGridContainer');
+      const days = ['Monday 🌸', 'Tuesday 🌿', 'Wednesday 🍓', 'Thursday 💫', 'Friday 🤍', 'Saturday ✨', 'Sunday 🌷'];
+      if (weekGridContainer) {
+        days.forEach((day, idx) => {
+          const key = 'week_day_' + idx;
+          const val = localStorage.getItem('pyd_' + key) || '';
+          const box = document.createElement('div');
+          box.className = 'day-box';
+          box.innerHTML = `
+            <h3>${day}</h3>
+            <textarea id="${key}" placeholder="Daily study goals...">${val}</textarea>
+          `;
+          weekGridContainer.appendChild(box);
+          const ta = box.querySelector('textarea');
+          ta.addEventListener('input', (e) => {
+            localStorage.setItem('pyd_' + key, e.target.value);
+          });
+        });
+      }
+
+      // Habits
+      const habits = ['Studied 2+ Hours', 'Reviewed Notes', 'Drank 8 Glasses', 'Slept 8 Hours', 'No Phone Scroll'];
+      const habitTableBody = document.getElementById('habitTableBody');
+      if (habitTableBody) {
+        habits.forEach((habit, hIdx) => {
+          const tr = document.createElement('tr');
+          let html = `<td>${habit}</td>`;
+          for (let d = 0; d < 7; d++) {
+            const hKey = `habit_${hIdx}_${d}`;
+            const checked = localStorage.getItem('pyd_' + hKey) === 'true' ? 'checked' : '';
+            html += `<td><input type="checkbox" data-hkey="${hKey}" ${checked} style="width:16px;height:16px;accent-color:var(--deep-pink);" /></td>`;
+          }
+          tr.innerHTML = html;
+          habitTableBody.appendChild(tr);
+        });
+
+        habitTableBody.querySelectorAll('input[type="checkbox"]').forEach(chk => {
+          chk.addEventListener('change', (e) => {
+            const key = e.target.getAttribute('data-hkey');
+            localStorage.setItem('pyd_' + key, e.target.checked);
+          });
+        });
+      }
+
+      // 10. Pomodoro Timer
+      let timerInterval = null;
+      let currentTime = 1500;
+      let totalSeconds = 1500;
+      let isRunning = false;
+      let focusCount = parseInt(localStorage.getItem('pyd_focus_count') || '0', 10);
+
+      const timerClock = document.getElementById('timerClock');
+      const timerStartBtn = document.getElementById('timerStartBtn');
+      const timerPauseBtn = document.getElementById('timerPauseBtn');
+      const timerResetBtn = document.getElementById('timerResetBtn');
+      const pomodoroCountText = document.getElementById('pomodoroCountText');
+      const modeBtns = document.querySelectorAll('.mode-btn');
+
+      if (pomodoroCountText) pomodoroCountText.textContent = `Completed focus sessions today: ${focusCount} 🍅`;
+
+      function updateClockDisplay() {
+        const mins = Math.floor(currentTime / 60);
+        const secs = currentTime % 60;
+        if (timerClock) {
+          timerClock.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+      }
+
+      function playChime() {
+        try {
+          const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5 note
+          gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.2);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 1.2);
+        } catch(e) {}
+      }
+
+      modeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          modeBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const t = parseInt(btn.getAttribute('data-time'), 10);
+          currentTime = t;
+          totalSeconds = t;
+          clearInterval(timerInterval);
+          isRunning = false;
+          updateClockDisplay();
+        });
+      });
+
+      if (timerStartBtn) {
+        timerStartBtn.addEventListener('click', () => {
+          if (isRunning) return;
+          isRunning = true;
+          timerInterval = setInterval(() => {
+            if (currentTime > 0) {
+              currentTime--;
+              updateClockDisplay();
+            } else {
+              clearInterval(timerInterval);
+              isRunning = false;
+              playChime();
+              focusCount++;
+              localStorage.setItem('pyd_focus_count', focusCount);
+              if (pomodoroCountText) pomodoroCountText.textContent = `Completed focus sessions today: ${focusCount} 🍅`;
+              alert('🎉 Focus session completed! Take a well-deserved break.');
+            }
+          }, 1000);
+        });
+      }
+
+      if (timerPauseBtn) {
+        timerPauseBtn.addEventListener('click', () => {
+          clearInterval(timerInterval);
+          isRunning = false;
+        });
+      }
+
+      if (timerResetBtn) {
+        timerResetBtn.addEventListener('click', () => {
+          clearInterval(timerInterval);
+          isRunning = false;
+          currentTime = totalSeconds;
+          updateClockDisplay();
+        });
+      }
+      updateClockDisplay();
+
+      // Ambient Sound Generator via Web Audio API
+      let activeAudioCtx = null;
+      let activeOscs = [];
+
+      function stopAmbientSound() {
+        if (activeAudioCtx) {
+          activeAudioCtx.close();
+          activeAudioCtx = null;
+          activeOscs = [];
+        }
+      }
+
+      const soundRainBtn = document.getElementById('soundRainBtn');
+      const soundCafeBtn = document.getElementById('soundCafeBtn');
+      const soundForestBtn = document.getElementById('soundForestBtn');
+
+      function toggleSound(btn, type) {
+        const isPlaying = btn.classList.contains('playing');
+        document.querySelectorAll('.sound-btn').forEach(b => b.classList.remove('playing'));
+        stopAmbientSound();
+
+        if (!isPlaying) {
+          btn.classList.add('playing');
+          try {
+            activeAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const bufferSize = activeAudioCtx.sampleRate * 2;
+            const noiseBuffer = activeAudioCtx.createBuffer(1, bufferSize, activeAudioCtx.sampleRate);
+            const output = noiseBuffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+              output[i] = Math.random() * 2 - 1;
+            }
+
+            const whiteNoise = activeAudioCtx.createBufferSource();
+            whiteNoise.buffer = noiseBuffer;
+            whiteNoise.loop = true;
+
+            const filter = activeAudioCtx.createFilterNode ? activeAudioCtx.createBiquadFilter() : activeAudioCtx.createBiquadFilter();
+            filter.type = type === 'rain' ? 'lowpass' : (type === 'cafe' ? 'bandpass' : 'highpass');
+            filter.frequency.value = type === 'rain' ? 800 : (type === 'cafe' ? 1200 : 2500);
+
+            const gain = activeAudioCtx.createGain();
+            gain.gain.value = 0.15;
+
+            whiteNoise.connect(filter);
+            filter.connect(gain);
+            gain.connect(activeAudioCtx.destination);
+            whiteNoise.start(0);
+          } catch(e) {}
+        }
+      }
+
+      if (soundRainBtn) soundRainBtn.addEventListener('click', () => toggleSound(soundRainBtn, 'rain'));
+      if (soundCafeBtn) soundCafeBtn.addEventListener('click', () => toggleSound(soundCafeBtn, 'cafe'));
+      if (soundForestBtn) soundForestBtn.addEventListener('click', () => toggleSound(soundForestBtn, 'forest'));
+
+    });
+  </script>
+</body>
+</html>

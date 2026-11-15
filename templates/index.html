@@ -3,36 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plan Your Day ✨</title>
+  <title>Flow Space ✨</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
   <style>
     /* ================= COLOR PALETTES ================= */
     :root {
-      /* Light Mode (Floral, Soft) */
-      --bg-main: #FFF8F6;
-      --bg-card: #FFFFFF;
+      /* Light Mode (Lavender background + Baby Pink/Peach cards) */
+      --bg-main: #F2EBF7; /* Soft Lavender background */
+      --bg-card: #FFF0F5; /* Soft Baby Pink cards and boxes */
       --primary: #E8A0BF; /* Rose pink */
       --secondary: #B7A6E0; /* Lavender */
       --accent: #9CC5A1; /* Sage green */
       --highlight: #F9D5A7; /* Peach */
       --text-main: #4A3B47; /* Muted plum */
       --text-muted: #8c767e;
-      --border-color: #f3d4e4;
-      --shadow: 0 10px 30px rgba(232, 160, 191, 0.18);
+      --border-color: #E2D1E9;
+      --shadow: 0 10px 30px rgba(183, 166, 224, 0.2);
     }
 
     [data-theme="dark"] {
-      /* Dark Mode (Gold-driven) */
-      --bg-main: #12100E; /* Warm near-black */
-      --bg-card: #1D1A16;
-      --primary: #D4AF37; /* Classic gold */
-      --secondary: #B8923A; /* Antique gold */
-      --accent: #F2D888; /* Champagne */
-      --highlight: #D4AF37;
-      --text-main: #F5EBD7; /* Warm cream */
-      --text-muted: #b8a892;
-      --border-color: #3A3226; /* Dark bronze */
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      /* Dark Mode (Ultramarine Starry Night Blue) */
+      --bg-main: #0B132B; /* Deep Ultramarine Starry Night background */
+      --bg-card: #1C2541; /* Midnight blue cards & surfaces */
+      --primary: #64B5F6; /* Starlight blue primary */
+      --secondary: #48CAE4; /* Bright cyan/blue accent */
+      --accent: #F2D888; /* Warm gold starlight touch */
+      --highlight: #90E0EF;
+      --text-main: #E0FBFC; /* Soft starlight cream/blue-white */
+      --text-muted: #8D99AE;
+      --border-color: #243B53; /* Deep blue border */
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
     }
 
     * {
@@ -261,7 +261,7 @@
 
     input:focus, select:focus, textarea:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(232, 160, 191, 0.2);
+      box-shadow: 0 0 0 3px rgba(100, 181, 246, 0.2);
     }
 
     .btn-primary {
@@ -330,7 +330,7 @@
     }
 
     [data-theme="dark"] .badge {
-      color: #12100E;
+      color: #0B132B;
     }
 
     /* Schedule Slots */
@@ -585,7 +585,7 @@
     <!-- Header with Personalization -->
     <header>
       <div class="brand">
-        <h1>✨ Plan Your Day 🌸</h1>
+        <h1>✨ Flow Space 🌸</h1>
         <div class="personalize-box">
           <span>Hello,</span>
           <input type="text" id="userNameInput" placeholder="Your Name ✨" />
@@ -818,11 +818,11 @@
       if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-US', dateOpts);
 
       const userNameInput = document.getElementById('userNameInput');
-      const savedName = localStorage.getItem('pyd_username') || '';
+      const savedName = localStorage.getItem('fs_username') || '';
       if (userNameInput) {
         userNameInput.value = savedName;
         userNameInput.addEventListener('input', (e) => {
-          localStorage.setItem('pyd_username', e.target.value);
+          localStorage.setItem('fs_username', e.target.value);
         });
       }
 
@@ -838,7 +838,7 @@
       // 2. Dark Mode Toggle
       const themeToggleBtn = document.getElementById('themeToggleBtn');
       const htmlEl = document.documentElement;
-      const savedTheme = localStorage.getItem('pyd_theme') || 'light';
+      const savedTheme = localStorage.getItem('fs_theme') || 'light';
       htmlEl.setAttribute('data-theme', savedTheme);
       if (themeToggleBtn) {
         themeToggleBtn.textContent = savedTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
@@ -846,7 +846,7 @@
           const current = htmlEl.getAttribute('data-theme');
           const next = current === 'dark' ? 'light' : 'dark';
           htmlEl.setAttribute('data-theme', next);
-          localStorage.setItem('pyd_theme', next);
+          localStorage.setItem('fs_theme', next);
           themeToggleBtn.textContent = next === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
         });
       }
@@ -866,7 +866,7 @@
       });
 
       // 4. Study Tasks & Progress Bar
-      let tasks = JSON.parse(localStorage.getItem('pyd_tasks') || '[]');
+      let tasks = JSON.parse(localStorage.getItem('fs_tasks') || '[]');
       const taskForm = document.getElementById('taskForm');
       const taskListContainer = document.getElementById('taskListContainer');
       const progressFill = document.getElementById('progressFill');
@@ -915,7 +915,7 @@
           chk.addEventListener('change', (e) => {
             const i = e.target.getAttribute('data-index');
             tasks[i].done = e.target.checked;
-            localStorage.setItem('pyd_tasks', JSON.stringify(tasks));
+            localStorage.setItem('fs_tasks', JSON.stringify(tasks));
             renderTasks();
           });
         });
@@ -923,7 +923,7 @@
           btn.addEventListener('click', (e) => {
             const i = e.target.getAttribute('data-delete');
             tasks.splice(i, 1);
-            localStorage.setItem('pyd_tasks', JSON.stringify(tasks));
+            localStorage.setItem('fs_tasks', JSON.stringify(tasks));
             renderTasks();
           });
         });
@@ -938,7 +938,7 @@
           const priority = document.getElementById('taskPriorityInput').value;
           if (!title) return;
           tasks.unshift({ title, subject, date, priority, done: false });
-          localStorage.setItem('pyd_tasks', JSON.stringify(tasks));
+          localStorage.setItem('fs_tasks', JSON.stringify(tasks));
           taskForm.reset();
           renderTasks();
         });
@@ -946,7 +946,7 @@
       renderTasks();
 
       // 5. Exam Countdowns
-      let exams = JSON.parse(localStorage.getItem('pyd_exams') || '[]');
+      let exams = JSON.parse(localStorage.getItem('fs_exams') || '[]');
       const examForm = document.getElementById('examForm');
       const examListContainer = document.getElementById('examListContainer');
 
@@ -982,7 +982,7 @@
           btn.addEventListener('click', (e) => {
             const i = e.target.getAttribute('data-delete-exam');
             exams.splice(i, 1);
-            localStorage.setItem('pyd_exams', JSON.stringify(exams));
+            localStorage.setItem('fs_exams', JSON.stringify(exams));
             renderExams();
           });
         });
@@ -995,7 +995,7 @@
           const date = document.getElementById('examDateInput').value;
           if (!name || !date) return;
           exams.push({ name, date });
-          localStorage.setItem('pyd_exams', JSON.stringify(exams));
+          localStorage.setItem('fs_exams', JSON.stringify(exams));
           examForm.reset();
           renderExams();
         });
@@ -1008,7 +1008,7 @@
       if (scheduleContainer) {
         hours.forEach((hr, idx) => {
           const key = 'sched_' + idx;
-          const val = localStorage.getItem('pyd_' + key) || '';
+          const val = localStorage.getItem('fs_' + key) || '';
           const row = document.createElement('div');
           row.className = 'schedule-row';
           row.innerHTML = `
@@ -1017,7 +1017,7 @@
           `;
           scheduleContainer.appendChild(row);
           row.querySelector('input').addEventListener('input', (e) => {
-            localStorage.setItem('pyd_' + key, e.target.value);
+            localStorage.setItem('fs_' + key, e.target.value);
           });
         });
       }
@@ -1026,9 +1026,9 @@
       autoSaveFields.forEach(id => {
         const el = document.getElementById(id);
         if (el) {
-          if (localStorage.getItem('pyd_' + id)) el.value = localStorage.getItem('pyd_' + id);
+          if (localStorage.getItem('fs_' + id)) el.value = localStorage.getItem('fs_' + id);
           el.addEventListener('input', (e) => {
-            localStorage.setItem('pyd_' + id, e.target.value);
+            localStorage.setItem('fs_' + id, e.target.value);
           });
         }
       });
@@ -1036,7 +1036,7 @@
       // 7. Mood Tracker
       const moodBtns = document.querySelectorAll('.mood-btn');
       const moodStatusText = document.getElementById('moodStatusText');
-      const savedMood = localStorage.getItem('pyd_mood');
+      const savedMood = localStorage.getItem('fs_mood');
       if (savedMood) {
         if (moodStatusText) moodStatusText.textContent = 'Current mood: ' + savedMood;
         moodBtns.forEach(b => {
@@ -1048,7 +1048,7 @@
           moodBtns.forEach(b => b.classList.remove('selected'));
           btn.classList.add('selected');
           const mood = btn.getAttribute('data-mood');
-          localStorage.setItem('pyd_mood', mood);
+          localStorage.setItem('fs_mood', mood);
           if (moodStatusText) moodStatusText.textContent = 'Current mood: ' + mood;
         });
       });
@@ -1056,7 +1056,7 @@
       // 8. Water Tracker
       const waterContainer = document.getElementById('waterGlassesContainer');
       const waterStatusText = document.getElementById('waterStatusText');
-      let waterCount = parseInt(localStorage.getItem('pyd_water') || '0', 10);
+      let waterCount = parseInt(localStorage.getItem('fs_water') || '0', 10);
 
       function renderWater() {
         if (!waterContainer) return;
@@ -1067,7 +1067,7 @@
           glass.innerHTML = i <= waterCount ? '💧' : '🥛';
           glass.addEventListener('click', () => {
             waterCount = (waterCount === i) ? i - 1 : i;
-            localStorage.setItem('pyd_water', waterCount);
+            localStorage.setItem('fs_water', waterCount);
             renderWater();
           });
           waterContainer.appendChild(glass);
@@ -1082,7 +1082,7 @@
       if (weekGridContainer) {
         days.forEach((day, idx) => {
           const key = 'week_day_' + idx;
-          const val = localStorage.getItem('pyd_' + key) || '';
+          const val = localStorage.getItem('fs_' + key) || '';
           const box = document.createElement('div');
           box.className = 'day-box';
           box.innerHTML = `
@@ -1091,7 +1091,7 @@
           `;
           weekGridContainer.appendChild(box);
           box.querySelector('textarea').addEventListener('input', (e) => {
-            localStorage.setItem('pyd_' + key, e.target.value);
+            localStorage.setItem('fs_' + key, e.target.value);
           });
         });
       }
@@ -1104,7 +1104,7 @@
           let html = `<td>${habit}</td>`;
           for (let d = 0; d < 7; d++) {
             const hKey = `habit_${hIdx}_${d}`;
-            const checked = localStorage.getItem('pyd_' + hKey) === 'true' ? 'checked' : '';
+            const checked = localStorage.getItem('fs_' + hKey) === 'true' ? 'checked' : '';
             html += `<td><input type="checkbox" data-hkey="${hKey}" ${checked} style="width:16px;height:16px;accent-color:var(--primary);" /></td>`;
           }
           tr.innerHTML = html;
@@ -1113,7 +1113,7 @@
 
         habitTableBody.querySelectorAll('input[type="checkbox"]').forEach(chk => {
           chk.addEventListener('change', (e) => {
-            localStorage.setItem('pyd_' + e.target.getAttribute('data-hkey'), e.target.checked);
+            localStorage.setItem('fs_' + e.target.getAttribute('data-hkey'), e.target.checked);
           });
         });
       }
@@ -1123,7 +1123,7 @@
       let currentTime = 1500;
       let totalSeconds = 1500;
       let isRunning = false;
-      let focusCount = parseInt(localStorage.getItem('pyd_focus_count') || '0', 10);
+      let focusCount = parseInt(localStorage.getItem('fs_focus_count') || '0', 10);
 
       const timerClock = document.getElementById('timerClock');
       const timerStartBtn = document.getElementById('timerStartBtn');
@@ -1167,7 +1167,7 @@
               clearInterval(timerInterval);
               isRunning = false;
               focusCount++;
-              localStorage.setItem('pyd_focus_count', focusCount);
+              localStorage.setItem('fs_focus_count', focusCount);
               if (pomodoroCountText) pomodoroCountText.textContent = `Completed focus sessions today: ${focusCount} 🍅`;
               alert('🎉 Focus session completed! Take a well-deserved break.');
             }
@@ -1242,7 +1242,7 @@
       if (soundForestBtn) soundForestBtn.addEventListener('click', () => toggleSound(soundForestBtn, 'forest'));
 
       // 11. Virtual Zen Garden Leisure Game
-      let waterDrops = parseInt(localStorage.getItem('pyd_garden_drops') || '0', 10);
+      let waterDrops = parseInt(localStorage.getItem('fs_garden_drops') || '0', 10);
       const waterDropCount = document.getElementById('waterDropCount');
       const plantDisplay = document.getElementById('plantDisplay');
       const plantStageName = document.getElementById('plantStageName');
@@ -1269,7 +1269,7 @@
       if (waterPlantBtn) {
         waterPlantBtn.addEventListener('click', () => {
           waterDrops++;
-          localStorage.setItem('pyd_garden_drops', waterDrops);
+          localStorage.setItem('fs_garden_drops', waterDrops);
           updateGarden();
         });
       }

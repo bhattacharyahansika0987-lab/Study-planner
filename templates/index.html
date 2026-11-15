@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Planify · AI Study Planner</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['Figtree', 'system-ui', 'sans-serif'] },
+  colors: { ink: '#0E1324', panel: '#161C33', paper: '#F4F5FA', brand: '#6D8CFF' } } } }
+</script>
+<style>[x-cloak]{display:none!important}</style>
+</head>
+<body class="bg-paper font-sans text-slate-800 antialiased" x-data="planner()" x-cloak>
+<div class="flex min-h-screen">
+
+  <!-- Sidebar -->
+  <aside class="hidden w-64 shrink-0 flex-col gap-7 bg-ink p-5 text-slate-300 lg:flex">
+    <div class="flex items-center gap-2 text-xl font-extrabold text-white">
+      <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand text-ink">P</span>Planify
+    </div>
+    <nav class="space-y-1">
+      <template x-for="v in ['day','week','month']" :key="v">
+        <button @click="view=v" :class="view===v ? 'bg-white/10 text-white' : 'hover:bg-white/5'"
+          class="w-full rounded-lg px-3 py-2 text-left font-medium capitalize transition" x-text="v + ' planner'"></button>
+      </template>
+    </nav>
+    <div class="min-h-0 flex-1">
+      <div class="mb-2 flex items-center justify-between px-3 text-sm font-semibold text-white">
+        Subjects
+        <button @click="subjOpen=!subjOpen" class="rounded px-2 text-lg leading-none hover:bg-white/10" aria-label="Add subject">+</button>
+      </div>
+      <div x-show="subjOpen" x-transition class="mb-2 flex gap-2 px-1">
+        <input x-model="ns.name" @keydown.enter="addSubject()" placeholder="New subject"
+          class="min-w-0 flex-1 rounded-lg bg-white/10 px-3 py-1.5 text-sm text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-brand">
+        <input type="color" x-model="ns.color" class="h-8 w-8 cursor-pointer rounded bg-transparent">
+      </div>
+      <button @click="filter=null" :class="!filter ? 'bg-white/10 text-white' : 'hover:bg-white/5'"
+        class="w-full rounded-lg px-3 py-2 text-left text-sm transition">All subjects</button>
+      <template x-for="s in subjects" :key="s.id">
+        <div class="group flex items-center">
+          <button @click="filter = filter===s.id ? null : s.id"
+            :class="filter===s.id ? 'bg-white/10 text-white' : 'hover:bg-white/5'"
+            class="flex flex-1 items-center gap-2 rounded-lg px-3 py-2 text-left text-sm transition">
+            <span class="h-2.5 w-2.5 rounded-full" :style="`background:${s.color}`"></span>
+            <span x-text="s.name"></span>
+          </button>
+          <button @click="delSubject(s)" class="px-2 text-slate-500 opacity-0 transition hover:text-red-400 group-hover:opacity-100" aria-label="Delete subject">×</button>
+        </div>
+      </template>
+    </div>
+    <button @click="aiOpen=true" class="rounded-xl bg-brand px-4 py-3 font-bold text-ink transition hover:brightness-110">Plan with AI</button>
+  </aside>
+
+  <!-- Main -->
+  <main class="min-w-0 flex-1 p-4 sm:p-8">
+    <header class="flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <h1 class="text-2xl font-extrabold text-ink" x-text="greeting"></h1>
+        <p class="text-slate-500" x-text="title"></p>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <div class="flex rounded-xl bg-white p-1 shadow-sm ring-1 ring-slate-200">
+          <template x-for="v in ['day','week','month']" :key="v">
+            <button @click="view=v" :class="view===v ? 'bg-ink text-white' : 'text-slate-600 hover:bg-slate-100'"
+              class="rounded-lg px-4 py-1.5 text-sm font-semibold capitalize transition" x-text="v"></button>
+          </template>
+        </div>
+        <div class="flex items-center gap-1">
+          <button @click="step(-1)" class="rounded-lg bg-white px-3 py-1.5 ring-1 ring-slate-200 transition hover:bg-slate-100" aria-label="Previous">‹</button>
+          <button @click="cur=new Date()" class="rounded-lg bg-white px-3 py-1.5 text-sm font-semibold ring-1 ring-slate-200 transition hover:bg-slate-100">Today</button>
+          <button @click="step(1)" class="rounded-lg bg-white px-3 py-1.5 ring-1 ring-slate-200 transition hover:bg-slate-100" aria-label="Next">›</button>
+        </div>
+        <button @click="openNew(iso(cur))" class="rounded-xl bg-ink px-4 py-2 font-semibold text-white transition hover:bg-panel">Add task</button>
+      </div>
+    </header>
+
+    <!-- Stats -->
+    <section class="mt-6 grid grid-cols-2 gap-4 xl:grid-cols-4">
+      <div class="col-span-2 rounded-2xl bg-ink p-5 text-white xl:col-span-1">
+        <p class="text-sm text-slate-400">Done today</p>
+        <p class="mt-1 text-3xl font-extrabold" x-text="st.todayDone + ' / ' + st.today"></p>
+        <div class="mt-3 h-2 overflow-hidden rounded-full bg-white/10">
+          <div class="h-full rounded-full bg-brand transition-all duration-500" :style="`width:${st.today ? st.todayDone/st.today*100 : 0}%`"></div>
+        </div>
+      </div>
+      <div class="rounded-2xl bg-white p-5 ring-1 ring-slate-200">
+        <p class="text-sm text-slate-500">Week completion</p>
+        <p class="mt-1 text-3xl font-extrabold text-ink" x-text="st.weekPct + '%'"></p>
+      </div>
+      <div class="rounded-2xl bg-white p-5 ring-1 ring-slate-200">
+        <p class="text-sm text-slate-500">Hours planned this week</p>
+        <p class="mt-1 text-3xl font-extrabold text-ink" x-text="st.hours"></p>
+      </div>
+      <div class="rounded-2xl bg-white p-5 ring-1 ring-slate-200">
+        <p class="text-sm text-slate-500">Study streak</p>
+        <p class="mt-1 text-3xl font-extrabold text-ink" x-text="st.streak + (st.streak===1 ? ' day' : ' days')"></p>
+      </div>
+    </section>
+
+    <!-- Day -->
+    <section x-show="view==='day'" x-transition.opacity class="mt-6 rounded-2xl bg-white p-4 ring-1 ring-slate-200 sm:p-6">
+      <template x-if="!on(iso(cur)).length">
+        <p class="py-12 text-center text-slate-500">Nothing planned for this day. Add a task, or let AI fill your schedule.</p>
+      </template>
+      <ul class="divide-y divide-slate-100">
+        <template x-for="t in on(iso(cur))" :key="t.id">
+          <li class="flex items-center gap-4 py-3 transition">
+            <button @click="toggle(t)" :class="t.done ? 'border-brand bg-brand text-ink' : 'border-slate-300 hover:border-brand'"
+              class="grid h-6 w-6 shrink-0 place-items-center rounded-full border-2 text-xs font-bold transition" :aria-label="'Mark ' + t.title + ' done'" x-text="t.done ? '✓' : ''"></button>
+            <span class="w-14 shrink-0 text-sm font-semibold text-slate-500" x-text="t.start_time"></span>
+            <button @click="openEdit(t)" class="min-w-0 flex-1 text-left">
+              <span :class="t.done && 'text-slate-400 line-through'" class="block truncate font-semibold text-ink" x-text="t.title"></span>
+              <span class="text-sm text-slate-500" x-text="sub(t).name + ' · ' + t.duration + ' min'"></span>
+            </button>
+            <span class="h-8 w-1.5 rounded-full" :style="`background:${sub(t).color}`"></span>
+            <button @click="del(t)" class="text-slate-400 transition hover:text-red-500" aria-label="Delete task">×</button>
+          </li>
+        </template>
+      </ul>
+    </section>
+
+    <!-- Week -->
+    <section x-show="view==='week'" x-transition.opacity class="mt-6 overflow-x-auto">
+      <div class="grid min-w-[840px] grid-cols-7 gap-3">
+        <template x-for="d in weekDays" :key="iso(d)">
+          <div class="min-h-[260px] rounded-2xl bg-white p-3 ring-1 ring-slate-200" :class="iso(d)===iso(new Date()) && 'ring-2 ring-brand'">
+            <div class="mb-3 flex items-center justify-between">
+              <div>
+                <p class="text-xs text-slate-500" x-text="d.toLocaleDateString(undefined,{weekday:'short'})"></p>
+                <p class="text-lg font-bold text-ink" x-text="d.getDate()"></p>
+              </div>
+              <button @click="openNew(iso(d))" class="rounded-lg px-2 text-lg text-slate-400 transition hover:bg-slate-100 hover:text-ink" aria-label="Add task">+</button>
+            </div>
+            <div class="space-y-2">
+              <template x-for="t in on(iso(d))" :key="t.id">
+                <div class="flex items-start gap-2 rounded-lg border-l-4 p-2 text-sm transition hover:shadow" :style="`border-color:${sub(t).color};background:${sub(t).color}1A`">
+                  <button @click="toggle(t)" :class="t.done ? 'bg-ink' : 'border border-slate-400'" class="mt-0.5 h-4 w-4 shrink-0 rounded-full" aria-label="Toggle done"></button>
+                  <button @click="openEdit(t)" class="min-w-0 text-left">
+                    <span :class="t.done && 'text-slate-400 line-through'" class="block font-semibold leading-tight text-ink" x-text="t.title"></span>
+                    <span class="text-xs text-slate-500" x-text="t.start_time"></span>
+                  </button>
+                </div>
+              </template>
+            </div>
+          </div>
+        </template>
+      </div>
+    </section>
+
+    <!-- Month -->
+    <section x-show="view==='month'" x-transition.opacity class="mt-6 overflow-x-auto">
+      <div class="min-w-[720px] rounded-2xl bg-white p-3 ring-1 ring-slate-200">
+        <div class="grid grid-cols-7 pb-2 text-center text-sm font-semibold text-slate-500">
+          <template x-for="n in ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']"><span x-text="n"></span></template>
+        </div>
+        <div class="grid grid-cols-7 gap-1">
+          <template x-for="c in monthCells" :key="iso(c.d)">
+            <div @click="cur=c.d; view='day'" :class="[c.other && 'opacity-40', iso(c.d)===iso(new Date()) && 'ring-2 ring-brand']"
+              class="min-h-[96px] cursor-pointer rounded-xl bg-paper p-2 transition hover:bg-slate-200">
+              <p class="text-sm font-bold text-ink" x-text="c.d.getDate()"></p>
+              <template x-for="t in on(iso(c.d)).slice(0,3)" :key="t.id">
+                <p class="mt-1 truncate rounded px-1.5 py-0.5 text-xs font-medium" :class="t.done && 'line-through opacity-60'"
+                  :style="`background:${sub(t).color}33`" x-text="t.title"></p>
+              </template>
+              <p x-show="on(iso(c.d)).length > 3" class="mt-1 text-xs text-slate-500" x-text="'+' + (on(iso(c.d)).length-3) + ' more'"></p>
+            </div>
+          </template>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Task modal -->
+<div x-show="modal" x-transition.opacity class="fixed inset-0 z-50 grid place-items-center bg-ink/60 p-4" @keydown.escape.window="modal=false; aiOpen=false">
+  <form @submit.prevent="saveTask()" @click.outside="modal=false" class="w-full max-w-md space-y-4 rounded-2xl bg-white p-6 shadow-2xl">
+    <h2 class="text-xl font-extrabold text-ink" x-text="f.id ? 'Edit task' : 'Add task'"></h2>
+    <input x-model="f.title" required placeholder="What will you study?" class="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:ring-2 focus:ring-brand">
+    <select x-model.number="f.subject_id" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+      <template x-for="s in subjects" :key="s.id"><option :value="s.id" x-text="s.name"></option></template>
+    </select>
+    <div class="grid grid-cols-3 gap-3">
+      <input type="date" x-model="f.date" required class="col-span-3 rounded-lg border border-slate-300 px-3 py-2 sm:col-span-1">
+      <input type="time" x-model="f.start_time" class="rounded-lg border border-slate-300 px-3 py-2">
+      <input type="number" min="5" step="5" x-model.number="f.duration" class="rounded-lg border border-slate-300 px-3 py-2" aria-label="Minutes">
+    </div>
+    <div class="flex justify-end gap-2">
+      <button type="button" @click="modal=false" class="rounded-lg px-4 py-2 text-slate-600 hover:bg-slate-100">Cancel</button>
+      <button class="rounded-lg bg-ink px-4 py-2 font-semibold text-white hover:bg-panel">Save task</button>
+    </div>
+  </form>
+</div>
+
+<!-- AI modal -->
+<div x-show="aiOpen" x-transition.opacity class="fixed inset-0 z-50 grid place-items-center bg-ink/60 p-4">
+  <form @submit.prevent="runAI()" @click.outside="aiOpen=false" class="w-full max-w-md space-y-4 rounded-2xl bg-white p-6 shadow-2xl">
+    <h2 class="text-xl font-extrabold text-ink">Plan with AI</h2>
+    <p class="text-sm text-slate-500">Pick a subject and an exam date. Planify schedules daily sessions up to 3 weeks ahead.</p>
+    <select x-model.number="ai.subject_id" required class="w-full rounded-lg border border-slate-300 px-3 py-2">
+      <option value="">Choose subject</option>
+      <template x-for="s in subjects" :key="s.id"><option :value="s.id" x-text="s.name"></option></template>
+    </select>
+    <div class="grid grid-cols-2 gap-3">
+      <input type="date" x-model="ai.exam" required class="rounded-lg border border-slate-300 px-3 py-2" aria-label="Exam date">
+      <input type="number" min="0.5" max="8" step="0.5" x-model="ai.hours" class="rounded-lg border border-slate-300 px-3 py-2" aria-label="Hours per day">
+    </div>
+    <p x-show="err" class="text-sm text-red-600" x-text="err"></p>
+    <div class="flex justify-end gap-2">
+      <button type="button" @click="aiOpen=false" class="rounded-lg px-4 py-2 text-slate-600 hover:bg-slate-100">Cancel</button>
+      <button :disabled="busy" class="rounded-lg bg-brand px-4 py-2 font-bold text-ink disabled:opacity-50" x-text="busy ? 'Planning…' : 'Create plan'"></button>
+    </div>
+  </form>
+</div>
+
+<script>
+function planner() { return {
+  view: 'week', cur: new Date(), tasks: [], subjects: [], filter: null,
+  modal: false, aiOpen: false, subjOpen: false, busy: false, err: '',
+  f: {}, ai: { subject_id: '', exam: '', hours: 2 }, ns: { name: '', color: '#6D8CFF' },
+
+  async api(url, method = 'GET', body) {
+    const r = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: body && JSON.stringify(body) });
+    return r.status === 204 ? null : r.json();
+  },
+  async init() { [this.subjects, this.tasks] = await Promise.all([this.api('/api/subjects'), this.api('/api/tasks')]); },
+  async reload() { this.tasks = await this.api('/api/tasks'); },
+
+  iso(d) { const z = new Date(d); z.setMinutes(z.getMinutes() - z.getTimezoneOffset()); return z.toISOString().slice(0, 10); },
+  day(s) { return new Date(s + 'T00:00'); },
+  on(s) { return this.tasks.filter(t => t.date === s && (!this.filter || t.subject_id === this.filter)).sort((a, b) => a.start_time.localeCompare(b.start_time)); },
+  sub(t) { return this.subjects.find(s => s.id === t.subject_id) || { name: 'General', color: '#94A3B8' }; },
+  step(n) {
+    const d = new Date(this.cur);
+    if (this.view === 'month') { d.setDate(1); d.setMonth(d.getMonth() + n); } else d.setDate(d.getDate() + n * (this.view === 'week' ? 7 : 1));
+    this.cur = d;
+  },
+
+  get greeting() { const h = new Date().getHours(); return (h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening') + ', ready to study?'; },
+  get title() {
+    const o = { month: 'long', day: 'numeric' };
+    if (this.view === 'day') return this.cur.toLocaleDateString(undefined, { weekday: 'long', ...o, year: 'numeric' });
+    if (this.view === 'month') return this.cur.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+    const w = this.weekDays; return w[0].toLocaleDateString(undefined, o) + ' – ' + w[6].toLocaleDateString(undefined, o);
+  },
+  get weekDays() {
+    const s = new Date(this.cur); s.setDate(s.getDate() - ((s.getDay() + 6) % 7));
+    return Array.from({ length: 7 }, (_, i) => { const d = new Date(s); d.setDate(s.getDate() + i); return d; });
+  },
+  get monthCells() {
+    const first = new Date(this.cur.getFullYear(), this.cur.getMonth(), 1);
+    const s = new Date(first); s.setDate(1 - ((first.getDay() + 6) % 7));
+    return Array.from({ length: 42 }, (_, i) => { const d = new Date(s); d.setDate(s.getDate() + i); return { d, other: d.getMonth() !== first.getMonth() }; });
+  },
+  get st() {
+    const t0 = this.iso(new Date()), todayT = this.tasks.filter(t => t.date === t0);
+    const wk = this.weekDays.map(d => this.iso(d)), weekT = this.tasks.filter(t => wk.includes(t.date));
+    const doneDays = new Set(this.tasks.filter(t => t.done).map(t => t.date));
+    let streak = 0; const d = new Date();
+    for (let i = 0; i < 365; i++, d.setDate(d.getDate() - 1)) {
+      if (doneDays.has(this.iso(d))) streak++; else if (i > 0) break;
+    }
+    return {
+      today: todayT.length, todayDone: todayT.filter(t => t.done).length,
+      weekPct: weekT.length ? Math.round(weekT.filter(t => t.done).length / weekT.length * 100) : 0,
+      hours: (weekT.reduce((a, t) => a + t.duration, 0) / 60).toFixed(1), streak
+    };
+  },
+
+  openNew(date) { this.f = { title: '', subject_id: this.filter || this.subjects[0]?.id, date, start_time: '09:00', duration: 60 }; this.modal = true; },
+  openEdit(t) { this.f = { ...t }; this.modal = true; },
+  async saveTask() {
+    const { id, ...body } = this.f;
+    await this.api(id ? '/api/tasks/' + id : '/api/tasks', id ? 'PATCH' : 'POST', body);
+    this.modal = false; await this.reload();
+  },
+  async toggle(t) { t.done = t.done ? 0 : 1; await this.api('/api/tasks/' + t.id, 'PATCH', { done: t.done }); },
+  async del(t) { this.tasks = this.tasks.filter(x => x.id !== t.id); await this.api('/api/tasks/' + t.id, 'DELETE'); },
+
+  async addSubject() {
+    if (!this.ns.name.trim()) return;
+    const s = await this.api('/api/subjects', 'POST', this.ns);
+    this.subjects.push(s); this.ns.name = ''; this.subjOpen = false;
+  },
+  async delSubject(s) {
+    if (!confirm(`Delete ${s.name} and all its tasks?`)) return;
+    await this.api('/api/subjects/' + s.id, 'DELETE');
+    if (this.filter === s.id) this.filter = null;
+    this.subjects = this.subjects.filter(x => x.id !== s.id); await this.reload();
+  },
+  async runAI() {
+    this.busy = true; this.err = '';
+    const r = await this.api('/api/ai-plan', 'POST', this.ai);
+    this.busy = false;
+    if (r.error) { this.err = r.error; return; }
+    this.aiOpen = false; await this.reload();
+  }
+}}
+</script>
+</body>
+</html>

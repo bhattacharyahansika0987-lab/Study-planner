@@ -6,32 +6,33 @@
   <title>Plan Your Day ✨</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
   <style>
+    /* ================= COLOR PALETTES ================= */
     :root {
-      --bg-main: #FFFFFF;
+      /* Light Mode (Floral, Soft) */
+      --bg-main: #FFF8F6;
       --bg-card: #FFFFFF;
-      --bg-cream: #FFF0F5;
-      --pastel-green: #D8F3DC;
-      --soft-green: #E8F5E9;
-      --baby-pink: #FFD1DC;
-      --deep-pink: #FF6B8B;
-      --text-main: #2F3E46;
-      --text-muted: #6C757D;
-      --border-color: #FFD1DC;
-      --shadow: 0 8px 24px rgba(255, 209, 220, 0.25);
+      --primary: #E8A0BF; /* Rose pink */
+      --secondary: #B7A6E0; /* Lavender */
+      --accent: #9CC5A1; /* Sage green */
+      --highlight: #F9D5A7; /* Peach */
+      --text-main: #4A3B47; /* Muted plum */
+      --text-muted: #8c767e;
+      --border-color: #f3d4e4;
+      --shadow: 0 10px 30px rgba(232, 160, 191, 0.18);
     }
 
     [data-theme="dark"] {
-      --bg-main: #141E19;
-      --bg-card: #1D2D24;
-      --bg-cream: #231922;
-      --pastel-green: #2D6A4F;
-      --soft-green: #1B4332;
-      --baby-pink: #FF9EBB;
-      --deep-pink: #FF6B8B;
-      --text-main: #E8F5E9;
-      --text-muted: #95D5B2;
-      --border-color: #2D6A4F;
-      --shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      /* Dark Mode (Gold-driven) */
+      --bg-main: #12100E; /* Warm near-black */
+      --bg-card: #1D1A16;
+      --primary: #D4AF37; /* Classic gold */
+      --secondary: #B8923A; /* Antique gold */
+      --accent: #F2D888; /* Champagne */
+      --highlight: #D4AF37;
+      --text-main: #F5EBD7; /* Warm cream */
+      --text-muted: #b8a892;
+      --border-color: #3A3226; /* Dark bronze */
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
 
     * {
@@ -51,31 +52,31 @@
       overflow-x: hidden;
     }
 
-    /* Subtle Sparkle & Glow Pattern */
+    /* Ambient Background Sparkle Pattern */
     body::before {
       content: "";
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       pointer-events: none;
       background-image: 
-        radial-gradient(2px 2px at 50px 70px, var(--baby-pink), rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 250px 180px, var(--pastel-green), rgba(0,0,0,0)),
-        radial-gradient(2.5px 2.5px at 80% 20%, var(--baby-pink), rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 70% 80%, var(--pastel-green), rgba(0,0,0,0));
+        radial-gradient(2px 2px at 60px 80px, var(--primary), rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 280px 200px, var(--accent), rgba(0,0,0,0)),
+        radial-gradient(2.5px 2.5px at 85% 25%, var(--highlight), rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 75% 75%, var(--secondary), rgba(0,0,0,0));
       background-size: 500px 500px;
-      opacity: 0.6;
+      opacity: 0.5;
       z-index: 0;
     }
 
     .container {
-      max-width: 1100px;
+      max-width: 1150px;
       margin: 0 auto;
       padding: 24px 20px;
       position: relative;
       z-index: 1;
     }
 
-    /* Header */
+    /* Header & Personalization */
     header {
       display: flex;
       justify-content: space-between;
@@ -85,7 +86,7 @@
       border-radius: 24px;
       padding: 20px 28px;
       box-shadow: var(--shadow);
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
       gap: 15px;
     }
@@ -93,16 +94,31 @@
     .brand h1 {
       font-family: 'Playfair Display', serif;
       font-size: 2.2rem;
-      color: var(--deep-pink);
+      color: var(--primary);
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .brand p {
-      font-size: 0.88rem;
+    .personalize-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
       color: var(--text-muted);
-      margin-top: 2px;
+    }
+
+    .personalize-box input {
+      padding: 6px 12px;
+      border-radius: 50px;
+      border: 1.5px solid var(--border-color);
+      background: var(--bg-main);
+      color: var(--text-main);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      width: 140px;
+      margin-bottom: 0;
     }
 
     .header-controls {
@@ -112,7 +128,7 @@
     }
 
     .badge-date {
-      background: var(--bg-cream);
+      background: var(--bg-main);
       border: 1px solid var(--border-color);
       padding: 8px 16px;
       border-radius: 50px;
@@ -121,7 +137,7 @@
     }
 
     .theme-btn {
-      background: var(--bg-cream);
+      background: var(--bg-main);
       border: 1.5px solid var(--border-color);
       color: var(--text-main);
       padding: 9px 18px;
@@ -137,13 +153,14 @@
     }
 
     .theme-btn:hover {
-      background: var(--baby-pink);
+      background: var(--primary);
+      color: #fff;
       transform: translateY(-1px);
     }
 
     /* Quote Banner */
     .quote-banner {
-      background: linear-gradient(135deg, var(--bg-cream), var(--soft-green));
+      background: linear-gradient(135deg, var(--bg-card), var(--bg-main));
       border: 1.5px solid var(--border-color);
       border-radius: 16px;
       padding: 14px 22px;
@@ -157,33 +174,34 @@
     /* Navigation Tabs */
     .tabs-nav {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       margin-bottom: 24px;
       flex-wrap: wrap;
     }
 
     .tab-btn {
       flex: 1;
-      min-width: 170px;
+      min-width: 155px;
       background: var(--bg-card);
       border: 2px solid var(--border-color);
       color: var(--text-main);
-      padding: 12px 16px;
+      padding: 12px 14px;
       border-radius: 16px;
       font-family: 'Poppins', sans-serif;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       cursor: pointer;
       box-shadow: var(--shadow);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .tab-btn.active, .tab-btn:hover {
-      background: linear-gradient(135deg, var(--baby-pink), var(--pastel-green));
-      border-color: var(--deep-pink);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      border-color: var(--primary);
       transform: translateY(-2px);
     }
 
@@ -201,7 +219,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Grid Layouts */
+    /* Grids & Cards */
     .grid-2 {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -220,20 +238,20 @@
     .card h2 {
       font-family: 'Playfair Display', serif;
       font-size: 1.3rem;
-      color: var(--deep-pink);
+      color: var(--primary);
       margin-bottom: 14px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    /* Inputs & Buttons */
+    /* Form Inputs */
     input, select, textarea {
       width: 100%;
       padding: 11px 14px;
       border-radius: 12px;
       border: 1.5px solid var(--border-color);
-      background: var(--bg-cream);
+      background: var(--bg-main);
       color: var(--text-main);
       font-family: 'Poppins', sans-serif;
       font-size: 0.9rem;
@@ -242,12 +260,12 @@
     }
 
     input:focus, select:focus, textarea:focus {
-      border-color: var(--deep-pink);
-      box-shadow: 0 0 0 3px rgba(255, 107, 139, 0.15);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(232, 160, 191, 0.2);
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--deep-pink), var(--baby-pink));
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: #fff;
       border: none;
       padding: 11px 20px;
@@ -256,18 +274,18 @@
       font-weight: 600;
       font-size: 0.9rem;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(255, 107, 139, 0.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       width: 100%;
     }
 
     .btn-primary:hover {
-      opacity: 0.93;
+      opacity: 0.92;
       transform: translateY(-1px);
     }
 
     /* Progress Bar */
     .progress-container {
-      background: var(--bg-cream);
+      background: var(--bg-main);
       border-radius: 50px;
       height: 14px;
       width: 100%;
@@ -277,19 +295,19 @@
     }
 
     .progress-fill {
-      background: linear-gradient(90deg, var(--pastel-green), var(--deep-pink));
+      background: linear-gradient(90deg, var(--accent), var(--primary));
       height: 100%;
       width: 0%;
       transition: width 0.4s ease;
       border-radius: 50px;
     }
 
-    /* Task & Exam Items */
+    /* Task Items */
     .task-item, .exam-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: var(--bg-cream);
+      background: var(--bg-main);
       border: 1px solid var(--border-color);
       padding: 11px 14px;
       border-radius: 12px;
@@ -303,17 +321,17 @@
     }
 
     .badge {
-      background: var(--pastel-green);
-      color: var(--text-main);
+      background: var(--accent);
+      color: #2F3E46;
       padding: 3px 9px;
       border-radius: 50px;
       font-size: 0.73rem;
       font-weight: 600;
     }
 
-    .priority-high { background: #ffcdd2; color: #b71c1c; }
-    .priority-med { background: #fff9c4; color: #f57f17; }
-    .priority-low { background: var(--pastel-green); color: #1b5e20; }
+    [data-theme="dark"] .badge {
+      color: #12100E;
+    }
 
     /* Schedule Slots */
     .schedule-row {
@@ -327,8 +345,8 @@
       min-width: 85px;
       font-weight: 600;
       font-size: 0.8rem;
-      color: var(--deep-pink);
-      background: var(--bg-cream);
+      color: var(--primary);
+      background: var(--bg-main);
       border: 1px solid var(--border-color);
       padding: 7px 8px;
       border-radius: 8px;
@@ -349,7 +367,7 @@
 
     .mood-btn {
       flex: 1;
-      background: var(--bg-cream);
+      background: var(--bg-main);
       border: 2px solid var(--border-color);
       border-radius: 14px;
       padding: 10px 4px;
@@ -366,8 +384,8 @@
     }
 
     .mood-btn.selected {
-      background: var(--pastel-green);
-      border-color: var(--deep-pink);
+      background: var(--accent);
+      border-color: var(--primary);
       transform: scale(1.05);
     }
 
@@ -389,14 +407,13 @@
       justify-content: center;
       cursor: pointer;
       font-size: 1.2rem;
-      background: var(--bg-cream);
+      background: var(--bg-main);
       user-select: none;
     }
 
     .glass.filled {
-      background: var(--pastel-green);
-      border-color: #2D6A4F;
-      box-shadow: 0 3px 8px rgba(45, 106, 79, 0.2);
+      background: var(--accent);
+      box-shadow: 0 3px 8px rgba(156, 197, 161, 0.3);
     }
 
     /* Week & Habit Grids */
@@ -407,7 +424,7 @@
     }
 
     .day-box {
-      background: var(--bg-cream);
+      background: var(--bg-main);
       border: 1.5px solid var(--border-color);
       border-radius: 14px;
       padding: 12px;
@@ -415,7 +432,7 @@
 
     .day-box h3 {
       font-size: 0.95rem;
-      color: var(--deep-pink);
+      color: var(--primary);
       margin-bottom: 8px;
       border-bottom: 1px dashed var(--border-color);
       padding-bottom: 4px;
@@ -442,8 +459,8 @@
     }
 
     .habit-table th {
-      background: var(--bg-cream);
-      color: var(--deep-pink);
+      background: var(--bg-main);
+      color: var(--primary);
       font-weight: 600;
     }
 
@@ -455,7 +472,7 @@
     /* Pomodoro Timer Styling */
     .pomodoro-display {
       text-align: center;
-      background: var(--bg-cream);
+      background: var(--bg-main);
       border: 2px solid var(--border-color);
       border-radius: 20px;
       padding: 24px;
@@ -482,16 +499,16 @@
     }
 
     .mode-btn.active {
-      background: var(--deep-pink);
+      background: var(--primary);
       color: #fff;
-      border-color: var(--deep-pink);
+      border-color: var(--primary);
     }
 
     .timer-clock {
       font-size: 3.8rem;
       font-weight: 700;
       font-family: 'Playfair Display', serif;
-      color: var(--deep-pink);
+      color: var(--primary);
       letter-spacing: 2px;
       margin: 10px 0;
     }
@@ -502,27 +519,8 @@
       gap: 10px;
     }
 
-    .technique-card {
-      background: var(--bg-cream);
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 12px;
-    }
-
-    .technique-card h4 {
-      color: var(--deep-pink);
-      font-size: 0.95rem;
-      margin-bottom: 4px;
-    }
-
-    .technique-card p {
-      font-size: 0.83rem;
-      color: var(--text-muted);
-    }
-
     .sound-btn {
-      background: var(--soft-green);
+      background: var(--bg-main);
       border: 1px solid var(--border-color);
       padding: 8px 14px;
       border-radius: 12px;
@@ -538,7 +536,7 @@
     }
 
     .sound-btn.playing {
-      background: var(--deep-pink);
+      background: var(--primary);
       color: white;
     }
 
@@ -548,16 +546,50 @@
       margin-top: 6px;
       font-style: italic;
     }
+
+    /* ================= MINI GAME: VIRTUAL ZEN GARDEN ================= */
+    .garden-arena {
+      text-align: center;
+      background: var(--bg-main);
+      border: 2px solid var(--border-color);
+      border-radius: 20px;
+      padding: 24px;
+      position: relative;
+    }
+
+    .plant-pot {
+      font-size: 5rem;
+      margin: 20px 0;
+      min-height: 110px;
+      animation: floatPlant 3s ease-in-out infinite;
+    }
+
+    @keyframes floatPlant {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .garden-stats {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 16px;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <!-- Header -->
+    <!-- Header with Personalization -->
     <header>
       <div class="brand">
-        <h1>✨ Plan Your Day 🍓🌿</h1>
-        <p>Your strawberry matcha study sanctuary, task & wellness hub</p>
+        <h1>✨ Plan Your Day 🌸</h1>
+        <div class="personalize-box">
+          <span>Hello,</span>
+          <input type="text" id="userNameInput" placeholder="Your Name ✨" />
+        </div>
       </div>
       <div class="header-controls">
         <div class="badge-date" id="currentDate">Loading...</div>
@@ -569,7 +601,7 @@
 
     <!-- Motivational Quote Banner -->
     <div class="quote-banner" id="quoteBanner">
-      ✨ "Small daily progress adds up to huge results. You've got this!" 🍓
+      ✨ "Small daily progress adds up to huge results. You've got this!" 🌸
     </div>
 
     <!-- Navigation Tabs -->
@@ -578,12 +610,12 @@
       <button class="tab-btn" data-tab="dayTab">🌷 Day Planner</button>
       <button class="tab-btn" data-tab="weekTab">🗓️ Week & Habits</button>
       <button class="tab-btn" data-tab="pomodoroTab">⏱️ Pomodoro & Focus</button>
+      <button class="tab-btn" data-tab="gameTab">🎮 Zen Garden Break</button>
     </div>
 
     <!-- ================= TAB 1: STUDY DASHBOARD ================= -->
     <div id="studyTab" class="tab-pane active">
       <div class="grid-2">
-        <!-- Add Task Card -->
         <div class="card">
           <h2>📚 Add Study Task</h2>
           <form id="taskForm">
@@ -610,13 +642,10 @@
           </div>
         </div>
 
-        <!-- Tasks List & Exam Countdown -->
         <div>
           <div class="card">
             <h2>✨ Today's Tasks</h2>
-            <div id="taskListContainer">
-              <!-- Dynamically populated tasks -->
-            </div>
+            <div id="taskListContainer"></div>
           </div>
 
           <div class="card">
@@ -624,7 +653,7 @@
             <form id="examForm" style="margin-bottom: 12px;">
               <input type="text" id="examNameInput" placeholder="Exam / Quiz Name (e.g. Physics Midterm)" required />
               <input type="date" id="examDateInput" required />
-              <button type="submit" class="btn-primary" style="background: linear-gradient(135deg, #2D6A4F, #52B788);">+ Add Exam Countdown</button>
+              <button type="submit" class="btn-primary" style="background: linear-gradient(135deg, var(--secondary), var(--accent));">+ Add Exam Countdown</button>
             </form>
             <div id="examListContainer"></div>
           </div>
@@ -635,14 +664,12 @@
     <!-- ================= TAB 2: DAY PLANNER ================= -->
     <div id="dayTab" class="tab-pane">
       <div class="grid-2">
-        <!-- Schedule Column -->
         <div class="card">
           <h2>⏰ Hourly Schedule (6 AM - 10 PM)</h2>
           <div id="scheduleContainer"></div>
           <p class="status-note">✨ Auto-saves as you type!</p>
         </div>
 
-        <!-- Wellness & Priorities Column -->
         <div>
           <div class="card">
             <h2>👑 Top 3 Priorities Today</h2>
@@ -673,9 +700,9 @@
 
           <div class="card">
             <h2>✨ Gratitude & Affirmation</h2>
-            <input type="text" id="grat1" placeholder="🍓 1. I am grateful for..." />
-            <input type="text" id="grat2" placeholder="🍓 2. I am grateful for..." />
-            <input type="text" id="grat3" placeholder="🍓 3. I am grateful for..." />
+            <input type="text" id="grat1" placeholder="🌸 1. I am grateful for..." />
+            <input type="text" id="grat2" placeholder="🌸 2. I am grateful for..." />
+            <input type="text" id="grat3" placeholder="🌸 3. I am grateful for..." />
             <textarea id="dailyAffirmation" rows="3" placeholder="Write a kind affirmation or daily reflection..."></textarea>
           </div>
         </div>
@@ -706,9 +733,7 @@
                 <th>Sun</th>
               </tr>
             </thead>
-            <tbody id="habitTableBody">
-              <!-- Dynamically populated habits -->
-            </tbody>
+            <tbody id="habitTableBody"></tbody>
           </table>
         </div>
       </div>
@@ -729,7 +754,7 @@
             <div class="timer-clock" id="timerClock">25:00</div>
             <div class="timer-controls">
               <button class="btn-primary" id="timerStartBtn" style="width: auto; padding: 10px 24px;">Start</button>
-              <button class="btn-primary" id="timerPauseBtn" style="width: auto; padding: 10px 24px; background: var(--bg-cream); color: var(--text-main); border: 1.5px solid var(--border-color);">Pause</button>
+              <button class="btn-primary" id="timerPauseBtn" style="width: auto; padding: 10px 24px; background: var(--bg-main); color: var(--text-main); border: 1.5px solid var(--border-color);">Pause</button>
               <button class="btn-primary" id="timerResetBtn" style="width: auto; padding: 10px 24px; background: var(--text-muted);">Reset</button>
             </div>
             <p class="status-note" id="pomodoroCountText" style="margin-top: 14px;">Completed focus sessions today: 0 🍅</p>
@@ -741,30 +766,43 @@
             <button class="sound-btn" id="soundRainBtn">🌧️ Soft Rain</button>
             <button class="sound-btn" id="soundCafeBtn">☕ Lo-Fi Cafe</button>
             <button class="sound-btn" id="soundForestBtn">🌲 Forest Breeze</button>
-            <p class="status-note">Note: Uses gentle web audio synthesizer tones for calm background ambiance.</p>
           </div>
         </div>
 
         <div>
           <div class="card">
             <h2>🧠 Proven Study Techniques Hub</h2>
-            <div class="technique-card">
-              <h4>1. Pomodoro Technique 🍅</h4>
-              <p>Work with intense focus for 25 minutes, then take a 5-minute rejuvenating break. Keeps burnout away!</p>
+            <div class="card" style="background: var(--bg-main); margin-bottom: 12px; padding: 14px;">
+              <h4 style="color: var(--primary); font-size: 0.95rem; margin-bottom: 4px;">1. Pomodoro Technique 🍅</h4>
+              <p style="font-size: 0.83rem; color: var(--text-muted);">25 minutes intense focus, 5 minutes rest.</p>
             </div>
-            <div class="technique-card">
-              <h4>2. Feynman Technique 💡</h4>
-              <p>Study a concept, then explain it out loud in simple terms as if teaching a beginner. Instantly exposes knowledge gaps.</p>
+            <div class="card" style="background: var(--bg-main); margin-bottom: 12px; padding: 14px;">
+              <h4 style="color: var(--primary); font-size: 0.95rem; margin-bottom: 4px;">2. Feynman Technique 💡</h4>
+              <p style="font-size: 0.83rem; color: var(--text-muted);">Explain concepts out loud in simple terms.</p>
             </div>
-            <div class="technique-card">
-              <h4>3. Active Recall & Spaced Repetition 📝</h4>
-              <p>Test yourself instead of passively re-reading notes. Review difficult topics at increasing intervals.</p>
-            </div>
-            <div class="technique-card">
-              <h4>4. The Blurting Method 🧠</h4>
-              <p>Read a section, close your book, and "blurt" out everything you remember on a blank sheet, then check for missing details.</p>
+            <div class="card" style="background: var(--bg-main); margin-bottom: 0; padding: 14px;">
+              <h4 style="color: var(--primary); font-size: 0.95rem; margin-bottom: 4px;">3. The Blurting Method 🧠</h4>
+              <p style="font-size: 0.83rem; color: var(--text-muted);">Write everything from memory on a blank page.</p>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= TAB 5: ZEN GARDEN LEISURE GAME ================= -->
+    <div id="gameTab" class="tab-pane">
+      <div class="card" style="max-width: 600px; margin: 0 auto;">
+        <h2>🌸 Virtual Zen Garden Break</h2>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">Take a mindful break! Click the water can to nourish your study blossom and watch it grow stage by stage.</p>
+        
+        <div class="garden-arena">
+          <div class="garden-stats">
+            <span>Stage: <id id="plantStageName">Seed 🌱</id></span>
+            <span>Water Drops: <id id="waterDropCount">0</id> 💧</span>
+          </div>
+          <div class="plant-pot" id="plantDisplay">🌱</div>
+          <p id="plantMessage" style="font-size: 0.9rem; font-weight: 500; margin-bottom: 16px; color: var(--primary);">Your seed is resting peacefully. Click below to water!</p>
+          <button class="btn-primary" id="waterPlantBtn" style="max-width: 220px; margin: 0 auto;">💦 Water Plant (+1)</button>
         </div>
       </div>
     </div>
@@ -774,13 +812,22 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
 
-      // 1. Date Display & Random Quotes
+      // 1. Personalization & Date Display
       const dateOpts = { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' };
       const dateEl = document.getElementById('currentDate');
       if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-US', dateOpts);
 
+      const userNameInput = document.getElementById('userNameInput');
+      const savedName = localStorage.getItem('pyd_username') || '';
+      if (userNameInput) {
+        userNameInput.value = savedName;
+        userNameInput.addEventListener('input', (e) => {
+          localStorage.setItem('pyd_username', e.target.value);
+        });
+      }
+
       const quotes = [
-        '✨ "Small daily progress adds up to huge results. You\'ve got this!" 🍓',
+        '✨ "Small daily progress adds up to huge results. You\'ve got this!" 🌸',
         '🌿 "Success is the sum of small efforts, repeated day in and day out." ☕',
         '🌸 "Plant your study seeds today so you can harvest your dreams tomorrow." 🌷',
         '💫 "Believe in yourself and all that you are. Focus on your goals!" 🤍'
@@ -829,7 +876,7 @@
       function renderTasks() {
         if (!taskListContainer) return;
         if (tasks.length === 0) {
-          taskListContainer.innerHTML = '<p style="color: var(--text-muted); font-size: 0.88rem;">No study tasks yet. Add one above! 🍓</p>';
+          taskListContainer.innerHTML = '<p style="color: var(--text-muted); font-size: 0.88rem;">No study tasks yet. Add one above! 🌸</p>';
           if (progressFill) progressFill.style.width = '0%';
           if (progressText) progressText.textContent = '0 / 0 completed';
           if (progressPercent) progressPercent.textContent = '0%';
@@ -844,12 +891,12 @@
           div.className = `task-item ${t.done ? 'done' : ''}`;
           div.innerHTML = `
             <div style="display: flex; align-items: center; gap: 10px; flex: 1; cursor: pointer;">
-              <input type="checkbox" ${t.done ? 'checked' : ''} data-index="${idx}" style="width: 18px; height: 18px; accent-color: var(--deep-pink);" />
+              <input type="checkbox" ${t.done ? 'checked' : ''} data-index="${idx}" style="width: 18px; height: 18px; accent-color: var(--primary);" />
               <div>
                 <strong>${t.title}</strong>
                 <div style="display: flex; gap: 6px; margin-top: 3px; align-items: center; flex-wrap: wrap;">
                   ${t.subject ? `<span class="badge">${t.subject}</span>` : ''}
-                  <span class="badge priority-${t.priority.toLowerCase()}">${t.priority}</span>
+                  <span class="badge">${t.priority}</span>
                   ${t.date ? `<small style="color: var(--text-muted);">📅 ${t.date}</small>` : ''}
                 </div>
               </div>
@@ -864,7 +911,6 @@
         if (progressText) progressText.textContent = `${completedCount} / ${tasks.length} completed`;
         if (progressPercent) progressPercent.textContent = percent + '%';
 
-        // Bind events
         taskListContainer.querySelectorAll('input[type="checkbox"]').forEach(chk => {
           chk.addEventListener('change', (e) => {
             const i = e.target.getAttribute('data-index');
@@ -915,8 +961,7 @@
           const today = new Date();
           today.setHours(0,0,0,0);
           const examDate = new Date(ex.date);
-          const diffTime = examDate - today;
-          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          const diffDays = Math.ceil((examDate - today) / (1000 * 60 * 60 * 24));
 
           const div = document.createElement('div');
           div.className = 'exam-item';
@@ -926,7 +971,7 @@
               <div style="font-size: 0.8rem; color: var(--text-muted);">📅 ${ex.date}</div>
             </div>
             <div style="display: flex; align-items: center; gap: 8px;">
-              <span class="badge" style="background: var(--baby-pink); font-weight: 700;">${diffDays >= 0 ? diffDays + ' days left' : 'Passed'}</span>
+              <span class="badge" style="font-weight: 700;">${diffDays >= 0 ? diffDays + ' days left' : 'Passed'}</span>
               <button data-delete-exam="${idx}" style="background: none; border: none; cursor: pointer;">🗑️</button>
             </div>
           `;
@@ -957,7 +1002,7 @@
       }
       renderExams();
 
-      // 6. Day Planner Schedule & Auto-Save Fields
+      // 6. Day Planner Schedule & Auto-Save
       const hours = ['06:00 AM', '08:00 AM', '10:00 AM', '12:00 PM', '02:00 PM', '04:00 PM', '06:00 PM', '08:00 PM', '10:00 PM'];
       const scheduleContainer = document.getElementById('scheduleContainer');
       if (scheduleContainer) {
@@ -971,8 +1016,7 @@
             <input type="text" id="${key}" value="${val}" placeholder="Plan for ${hr}..." />
           `;
           scheduleContainer.appendChild(row);
-          const inputEl = row.querySelector('input');
-          inputEl.addEventListener('input', (e) => {
+          row.querySelector('input').addEventListener('input', (e) => {
             localStorage.setItem('pyd_' + key, e.target.value);
           });
         });
@@ -1009,7 +1053,7 @@
         });
       });
 
-      // 8. Water Tracker (8 glasses)
+      // 8. Water Tracker
       const waterContainer = document.getElementById('waterGlassesContainer');
       const waterStatusText = document.getElementById('waterStatusText');
       let waterCount = parseInt(localStorage.getItem('pyd_water') || '0', 10);
@@ -1032,7 +1076,7 @@
       }
       renderWater();
 
-      // 9. Week Planner Grid & Habit Tracker
+      // 9. Week Grid & Habits
       const weekGridContainer = document.getElementById('weekGridContainer');
       const days = ['Monday 🌸', 'Tuesday 🌿', 'Wednesday 🍓', 'Thursday 💫', 'Friday 🤍', 'Saturday ✨', 'Sunday 🌷'];
       if (weekGridContainer) {
@@ -1046,14 +1090,12 @@
             <textarea id="${key}" placeholder="Daily study goals...">${val}</textarea>
           `;
           weekGridContainer.appendChild(box);
-          const ta = box.querySelector('textarea');
-          ta.addEventListener('input', (e) => {
+          box.querySelector('textarea').addEventListener('input', (e) => {
             localStorage.setItem('pyd_' + key, e.target.value);
           });
         });
       }
 
-      // Habits
       const habits = ['Studied 2+ Hours', 'Reviewed Notes', 'Drank 8 Glasses', 'Slept 8 Hours', 'No Phone Scroll'];
       const habitTableBody = document.getElementById('habitTableBody');
       if (habitTableBody) {
@@ -1063,7 +1105,7 @@
           for (let d = 0; d < 7; d++) {
             const hKey = `habit_${hIdx}_${d}`;
             const checked = localStorage.getItem('pyd_' + hKey) === 'true' ? 'checked' : '';
-            html += `<td><input type="checkbox" data-hkey="${hKey}" ${checked} style="width:16px;height:16px;accent-color:var(--deep-pink);" /></td>`;
+            html += `<td><input type="checkbox" data-hkey="${hKey}" ${checked} style="width:16px;height:16px;accent-color:var(--primary);" /></td>`;
           }
           tr.innerHTML = html;
           habitTableBody.appendChild(tr);
@@ -1071,8 +1113,7 @@
 
         habitTableBody.querySelectorAll('input[type="checkbox"]').forEach(chk => {
           chk.addEventListener('change', (e) => {
-            const key = e.target.getAttribute('data-hkey');
-            localStorage.setItem('pyd_' + key, e.target.checked);
+            localStorage.setItem('pyd_' + e.target.getAttribute('data-hkey'), e.target.checked);
           });
         });
       }
@@ -1101,22 +1142,6 @@
         }
       }
 
-      function playChime() {
-        try {
-          const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5 note
-          gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.2);
-          osc.connect(gain);
-          gain.connect(audioCtx.destination);
-          osc.start();
-          osc.stop(audioCtx.currentTime + 1.2);
-        } catch(e) {}
-      }
-
       modeBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           modeBtns.forEach(b => b.classList.remove('active'));
@@ -1141,7 +1166,6 @@
             } else {
               clearInterval(timerInterval);
               isRunning = false;
-              playChime();
               focusCount++;
               localStorage.setItem('pyd_focus_count', focusCount);
               if (pomodoroCountText) pomodoroCountText.textContent = `Completed focus sessions today: ${focusCount} 🍅`;
@@ -1168,21 +1192,14 @@
       }
       updateClockDisplay();
 
-      // Ambient Sound Generator via Web Audio API
+      // Ambient Sound Generator
       let activeAudioCtx = null;
-      let activeOscs = [];
-
       function stopAmbientSound() {
         if (activeAudioCtx) {
           activeAudioCtx.close();
           activeAudioCtx = null;
-          activeOscs = [];
         }
       }
-
-      const soundRainBtn = document.getElementById('soundRainBtn');
-      const soundCafeBtn = document.getElementById('soundCafeBtn');
-      const soundForestBtn = document.getElementById('soundForestBtn');
 
       function toggleSound(btn, type) {
         const isPlaying = btn.classList.contains('playing');
@@ -1196,15 +1213,13 @@
             const bufferSize = activeAudioCtx.sampleRate * 2;
             const noiseBuffer = activeAudioCtx.createBuffer(1, bufferSize, activeAudioCtx.sampleRate);
             const output = noiseBuffer.getChannelData(0);
-            for (let i = 0; i < bufferSize; i++) {
-              output[i] = Math.random() * 2 - 1;
-            }
+            for (let i = 0; i < bufferSize; i++) output[i] = Math.random() * 2 - 1;
 
             const whiteNoise = activeAudioCtx.createBufferSource();
             whiteNoise.buffer = noiseBuffer;
             whiteNoise.loop = true;
 
-            const filter = activeAudioCtx.createFilterNode ? activeAudioCtx.createBiquadFilter() : activeAudioCtx.createBiquadFilter();
+            const filter = activeAudioCtx.createBiquadFilter();
             filter.type = type === 'rain' ? 'lowpass' : (type === 'cafe' ? 'bandpass' : 'highpass');
             filter.frequency.value = type === 'rain' ? 800 : (type === 'cafe' ? 1200 : 2500);
 
@@ -1219,9 +1234,46 @@
         }
       }
 
+      const soundRainBtn = document.getElementById('soundRainBtn');
+      const soundCafeBtn = document.getElementById('soundCafeBtn');
+      const soundForestBtn = document.getElementById('soundForestBtn');
       if (soundRainBtn) soundRainBtn.addEventListener('click', () => toggleSound(soundRainBtn, 'rain'));
       if (soundCafeBtn) soundCafeBtn.addEventListener('click', () => toggleSound(soundCafeBtn, 'cafe'));
       if (soundForestBtn) soundForestBtn.addEventListener('click', () => toggleSound(soundForestBtn, 'forest'));
+
+      // 11. Virtual Zen Garden Leisure Game
+      let waterDrops = parseInt(localStorage.getItem('pyd_garden_drops') || '0', 10);
+      const waterDropCount = document.getElementById('waterDropCount');
+      const plantDisplay = document.getElementById('plantDisplay');
+      const plantStageName = document.getElementById('plantStageName');
+      const plantMessage = document.getElementById('plantMessage');
+      const waterPlantBtn = document.getElementById('waterPlantBtn');
+
+      const stages = [
+        { emoji: '🌱', name: 'Seed 🌱', msg: 'Your seed is resting peacefully. Keep watering!' },
+        { emoji: '🌿', name: 'Sprout 🌿', msg: 'Little green leaves are beginning to peek out!' },
+        { emoji: '🌷', name: 'Budding Flower 🌷', msg: 'Look at those lovely petals forming!' },
+        { emoji: '🌸', name: 'Full Blossom 🌸', msg: 'Gorgeous full bloom! Your study dedication shines!' },
+        { emoji: '👑✨', name: 'Royal Blossom 👑✨', msg: 'Legendary botanical masterpiece achieved!' }
+      ];
+
+      function updateGarden() {
+        if (!waterDropCount) return;
+        waterDropCount.textContent = waterDrops;
+        let stageIdx = Math.min(Math.floor(waterDrops / 5), stages.length - 1);
+        plantDisplay.textContent = stages[stageIdx].emoji;
+        plantStageName.textContent = stages[stageIdx].name;
+        plantMessage.textContent = stages[stageIdx].msg;
+      }
+
+      if (waterPlantBtn) {
+        waterPlantBtn.addEventListener('click', () => {
+          waterDrops++;
+          localStorage.setItem('pyd_garden_drops', waterDrops);
+          updateGarden();
+        });
+      }
+      updateGarden();
 
     });
   </script>
